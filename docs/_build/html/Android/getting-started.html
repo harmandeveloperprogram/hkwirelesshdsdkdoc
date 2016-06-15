@@ -1,0 +1,407 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Getting Started Guide (Android) &mdash; Harman Developer 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Harman Developer 1.0 documentation" href="../index.html" />
+    <link rel="next" title="Programming Guide (Android)" href="programming-guide.html" />
+    <link rel="prev" title="Overview of HKWirelessHD SDK (Android)" href="sdk-overview.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="programming-guide.html" title="Programming Guide (Android)"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="sdk-overview.html" title="Overview of HKWirelessHD SDK (Android)"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Harman Developer 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="getting-started-guide-android">
+<h1>Getting Started Guide (Android)<a class="headerlink" href="#getting-started-guide-android" title="Permalink to this headline">¶</a></h1>
+<p>The Harman/Kardon WirelessHD SDK is provided for Android 3rd party developers to communicate with Harman/Kardon Omni Series audio/video devices. The intent of this SDK is to provide the tools and libraries necessary to build, test and deploy the latest audio applications on the Android platform.</p>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<p>The HKWirelessHD SDK requires Android 4.1(API 16) minimum for Android devices. The SDK supports both 32bit and 64bit architecture.</p>
+</div>
+<div class="section" id="creating-a-sample-application">
+<h2>Creating a Sample Application<a class="headerlink" href="#creating-a-sample-application" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="add-jar-package-and-library-in-your-project">
+<h3>1. Add Jar package and library in your project<a class="headerlink" href="#add-jar-package-and-library-in-your-project" title="Permalink to this headline">¶</a></h3>
+<p>Add the libHKWirelessHD.jar package and libHKWirelessHD.so library in your libs folder.</p>
+<ul class="simple">
+<li>The step in Android Studio:</li>
+</ul>
+<ol class="arabic simple">
+<li>Copy the HKWirelessHD.jar to app/libs folder and copy the libHKWirelessHD.so to app/src/man/jniLibs/armeabi folder. If the folders don&#8217;t exist, please create them.</li>
+</ol>
+<p>The directory hierarchy as following:</p>
+<div class="figure">
+<img alt="../_images/1.png" src="../_images/1.png" />
+</div>
+<ol class="arabic simple" start="2">
+<li>Add the jar package as library. Select the menu: File-&gt;Project Structor-&gt;app(under Modules)-&gt;Dependencies, push +，then File dependency，select HKWirelessHD.jar. As following:</li>
+</ol>
+<div class="figure">
+<a class="reference internal image-reference" href="../_images/8.png"><img alt="../_images/8.png" src="../_images/8.png" /></a>
+</div>
+<ul class="simple">
+<li>The step in Eclipse:</li>
+</ul>
+<ol class="arabic simple">
+<li>copy the HKWirelessHD.jar to libs folder and copy the libHKWirelessHD.so to libs/armeabi folder. If the folders don&#8217;t exist, please create them.</li>
+</ol>
+<p>The directory hierarchy as following:</p>
+<div class="figure">
+<img alt="../_images/2.png" src="../_images/2.png" />
+</div>
+<ol class="arabic simple" start="2">
+<li>Add the jar package as library. Select the menu: Project property-&gt;Java Build Path-&gt;Libraries select “Add External JARs”，choose the HKWirelessHD.jar.Then add the jar package as external JARs.</li>
+</ol>
+</div>
+<div class="section" id="add-permission-in-androidmanifest-xml-file">
+<h3>2. Add Permission in AndroidManifest.xml file<a class="headerlink" href="#add-permission-in-androidmanifest-xml-file" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-java"><div class="highlight"><pre><span class="o">&lt;</span><span class="n">uses</span><span class="o">-</span><span class="n">permission</span> <span class="n">android</span><span class="o">:</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;android.permission.INTERNET&quot;</span> <span class="o">/&gt;</span>
+<span class="o">&lt;</span><span class="n">uses</span><span class="o">-</span><span class="n">permission</span> <span class="n">android</span><span class="o">:</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;android.permission.ACCESS_WIFI_STATE&quot;</span><span class="o">/&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="import-package">
+<h3>3. Import package<a class="headerlink" href="#import-package" title="Permalink to this headline">¶</a></h3>
+<p>Add the package header to your code:</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">com.harman.hkwirelessapi.*</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-hkwirelesshd-control-handler-and-initialize-the-wireless-audio">
+<h3>4. Create HKWirelessHD Control Handler and initialize the Wireless Audio<a class="headerlink" href="#create-hkwirelesshd-control-handler-and-initialize-the-wireless-audio" title="Permalink to this headline">¶</a></h3>
+<p>All APIs can be accessed through the object pointer of HKWirelessHandler and AudioCodecHandler. All you have to do is create a HKWirelessHandler object and a AudioCodecHandler object then use them to invoke the APIs you want to use.</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">// Create a HKWControlHandler instance</span>
+<span class="n">HKWirelessHandler</span> <span class="n">hControlHandler</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HKWirelessHandler</span><span class="o">();</span>
+
+<span class="c1">// Initialize the HKWControlHandler and start wireless audio</span>
+<span class="n">AudioCodecHandler</span> <span class="n">hAudioControl</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AudioCodecHandler</span><span class="o">();</span>
+
+<span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="n">Bundle</span> <span class="n">savedInstanceState</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">savedInstanceState</span><span class="o">);</span>
+        <span class="n">setContentView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">activity_main</span><span class="o">);</span>
+
+        <span class="c1">// Initialize the HKWControlHandler and start wireless audio</span>
+        <span class="n">hControlHandler</span><span class="o">.</span><span class="na">initializeHKWirelessController</span><span class="o">(</span><span class="s">&quot;...&quot;</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-application-interface">
+<h3>5. Create application interface<a class="headerlink" href="#create-application-interface" title="Permalink to this headline">¶</a></h3>
+<p>The app is a simple example. Make an activity with some buttons to control the omni device.
+The interface of app as following:</p>
+<div class="figure">
+<img alt="../_images/7.png" src="../_images/7.png" />
+</div>
+</div>
+<div class="section" id="discovery-of-the-available-speakers">
+<h3>6. Discovery of the available speakers<a class="headerlink" href="#discovery-of-the-available-speakers" title="Permalink to this headline">¶</a></h3>
+<p>To discover and update the status of speakers, you need to refresh the status regularly. The SDK provides a pair of convenient APIs to refresh device status. You can make a button to check the status of devices in the network. For this application, there is only one device in the network.</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">//refresh device button</span>
+  <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">refresh_btn</span><span class="o">)).</span><span class="na">setOnClickListener</span><span class="o">(</span><span class="k">new</span> <span class="n">View</span><span class="o">.</span><span class="na">OnClickListener</span><span class="o">()</span> <span class="o">{</span>
+      <span class="nd">@Override</span>
+      <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClick</span><span class="o">(</span><span class="n">View</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// start to refresh devices</span>
+          <span class="n">hControlHandler</span><span class="o">.</span><span class="na">refreshDeviceInfoOnce</span><span class="o">();</span>
+      <span class="o">}</span>
+  <span class="o">});</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="implement-callbacks">
+<h3>7. Implement callbacks<a class="headerlink" href="#implement-callbacks" title="Permalink to this headline">¶</a></h3>
+<p>All the updates from the speaker side are reported to the phone via callbacks. So, if your app needs the latest information of the speakers in certain cases, you should use corresponding callbacks accordingly.
+We can get the device ID from <code class="docutils literal"><span class="pre">onDeviceStateUpdated()</span></code>. For this application, it is supposed that device ID &#8220;123456789&#8221; is found in the network.</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="n">hControlHandler</span><span class="o">.</span><span class="na">registerHKWirelessControllerListener</span><span class="o">(</span><span class="k">new</span> <span class="n">HKWirelessListener</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onPlayEnded</span><span class="o">()</span> <span class="o">{</span>
+                <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="n">LOG_TAG</span><span class="o">,</span> <span class="s">&quot;PlayEnded&quot;</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onPlaybackStateChanged</span><span class="o">(</span><span class="kt">int</span> <span class="n">playState</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="n">LOG_TAG</span><span class="o">,</span> <span class="s">&quot;PlaybackState :&quot;</span> <span class="o">+</span> <span class="n">playState</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onPlaybackTimeChanged</span><span class="o">(</span><span class="kt">int</span> <span class="n">timeElapsed</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="n">LOG_TAG</span><span class="o">,</span> <span class="s">&quot;TimeElapsed :&quot;</span> <span class="o">+</span> <span class="n">timeElapsed</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onVolumeLevelChanged</span><span class="o">(</span><span class="kt">long</span> <span class="n">deviceId</span><span class="o">,</span> <span class="kt">int</span> <span class="n">deviceVolume</span><span class="o">,</span><span class="kt">int</span> <span class="n">avgVolume</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="n">LOG_TAG</span><span class="o">,</span> <span class="s">&quot;DeviceId:&quot;</span> <span class="o">+</span> <span class="n">deviceId</span> <span class="o">+</span> <span class="s">&quot;Volume:&quot;</span><span class="o">+</span> <span class="n">deviceVolume</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onDeviceStateUpdated</span><span class="o">(</span><span class="kt">long</span> <span class="n">deviceId</span><span class="o">,</span> <span class="kt">int</span> <span class="n">reason</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="n">LOG_TAG</span><span class="o">,</span> <span class="s">&quot;DeviceStateUpdated:&quot;</span> <span class="o">+</span> <span class="n">deviceId</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onErrorOccurred</span><span class="o">(</span><span class="kt">int</span> <span class="n">errorCode</span><span class="o">,</span> <span class="n">String</span> <span class="n">errorMsg</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="n">LOG_TAG</span><span class="o">,</span> <span class="s">&quot;Error:&quot;</span> <span class="o">+</span> <span class="n">errorMsg</span><span class="o">);</span>
+        <span class="o">}</span>
+<span class="o">});</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="find-info-of-speakers-and-groups">
+<h3>8. Find info of speakers and groups<a class="headerlink" href="#find-info-of-speakers-and-groups" title="Permalink to this headline">¶</a></h3>
+<p>Get DeviceInfo with deviceId
+You know the deviceId of a speaker from <code class="docutils literal"><span class="pre">onDeviceStateUpdated()</span></code> when new device and group found, then you can get the information of the device using DeviceInfo object.</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="nd">@Override</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">onDeviceStateUpdated</span><span class="o">(</span><span class="kt">long</span> <span class="n">deviceId</span><span class="o">,</span> <span class="kt">int</span> <span class="n">reason</span><span class="o">)</span> <span class="o">{</span>
+      <span class="c1">// get the number of available speakers</span>
+              <span class="n">DeviceObj</span> <span class="n">deviceInfo</span> <span class="o">=</span> <span class="n">hControlHandler</span><span class="o">.</span><span class="na">findDeviceFromList</span><span class="o">(</span><span class="n">deviceId</span><span class="o">)</span>
+  <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="n">LOG_TAG</span><span class="o">,</span> <span class="s">&quot;name :&quot;</span> <span class="o">+</span> <span class="n">DeviceInfo</span><span class="o">.</span><span class="na">deviceName</span><span class="o">);</span>
+      <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="n">LOG_TAG</span><span class="o">,</span> <span class="s">&quot;ipAddress :&quot;</span> <span class="o">+</span> <span class="n">DeviceInfo</span><span class="o">.</span><span class="na">ipAddress</span><span class="o">);</span>
+      <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="n">LOG_TAG</span><span class="o">,</span> <span class="s">&quot;volume :&quot;</span> <span class="o">+</span> <span class="n">DeviceInfo</span><span class="o">.</span><span class="na">volume</span><span class="o">);</span>
+      <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="n">LOG_TAG</span><span class="o">,</span> <span class="s">&quot;port :&quot;</span> <span class="o">+</span> <span class="n">DeviceInfo</span><span class="o">.</span><span class="na">port</span><span class="o">);</span>
+      <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="n">LOG_TAG</span><span class="o">,</span> <span class="s">&quot;role :&quot;</span> <span class="o">+</span> <span class="n">DeviceInfo</span><span class="o">.</span><span class="na">role</span><span class="o">);</span>
+      <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="n">LOG_TAG</span><span class="o">,</span> <span class="s">&quot;modelName :&quot;</span> <span class="o">+</span> <span class="n">DeviceInfo</span><span class="o">.</span><span class="na">modelName</span><span class="o">);</span>
+      <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="n">LOG_TAG</span><span class="o">,</span> <span class="s">&quot;zoneName :&quot;</span> <span class="o">+</span> <span class="n">DeviceInfo</span><span class="o">.</span><span class="na">zoneName</span><span class="o">);</span>
+      <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="n">LOG_TAG</span><span class="o">,</span> <span class="s">&quot;active :&quot;</span> <span class="o">+</span> <span class="n">DeviceInfo</span><span class="o">.</span><span class="na">active</span><span class="o">);</span>
+      <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="n">LOG_TAG</span><span class="o">,</span> <span class="s">&quot;version :&quot;</span> <span class="o">+</span> <span class="n">DeviceInfo</span><span class="o">.</span><span class="na">version</span><span class="o">);</span>
+      <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="n">LOG_TAG</span><span class="o">,</span> <span class="s">&quot;wifi :&quot;</span> <span class="o">+</span> <span class="n">DeviceInfo</span><span class="o">.</span><span class="na">wifiSignalStrength</span><span class="o">);</span>
+      <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="n">LOG_TAG</span><span class="o">,</span> <span class="s">&quot;groupID :&quot;</span> <span class="o">+</span> <span class="n">DeviceInfo</span><span class="o">.</span><span class="na">groupId</span><span class="o">);</span>
+      <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="n">LOG_TAG</span><span class="o">,</span> <span class="s">&quot;balance :&quot;</span> <span class="o">+</span> <span class="n">DeviceInfo</span><span class="o">.</span><span class="na">balance</span><span class="o">);</span>
+      <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="n">LOG_TAG</span><span class="o">,</span> <span class="s">&quot;isPlaying :&quot;</span> <span class="o">+</span> <span class="n">DeviceInfo</span><span class="o">.</span><span class="na">isPlaying</span><span class="o">);</span>
+      <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="n">LOG_TAG</span><span class="o">,</span> <span class="s">&quot;channelType :&quot;</span> <span class="o">+</span> <span class="n">DeviceInfo</span><span class="o">.</span><span class="na">channelType</span><span class="o">);</span>
+      <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="n">LOG_TAG</span><span class="o">,</span> <span class="s">&quot;isMaster :&quot;</span> <span class="o">+</span> <span class="n">DeviceInfo</span><span class="o">.</span><span class="na">isMaster</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>And GroupInfo</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="nd">@Override</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">onDeviceStateUpdated</span><span class="o">(</span><span class="kt">long</span> <span class="n">deviceId</span><span class="o">,</span> <span class="kt">int</span> <span class="n">reason</span><span class="o">)</span> <span class="o">{</span>
+              <span class="c1">//Get the number of groups available in the network</span>
+              <span class="kt">int</span> <span class="n">groupCount</span> <span class="o">=</span> <span class="n">hControlHandler</span><span class="o">.</span><span class="na">getGroupCount</span><span class="o">();</span>
+              <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="n">LOG_TAG</span><span class="o">,</span> <span class="s">&quot;group cnt :&quot;</span> <span class="o">+</span> <span class="n">groupCount</span><span class="o">);</span>
+      <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">groupCount</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
+              <span class="c1">// get the each group</span>
+    <span class="n">GroupObj</span> <span class="n">group</span> <span class="o">=</span> <span class="n">wireless</span><span class="o">.</span><span class="na">getDeviceGroupByIndex</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+    <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="n">LOG_TAG</span><span class="o">,</span> <span class="n">group</span><span class="o">.</span><span class="na">groupId</span> <span class="o">+</span> <span class="s">&quot; group groupName :&quot;</span> <span class="o">+</span> <span class="n">group</span><span class="o">.</span><span class="na">groupName</span><span class="o">);</span>
+    <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="n">LOG_TAG</span><span class="o">,</span> <span class="n">group</span><span class="o">.</span><span class="na">groupId</span> <span class="o">+</span> <span class="s">&quot; group device cnt :&quot;</span> <span class="o">+</span> <span class="n">group</span><span class="o">.</span><span class="na">deviceList</span><span class="o">.</span><span class="na">length</span><span class="o">);</span>
+
+    <span class="c1">// get the speakers of this group</span>
+    <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">group</span><span class="o">.</span><span class="na">deviceList</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">j</span><span class="o">++){</span>
+      <span class="n">DeviceObj</span> <span class="n">obj1</span> <span class="o">=</span> <span class="n">wireless</span><span class="o">.</span><span class="na">getDeviceInfoFromTable</span><span class="o">(</span><span class="n">i</span><span class="o">,</span> <span class="n">j</span><span class="o">);</span>
+      <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="n">LOG_TAG</span><span class="o">,</span> <span class="n">obj1</span><span class="o">.</span><span class="na">deviceId</span> <span class="o">+</span> <span class="s">&quot; obj1 :&quot;</span> <span class="o">+</span> <span class="n">obj1</span><span class="o">.</span><span class="na">deviceName</span><span class="o">);</span>
+                              <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="n">LOG_TAG</span><span class="o">,</span> <span class="n">group</span><span class="o">.</span><span class="na">groupId</span> <span class="o">+</span> <span class="s">&quot; group deviceId :&quot;</span> <span class="o">+</span> <span class="n">group</span><span class="o">.</span><span class="na">deviceList</span><span class="o">[</span><span class="n">j</span><span class="o">]);</span>
+    <span class="o">}</span>
+      <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="add-remove-a-speaker-to-from-a-playback-session">
+<h3>9. Add/remove a speaker to/from a playback session<a class="headerlink" href="#add-remove-a-speaker-to-from-a-playback-session" title="Permalink to this headline">¶</a></h3>
+<p>If want to play audio through a speaker, the speaker must be added to the playback session through <code class="docutils literal"><span class="pre">addDeviceToSession()</span></code>. And the speaker can be removed from the playback session through  <code class="docutils literal"><span class="pre">removeDeviceFromSession()</span></code>.</p>
+<p>We use the device ID that you get from <code class="docutils literal"><span class="pre">onDeviceStateUpdated()</span></code>.</p>
+<div class="highlight-java"><div class="highlight"><pre>      <span class="c1">//add the speaker to the current playback session from the select list</span>
+      <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">add_btn</span><span class="o">)).</span><span class="na">setOnClickListener</span><span class="o">(</span><span class="k">new</span> <span class="n">View</span><span class="o">.</span><span class="na">OnClickListener</span><span class="o">()</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClick</span><span class="o">(</span><span class="n">View</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
+      <span class="kt">long</span> <span class="n">deviceId</span> <span class="o">=</span> <span class="mi">123456789L</span><span class="o">;</span>
+      <span class="n">hControlHandler</span><span class="o">.</span><span class="na">addDeviceToSession</span><span class="o">(</span><span class="n">deviceId</span><span class="o">)</span>
+    <span class="o">}</span>
+<span class="o">});</span>
+
+<span class="c1">//remove a speaker from the current playback session from the unselect list</span>
+<span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">remove_btn</span><span class="o">)).</span><span class="na">setOnClickListener</span><span class="o">(</span><span class="k">new</span> <span class="n">View</span><span class="o">.</span><span class="na">OnClickListener</span><span class="o">()</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClick</span><span class="o">(</span><span class="n">View</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
+      <span class="kt">long</span> <span class="n">deviceId</span> <span class="o">=</span> <span class="mi">123456789L</span><span class="o">;</span>
+      <span class="n">hControlHandler</span><span class="o">.</span><span class="na">removeDeviceFromSession</span><span class="o">(</span><span class="n">deviceId</span><span class="o">)</span>
+              <span class="o">}</span>
+      <span class="o">});</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="play-an-audio-file">
+<h3>10. Play an audio file<a class="headerlink" href="#play-an-audio-file" title="Permalink to this headline">¶</a></h3>
+<p>If one or more speakers are added to the session, then you can start to play a song. Currently, use <code class="docutils literal"><span class="pre">playCAF()</span></code> to play mp3, wav, flac, sac, m4a and ogg file, and playWAV only for WAV file, and playStreamingMedia() for http web server.</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="c1">//Play a audio file from the play list</span>
+<span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">play_btn</span><span class="o">)).</span><span class="na">setOnClickListener</span><span class="o">(</span><span class="k">new</span> <span class="n">View</span><span class="o">.</span><span class="na">OnClickListener</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClick</span><span class="o">(</span><span class="n">View</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
+
+                <span class="c1">//play a song</span>
+                <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="n">textUrl</span><span class="o">.</span><span class="na">getText</span><span class="o">().</span><span class="na">toString</span><span class="o">();</span>
+                <span class="n">String</span> <span class="n">songTitle</span> <span class="o">=</span> <span class="n">textName</span><span class="o">.</span><span class="na">getText</span><span class="o">().</span><span class="na">toString</span><span class="o">();</span>
+                <span class="n">hAudioControl</span><span class="o">.</span><span class="na">playCAF</span><span class="o">(</span><span class="n">url</span><span class="o">,</span> <span class="n">songTitle</span><span class="o">,</span> <span class="kc">false</span><span class="o">)</span>
+        <span class="o">}</span>
+<span class="o">});</span>
+
+<span class="c1">//pause</span>
+<span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">pause_btn</span><span class="o">)).</span><span class="na">setOnClickListener</span><span class="o">(</span><span class="k">new</span> <span class="n">View</span><span class="o">.</span><span class="na">OnClickListener</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClick</span><span class="o">(</span><span class="n">View</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">hAudioControl</span><span class="o">.</span><span class="na">stop</span><span class="o">();</span>
+        <span class="o">}</span>
+<span class="o">});</span>
+
+
+<span class="c1">//stop</span>
+<span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">stop_btn</span><span class="o">)).</span><span class="na">setOnClickListener</span><span class="o">(</span><span class="k">new</span> <span class="n">View</span><span class="o">.</span><span class="na">OnClickListener</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClick</span><span class="o">(</span><span class="n">View</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">hAudioControl</span><span class="o">.</span><span class="na">stop</span><span class="o">();</span>
+        <span class="o">}</span>
+<span class="o">});</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="volume-control">
+<h3>11. Volume Control<a class="headerlink" href="#volume-control" title="Permalink to this headline">¶</a></h3>
+<p>You can set device volume through <code class="docutils literal"><span class="pre">setVolumeDevice()</span></code>. This application shows how to control the device volume through phone volume button. The volume level ranges from 0 (mute) to 50 (max).</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="nd">@Override</span>
+<span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">onKeyDown</span><span class="o">(</span><span class="kt">int</span> <span class="n">keyCode</span><span class="o">,</span> <span class="n">KeyEvent</span> <span class="n">event</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">//get device from your select list</span>
+        <span class="kt">long</span> <span class="n">deviceId</span> <span class="o">=</span> <span class="mi">123456789L</span><span class="o">;</span>
+        <span class="n">DeviceObj</span> <span class="n">deviceInfo</span> <span class="o">=</span> <span class="n">hControlHandler</span><span class="o">.</span><span class="na">findDeviceFromList</span><span class="o">(</span><span class="n">deviceId</span><span class="o">)</span>
+        <span class="kt">int</span> <span class="n">volume</span> <span class="o">=</span>  <span class="n">DeviceInfo</span><span class="o">.</span><span class="na">volume</span><span class="o">;</span>
+
+        <span class="k">switch</span> <span class="o">(</span><span class="n">keyCode</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">case</span> <span class="n">KeyEvent</span><span class="o">.</span><span class="na">KEYCODE_VOLUME_UP</span><span class="o">:</span>
+                        <span class="n">volume</span><span class="o">+=</span><span class="mi">5</span><span class="o">;</span>
+                        <span class="n">hAudioControl</span><span class="o">.</span><span class="na">setVolumeDevice</span><span class="o">(</span><span class="n">deviceId</span><span class="o">,</span> <span class="n">volume</span><span class="o">);</span>
+                <span class="o">}</span>
+                <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+
+                <span class="k">case</span> <span class="n">KeyEvent</span><span class="o">.</span><span class="na">KEYCODE_VOLUME_DOWN</span><span class="o">:</span>
+                        <span class="n">volume</span> <span class="o">-=</span> <span class="mi">5</span><span class="o">;</span>
+                        <span class="n">hAudioControl</span><span class="o">.</span><span class="na">setVolumeDevice</span><span class="o">(</span><span class="n">deviceId</span><span class="o">,</span> <span class="n">volume</span><span class="o">);</span>
+                <span class="o">}</span>
+                <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="kd">super</span><span class="o">.</span><span class="na">onKeyDown</span><span class="o">(</span><span class="n">keyCode</span><span class="o">,</span> <span class="n">event</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/HarmanDeveloperLogo.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Getting Started Guide (Android)</a><ul>
+<li><a class="reference internal" href="#requirements">Requirements</a></li>
+<li><a class="reference internal" href="#creating-a-sample-application">Creating a Sample Application</a><ul>
+<li><a class="reference internal" href="#add-jar-package-and-library-in-your-project">1. Add Jar package and library in your project</a></li>
+<li><a class="reference internal" href="#add-permission-in-androidmanifest-xml-file">2. Add Permission in AndroidManifest.xml file</a></li>
+<li><a class="reference internal" href="#import-package">3. Import package</a></li>
+<li><a class="reference internal" href="#create-hkwirelesshd-control-handler-and-initialize-the-wireless-audio">4. Create HKWirelessHD Control Handler and initialize the Wireless Audio</a></li>
+<li><a class="reference internal" href="#create-application-interface">5. Create application interface</a></li>
+<li><a class="reference internal" href="#discovery-of-the-available-speakers">6. Discovery of the available speakers</a></li>
+<li><a class="reference internal" href="#implement-callbacks">7. Implement callbacks</a></li>
+<li><a class="reference internal" href="#find-info-of-speakers-and-groups">8. Find info of speakers and groups</a></li>
+<li><a class="reference internal" href="#add-remove-a-speaker-to-from-a-playback-session">9. Add/remove a speaker to/from a playback session</a></li>
+<li><a class="reference internal" href="#play-an-audio-file">10. Play an audio file</a></li>
+<li><a class="reference internal" href="#volume-control">11. Volume Control</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="sdk-overview.html"
+                        title="previous chapter">Overview of HKWirelessHD SDK (Android)</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="programming-guide.html"
+                        title="next chapter">Programming Guide (Android)</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Android/getting-started.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="programming-guide.html" title="Programming Guide (Android)"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="sdk-overview.html" title="Overview of HKWirelessHD SDK (Android)"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Harman Developer 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Harman International.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>
