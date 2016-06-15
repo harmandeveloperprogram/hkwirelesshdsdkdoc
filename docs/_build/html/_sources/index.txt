@@ -21,13 +21,13 @@ HDWireless iOS SDK Documentations
 This documentation is organized into a few different chapters:
 
 	
-`HKWHub Specification (iOS)`_
+`HKWHub Specification`_
     This chapter explains about the HKWHub App and its REST API Specification.
 
 	
 ----
 
-.. _HKWHub Specification (iOS): iOS/hkwhub-spec.html
+.. _HKWHub Specification (iOS): hkwhub-spec.html
 
 
 ----
@@ -41,7 +41,7 @@ HKWHub Specification (iOS)
 .. toctree::
 	:maxdepth: 2
 
-	iOS/hkwhub-spec
+	hkwhub-spec
 	
 
 Search
