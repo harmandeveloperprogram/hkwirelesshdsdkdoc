@@ -23,11 +23,8 @@ This documentation is organized into a few different sections as follows:
 `Introduction`_
     This section explains about the HKWirelessHD and its REST API Specification.
 
-`Introduction`_
-    This section explains about the HKWirelessHD and its REST API Specification.
-
-`Introduction`_
-    This section explains about the HKWirelessHD and its REST API Specification.
+`Architecture Overview`_
+    This section explains about the overall architecture HKWirelessHD technology.
 
 
 	
@@ -35,9 +32,9 @@ This documentation is organized into a few different sections as follows:
 
 .. _Introduction: introduction.html
 
-.. _Introduction: introduction.html
+.. _Architecture Overview: architecture-overview.html
 
-.. _Introduction: introduction.html
+
 ----
 
 Contents
@@ -52,21 +49,15 @@ Introduction
 	introduction
 	
 
-Introduction
+Architecture Overview
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. toctree::
 	:maxdepth: 2
 
-	introduction
+	architecture-overview
 	
-Introduction
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. toctree::
-	:maxdepth: 2
-
-	introduction
 
 Search
 ======

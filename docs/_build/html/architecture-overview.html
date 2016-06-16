@@ -24,8 +24,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Harman Developer 1.0 documentation" href="index.html" />
-    <link rel="next" title="API Documentation" href="api.html" />
-    <link rel="prev" title="Programming Guide (iOS)" href="programming-guide.html" /> 
+    <link rel="prev" title="Introduction" href="introduction.html" /> 
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
@@ -35,10 +34,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="api.html" title="API Documentation"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="programming-guide.html" title="Programming Guide (iOS)"
+          <a href="introduction.html" title="Introduction"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">Harman Developer 1.0 documentation</a> &raquo;</li> 
       </ul>
@@ -59,7 +55,7 @@
 <p>In case of multi-channel streaming, each speaker is assigned with a role to process a dedicated audio channel. For example, a speaker can play either left channel or right channel in stereo mode.</p>
 <p>Source device can be iOS device, such as iPhone and iPad, and destination devices are Harman Kardon Omni speakers (Omni Adapt, Omni 10, Omni 20, Omni Bar, etc.) You can find more information on HK Omni speakers at <a class="reference external" href="http://www.harmankardon.com/content?ContentID=omni-v2">http://www.harmankardon.com/content?ContentID=omni-v2</a>.</p>
 <div class="figure">
-<img alt="_images/architecture.png" src="_images/architecture.png" />
+<img alt="img/architecture-overview/architecture.png" src="img/architecture-overview/architecture.png" />
 </div>
 </div>
 <div class="section" id="use-of-hkwirelesshd-api-to-stream-audio-to-omni-speakers">
@@ -151,13 +147,13 @@
 <p>For example, as described in the figure below, let&#8217;s assume that Speaker-A and Speaker-B are being used by Source A, and Speaker-D and Speaker-E are being used by Source B. Once Source A and Source B initialize HKWControlHandler, then all the speakers from Speaker-A to Speaker-E are also visible both to Source A and Source B. Therefore, it is possible for Source A to add Speaker-D to its on-going playback session, even if it is being used by Source B. In this case, Speaker-D stops playing the audio stream from Source B, and join the on-going playback audio stream from Source A.</p>
 <p>There is an API, called isPlaying(), in DeviceInfo.h to return a boolean value indicating if the speaker is being playing audio or not, regardless that which source audio stream comes from.</p>
 <div class="figure">
-<img alt="_images/speaker-visibility.png" src="_images/speaker-visibility.png" />
+<img alt="img/architecture-overview/speaker-visibility.png" src="img/architecture-overview/speaker-visibility.png" />
 </div>
 </div>
 <div class="section" id="controlling-speakers-and-handling-the-events-from-speakers">
 <h2>Controlling Speakers and Handling the Events from Speakers<a class="headerlink" href="#controlling-speakers-and-handling-the-events-from-speakers" title="Permalink to this headline">¶</a></h2>
 <div class="figure">
-<img alt="_images/control-handler.png" src="_images/control-handler.png" />
+<img alt="img/architecture-overview/control-handler.png" src="img/architecture-overview/control-handler.png" />
 </div>
 <div class="section" id="controlling-speakers">
 <h3>Controlling speakers<a class="headerlink" href="#controlling-speakers" title="Permalink to this headline">¶</a></h3>
@@ -258,11 +254,8 @@
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="programming-guide.html"
-                        title="previous chapter">Programming Guide (iOS)</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="api.html"
-                        title="next chapter">API Documentation</a></p>
+  <p class="topless"><a href="introduction.html"
+                        title="previous chapter">Introduction</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -294,10 +287,7 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="api.html" title="API Documentation"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="programming-guide.html" title="Programming Guide (iOS)"
+          <a href="introduction.html" title="Introduction"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">Harman Developer 1.0 documentation</a> &raquo;</li> 
       </ul>
