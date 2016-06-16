@@ -19,9 +19,8 @@ Source device can be a mobile device like iPhone or Android phone, but Harman Ka
 Use of HKWirelessHD API to stream audio to Omni Speakers
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To send audio stream to destination devices, an App has to use HKWirelessHD API. HKWirelessHD SDK provides the library of the APIs for arm32/64bit architecture. 
+To send audio stream to destination devices, an App (either APIs for Mobile app or Web app) has to use HKWirelessHD API. HKWirelessHD SDK provides a set of APIs, library (in case of mobile app) of the APIs. 
 
-Note that as of date of writing, no x86 architecture is supported, so developer cannot use iOS Simulator for running the app with HKWirelessHD API.
 
 Communication channels between source and destinations
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
