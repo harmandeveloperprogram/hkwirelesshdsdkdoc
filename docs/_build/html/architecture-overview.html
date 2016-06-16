@@ -83,7 +83,7 @@
 <dt>Destination device can also send commands to the source device in some cases.</dt>
 <dd><ul class="first last simple">
 <li>For example, a speaker which is not belonging to the current playback session can send a command to the source to add itself to the current playback session.</li>
-<li>User can add Omni 10 or Omni 20 speaker to the current running playback session by long-pressing the Home button on the control panel. Please refer to Omni 10 or 20 User&#8217;s Manual for more information.</li>
+<li>User can add Omni speaker to the current running playback session by long-pressing the Home button on the control panel. Please refer to Omni User&#8217;s Manual for more information.</li>
 </ul>
 </dd>
 </dl>
@@ -105,13 +105,13 @@
 </div>
 <div class="section" id="asynchronous-communication">
 <h3>Asynchronous Communication<a class="headerlink" href="#asynchronous-communication" title="Permalink to this headline">¶</a></h3>
-<p>The communication between the source device and the destination speakers are accomplished in asynchronous way. Asynchronous behavior is natural because all the commands and status updates are executed in a way like RPC (Remote Procedure Call). Even more, audio streaming always involves some amount of buffering of audio data packets, so the timing gap between the source and the destinations is inevitable.</p>
+<p>The communication between the source device and the destination speakers are accomplished in asynchronous way. Asynchronous behavior is efficient because all the commands and status updates are executed in a way like RPC (Remote Procedure Call). Even more, audio streaming always involves some amount of buffering of audio data packets, so a latency  between the source and the destinations is inevitable.</p>
 <p>Below are some examples of asynchronous communications.</p>
 <ul>
 <li><dl class="first docutils">
 <dt>Device availability</dt>
 <dd><ul class="first last simple">
-<li>When a speaker is turned on, the availability of the speaker is reflected to the source device a few second later. This is because several steps are involved to be attached the network and become discoverable by other speakers in the same network. Likewise, if a speaker is turned off or disconnected from the network, its unavailability is reflected to the source device a few second later.</li>
+<li>When a speaker is turned on, the availability of the speaker is reflected to the source device a few second later. This is because several steps are involved for speakers to be attached the network and become discoverable by other speakers in the same network. Likewise, if a speaker is turned off or disconnected from the network, its unavailability is reflected to the source device a few second later.</li>
 </ul>
 </dd>
 </dl>
@@ -136,8 +136,7 @@
 </div>
 <div class="section" id="speaker-management">
 <h3>Speaker Management<a class="headerlink" href="#speaker-management" title="Permalink to this headline">¶</a></h3>
-<p>Whenever a speaker updates its status, the latest status information should be updated on the source device side as well. HKWirelessHD API manages the latest device status information inside DeviceInfo instances. HKWControlHandler instance maintains a list of DeviceInfo objects, each of which corresponds to a speaker found in the network.</p>
-<p>The detailed description on each attribute in the device are described in DeviceInfo.h.</p>
+<p>Whenever a speaker updates its status, the latest status information should be updated on the source device side as well. HKWirelessHD APIs for source-side manages the latest device status information.</p>
 </div>
 </div>
 <div class="section" id="visibility-of-speakers">
@@ -146,78 +145,22 @@
 <p>For example, as described in the figure below, let&#8217;s assume that Speaker-A and Speaker-B are being used by Source A, and Speaker-D and Speaker-E are being used by Source B. Once Source A and Source B initialize HKWControlHandler, then all the speakers from Speaker-A to Speaker-E are also visible both to Source A and Source B. Therefore, it is possible for Source A to add Speaker-D to its on-going playback session, even if it is being used by Source B. In this case, Speaker-D stops playing the audio stream from Source B, and join the on-going playback audio stream from Source A.</p>
 <p>There is an API, called isPlaying(), in DeviceInfo.h to return a boolean value indicating if the speaker is being playing audio or not, regardless that which source audio stream comes from.</p>
 <div class="figure">
-<img alt="img/architecture-overview/speaker-visibility.png" src="img/architecture-overview/speaker-visibility.png" />
+<img alt="_images/speaker-visibility.png" src="_images/speaker-visibility.png" />
 </div>
 </div>
 <div class="section" id="controlling-speakers-and-handling-the-events-from-speakers">
 <h2>Controlling Speakers and Handling the Events from Speakers<a class="headerlink" href="#controlling-speakers-and-handling-the-events-from-speakers" title="Permalink to this headline">¶</a></h2>
 <div class="figure">
-<img alt="img/architecture-overview/control-handler.png" src="img/architecture-overview/control-handler.png" />
+<img alt="_images/control-handler.png" src="_images/control-handler.png" />
 </div>
 <div class="section" id="controlling-speakers">
 <h3>Controlling speakers<a class="headerlink" href="#controlling-speakers" title="Permalink to this headline">¶</a></h3>
-<p>Speaker controls, like start/pause/resume/stop audio streaming, change volume level, etc. are done by calling APIs provided by the HKWControlHandler singleton object. The app just needs to acquire the HKWControlHandler object, initialize it, and then use it to control the speakers. For example, as shown in the figure above, the app can call playCAF() with the HKWControlHandler to start to play a CAF audio file. The control APIs are described in HKWControlHandler.h.</p>
-<p>HKWControlHandler is a singleton object, and it can be acquired by calling as below. Note that there is no initializer API for the object. The sharedInstance() singleton API will create and initialize it if there is no instance in the runtime.</p>
-<div class="highlight-swift"><div class="highlight"><pre><span class="n">HKWControlHandler</span><span class="p">.</span><span class="n">sharedInstance</span><span class="p">()</span>
-</pre></div>
-</div>
+<p>Speaker controls, like start/pause/resume/stop audio streaming, change volume level, etc. are done by calling a corresponding APIs provided by the specification.</p>
 </div>
 <div class="section" id="handling-events-from-speakers">
 <h3>Handling events from speakers<a class="headerlink" href="#handling-events-from-speakers" title="Permalink to this headline">¶</a></h3>
-<p>On the other hand, the events from speakers are sent to the app through Delegate protocol APIs. By implementing the event handler delegate functions (in ViewController class in most cases), you can receive and handle the events from speakers. Whenever an event occurs from speakers, the corresponding handler is called and the event information is passed to the handler as parameter.</p>
-<p>The SDK provides two delegate protocols:</p>
-<ul>
-<li><dl class="first docutils">
-<dt>HKWDeviceEventHandlerDelegate (defined in HKWDeviceEventHandlerSingleton.h)</dt>
-<dd><ul class="first last">
-<li><dl class="first docutils">
-<dt>All the events related to the status of speakers. There are two cases the event is sent:</dt>
-<dd><ul class="first last simple">
-<li>device status updated</li>
-<li>error occurred</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>To register an object as the delegate, do as below (self is the object that implements the delegate protocols):</dt>
-<dd><ul class="first last simple">
-<li><code class="docutils literal"><span class="pre">HKWDeviceEventHandlerSingleton.sharedInstance().delete</span> <span class="pre">=</span> <span class="pre">self</span></code></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>HKWPlayerEventHandlerDelegate (defined in HKWPlayerEventHandlerSingleton.h)</dt>
-<dd><ul class="first last">
-<li><dl class="first docutils">
-<dt>All the events related to play music.</dt>
-<dd><ul class="first last simple">
-<li>play ended</li>
-<li>playback state changed</li>
-<li>playback time changed</li>
-<li>volume changed</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>To register an object as the delegate, do as below (self is the object that implements the delegate protocols):</dt>
-<dd><ul class="first last simple">
-<li><code class="docutils literal"><span class="pre">HKWPlayerEventHandlerSingleton.sharedInstance().delete</span> <span class="pre">=</span> <span class="pre">self</span></code></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
+<p>On the other hand, receiving an event from speakers is different. Because REST API is basically one-directional communication initiated by a client, it is hard for speaker as a server to report an event to a client when necessary.
+So, the client of Web app need to call corresponding APIs for checking events regularly, in a way of polling.</p>
 </div>
 </div>
 </div>
