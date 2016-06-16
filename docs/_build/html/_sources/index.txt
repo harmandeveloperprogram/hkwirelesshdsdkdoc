@@ -27,7 +27,7 @@ This documentation is organized into a few different chapters:
 	
 ----
 
-.. _HKWHub Specification (iOS): hkwhub-spec.html
+.. _HKWHub Specification: hkwhub-spec.html
 
 
 ----
