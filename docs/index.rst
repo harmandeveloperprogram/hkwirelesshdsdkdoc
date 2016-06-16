@@ -13,21 +13,20 @@ Harman HKWirelessHD API Documentation
 	This documentation is a work in progress.
 	
 
-Welcome to the Harman developer documentation. Here you will find information about creating your app using HKWirelessHD SDK.
 
-HDWireless iOS SDK Documentations
+Overview
 ----------------------------------
 
-This documentation is organized into a few different chapters:
+This documentation is organized into a few different sections as follows:
 
 	
-`HKWHub Specification`_
-    This chapter explains about the HKWHub App and its REST API Specification.
+`Introduction`_
+    This section explains about the HKWirelessHD and its REST API Specification.
 
 	
 ----
 
-.. _HKWHub Specification: hkwhub-spec.html
+.. _Introduction: introduction.html
 
 
 ----
@@ -35,13 +34,13 @@ This documentation is organized into a few different chapters:
 Contents
 --------
 	
-HKWHub Specification (iOS)
+Introduction
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. toctree::
 	:maxdepth: 2
 
-	hkwhub-spec
+	introduction
 	
 
 Search
