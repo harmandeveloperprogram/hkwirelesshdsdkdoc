@@ -28,6 +28,12 @@ This documentation is organized into a few different sections as follows:
 
 `Connecting Omni Speakers to your services`_
 	This section explains how your apps or services can connect Omni speakers using HKWirelessHD REST APIs.
+
+`Playback Session Management`_
+	This section explains about Playback Session Management.
+
+`REST API Specification`_
+	This section describe on REST APIs.
 	
 `Getting start with HKWHub App`_
 	This section explains how to use HKWHub App (iOS) to simulate Hub Speaker to control other HK Omni speakers.
@@ -39,6 +45,8 @@ This documentation is organized into a few different sections as follows:
 .. _Architecture Overview: architecture-overview.html
 
 .. _Connecting Omni Speakers to your services: hub-overview.html
+
+.. _Playback Session Management: playback-session-management.html
 
 .. _Getting start with HKWHub App: hkwhub-gettingstarted.html
 
@@ -72,6 +80,15 @@ Connecting Omni Speakers to your services
 	:maxdepth: 2
 
 	hub-overview
+	
+Playback Session Management
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. toctree::
+	:maxdepth: 2
+
+	playback-session-management
+	
 	
 Getting start with HKWHub App
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

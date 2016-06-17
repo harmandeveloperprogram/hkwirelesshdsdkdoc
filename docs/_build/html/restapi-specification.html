@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Connecting Omni speakers to your services or devices &mdash; Harman Developer 1.0 documentation</title>
+    <title>REST API Specification (including PubNub JSON format) &mdash; Harman Developer 1.0 documentation</title>
     
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -23,9 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Harman Developer 1.0 documentation" href="index.html" />
-    <link rel="next" title="Playback Session Management" href="playback-session-management.html" />
-    <link rel="prev" title="Architecture Overview" href="architecture-overview.html" /> 
+    <link rel="top" title="Harman Developer 1.0 documentation" href="index.html" /> 
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
@@ -34,12 +32,6 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="playback-session-management.html" title="Playback Session Management"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="architecture-overview.html" title="Architecture Overview"
-             accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">Harman Developer 1.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
@@ -49,569 +41,10 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="connecting-omni-speakers-to-your-services-or-devices">
-<h1>Connecting Omni speakers to your services or devices<a class="headerlink" href="#connecting-omni-speakers-to-your-services-or-devices" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="overview-of-hwkhub">
-<h2>Overview of HWKHub<a class="headerlink" href="#overview-of-hwkhub" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="use-cases">
-<h3>Use Cases<a class="headerlink" href="#use-cases" title="Permalink to this headline">¶</a></h3>
-<div class="figure">
-<img alt="_images/hub-use-cases.png" src="_images/hub-use-cases.png" />
-</div>
-</div>
-<div class="section" id="hub-speaker">
-<h3>Hub Speaker<a class="headerlink" href="#hub-speaker" title="Permalink to this headline">¶</a></h3>
-<p>To enable your Omni speakers to be controlled by other services or devices either in the Internet or in local network, one of your speakers should become a Hub Speaker. A Hub speaker is just a regular HK Omni speaker, but is configured as a Hub. A Hub device can control other HK Omni speakers when it receives a REST requests from other clients. Hub speaker needs to be connected all the time to the HKIoTCloud which actually receives HTTP request from client in the Internet. HKIoTCloud forwards the command to the Hub speaker to control other speakers as well as Hub speaker.</p>
-<p>In addition, to handle HTTP requests from devices in local network, not through HKIoTCloud, Hub Speaker runs a web server inside.</p>
-</div>
-<div class="section" id="hkwhub-app">
-<h3>HKWHub App<a class="headerlink" href="#hkwhub-app" title="Permalink to this headline">¶</a></h3>
-<p>HKWHub app is an iOS app that uses HKWirelessHD SDK and acts as a Hub Speaker that handles REST requests to control speakers. Like Hub Speaker, HKWHub App is always connected to HKIoTCloud and also runs a web server inside that handles HTTP requests of REST API.</p>
-<div class="section" id="features">
-<h4>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h4>
-<ul>
-<li><dl class="first docutils">
-<dt>Supports integration with cloud-based services, smart devices or sensors</dt>
-<dd><ul class="first last simple">
-<li>Receives the requests from clouds (web service) outside or sensors in the house</li>
-<li>Translates the requests into HKWirelessHD commands and controls the speakers based on the requests.</li>
-<li>Sends response with status of speakers to the cloud if necessary</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Central Music Playlist manager</dt>
-<dd><ul class="first last simple">
-<li>Maintain user’s media list from iOS local music library or streaming services, like MixRadio, etc.</li>
-<li>Maintain a collection of sound files used for IoT use cases, like door bell, etc.</li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</div>
-<div class="section" id="usage">
-<h4>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li>User may place an iOS device on the cradle and run WebHub app. Then the app acts as Web Hub. (A stationary device in a house lik AppleTV can be a nice iOS device for WebHub.)</li>
-</ul>
-<div class="figure">
-<img alt="_images/hub-app.png" src="_images/hub-app.png" />
-</div>
-</div>
-</div>
-<div class="section" id="overall-architecture">
-<h3>Overall Architecture<a class="headerlink" href="#overall-architecture" title="Permalink to this headline">¶</a></h3>
-<p>HKWHub App handles requests from and sends responses to sensors, smart devices or cloud-based services to control audio playback with wireless speakers in the house.</p>
-<div class="figure">
-<img alt="_images/architecture.png" src="_images/architecture.png" />
-</div>
-<p>The latest version of HKWHub app supports the following three modes:</p>
-<ul>
-<li><dl class="first docutils">
-<dt>Cloud mode (HKIoTCloud)</dt>
-<dd><ul class="first last simple">
-<li>HKWHub app communicates with HKIoTCloud to receive speaker control commands by REST API call from 3rd party services or clients.</li>
-<li>HKIoTCloud handles the REST API request from any clients in the Internet. The clients can be 3rd party apps or services or devices like smartphone or sensors.</li>
-<li>In this mode, any 3rd party services or clients in the Internet can reach out to HKWHub app and then control speakers and playback of audio.</li>
-<li>All the 3rd party apps or services should be authorized with OAuth2 to get access token. An access token is required when 3rd party apps call the REST APIs. The detailed information about OAuth2 is available at <a class="reference external" href="http://harmandeveloperdocs.readthedocs.org/en/latest/iOS/hkwhub-spec.html#id2">this link</a>.</li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-<ul>
-<li><dl class="first docutils">
-<dt>Local Server Mode</dt>
-<dd><ul class="first last simple">
-<li>HKWHub app lauches a web server internally, and then handles the REST API requests for speaker control and playback from devices, sensors or applications in the same local network.</li>
-<li>HKWHub app opens a HTTP port in the local network, so if devices or services outside of the local network want to reach out to HKWHub (and then speakers) then user needs to configure the route so that a request coming from outside can be routed to HKWHub app accordingly, such as firewall, etc.</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>PubNub Cloud mode</dt>
-<dd><ul class="first last simple">
-<li>HKWHub app uses PubNub API/SDK to connect to PubNub server and communicate with it to receive commands from other PubNub clients, and also sends events to other PubNub client, through a common PubNub channel.</li>
-<li>By setting the same PubNub channel, any client devices or services can communicate with the HKWHub app, and then control speakers and playback of audio.</li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-<p>The following figure shows how HKWHub app handles three modes.</p>
-<div class="figure">
-<img alt="_images/HubAppV2.png" src="_images/HubAppV2.png" />
-</div>
-</div>
-</div>
-<hr class="docutils" />
-<div class="section" id="quick-getting-started-guide-to-hkwhub-app">
-<h2>Quick Getting Started Guide to HKWHub App<a class="headerlink" href="#quick-getting-started-guide-to-hkwhub-app" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="overview-of-hkwhubapp">
-<h3>Overview of HKWHubApp<a class="headerlink" href="#overview-of-hkwhubapp" title="Permalink to this headline">¶</a></h3>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">You can download the HKWHub app from App Store (<a class="reference external" href="https://itunes.apple.com/us/app/hk-whub-app/id1057062847?ls=1&amp;mt=8">click here</a>)</p>
-</div>
-<div class="section" id="main-screen">
-<h4>Main Screen<a class="headerlink" href="#main-screen" title="Permalink to this headline">¶</a></h4>
-<div class="figure">
-<a class="reference internal image-reference" href="_images/hubappv2-main.jpg"><img alt="_images/hubappv2-main.jpg" src="_images/hubappv2-main.jpg" /></a>
-</div>
-<p>The main screen is composed of two parts - <strong>Select Server mode</strong> (amonng HKIoTCloud, Local Server and PubNub Cloud), and <strong>Settings</strong>.</p>
-<p>The <strong>Select Server mode</strong> has three options:</p>
-<ul>
-<li><dl class="first docutils">
-<dt>Connect to HK IoT Cloud</dt>
-<dd><ul class="first last simple">
-<li>HKWHub app connects to HKIotCloud, and communicate with it with WebSocket to receive REST API commands from and send the responses back to the Cloud.</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Run Local Web Server</dt>
-<dd><ul class="first last simple">
-<li>HKWHub app runs a local web server and processes incoming REST requests to control speakers and playback of audio</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Connect to PubNub Cloud</dt>
-<dd><ul class="first last simple">
-<li>HKWHub app uses PubNub APIs to connect PubNub server and communicate with other PubNub client through a common channel.</li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-<p>The <strong>Settings</strong> menu has four sub menus:</p>
-<ul>
-<li><dl class="first docutils">
-<dt>Media List</dt>
-<dd><ul class="first simple">
-<li>User can maintain the list of audio files for audio playback.</li>
-<li>User can add audio from iOS Media Library.</li>
-</ul>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Note that only the media file available offline and not from Apple Musica can be added. The music file that came from Apple Music cannot be added by DRM issue.</p>
-</div>
-<div class="last figure">
-<a class="reference internal image-reference" href="_images/hubappv2-medialist.jpg"><img alt="_images/hubappv2-medialist.jpg" src="_images/hubappv2-medialist.jpg" /></a>
-</div>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Set API Keys</dt>
-<dd><ul class="first simple">
-<li>To use PubNub mode, user needs to enter PubNub API keys. It requires Publish Key and Subscribe Key. And also, user needs to set the channel where it exchanges the command and events with other clients.</li>
-<li>If user (or developer) wants to use TTS APIs such as <strong>play_tts</strong>, then user needs to enter VoiceRSS (<a class="reference external" href="http://www.voicerss.org">http://www.voicerss.org</a>) API keys. You can get a free API key.</li>
-</ul>
-<div class="last figure">
-<a class="reference internal image-reference" href="_images/hubappv2-apikeys.jpg"><img alt="_images/hubappv2-apikeys.jpg" src="_images/hubappv2-apikeys.jpg" /></a>
-</div>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Speaker List</dt>
-<dd><ul class="first simple">
-<li>You can see the list of speakers available in the current local network.</li>
-<li>You can also change the device name or group name from this screen.</li>
-</ul>
-<div class="last figure">
-<a class="reference internal image-reference" href="_images/hubappv2-speakers.jpg"><img alt="_images/hubappv2-speakers.jpg" src="_images/hubappv2-speakers.jpg" /></a>
-</div>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>About</dt>
-<dd><ul class="first last simple">
-<li>The information of the app and the links to Harman developer documentation site.</li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-<p>From now on, we will explain a little more detail about each server mode.</p>
-</div>
-</div>
-<hr class="docutils" />
-<div class="section" id="hkiotcloud-mode">
-<h3>HKIoTCloud Mode<a class="headerlink" href="#hkiotcloud-mode" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="connecting-to-hkiotcloud">
-<h4>Connecting to HKIoTCloud<a class="headerlink" href="#connecting-to-hkiotcloud" title="Permalink to this headline">¶</a></h4>
-<p>In HKIoTCloud demo, 3rd party clients can connect to HKIoTCloud (<a class="reference external" href="http://hkiotcloud.herokuapp.com">http://hkiotcloud.herokuapp.com</a>) and send REST requests to control speakers and play audio. In order to use HKIoTCloud mode, user needs to sign up to the cloud with username, emaill address and password. Once sign up is done, user need to sign in to the server. User sign-up and sign-in can be done within the HKWHub app, as shown below.</p>
-<div class="figure">
-<a class="reference internal image-reference" href="_images/hubappv2-signin.jpg"><img alt="_images/hubappv2-signin.jpg" src="_images/hubappv2-signin.jpg" /></a>
-</div>
-<p>Once the HKWHub app successfully signs in to HKIoTCloud, the screen will be switched to Log screen, like shown as below. You can see all the message logs received from or sent to the cloud. Each log contains a JSON data, so you can see what information is being sent and received between the server.</p>
-<div class="figure">
-<a class="reference internal image-reference" href="_images/hubappv2-afterlogin.jpg"><img alt="_images/hubappv2-afterlogin.jpg" src="_images/hubappv2-afterlogin.jpg" /></a>
-</div>
-<p>If you want to disconnect the server and return to the main screen, press <strong>Disconnect</strong> button on the top righthand corner.</p>
-</div>
-<div class="section" id="sending-rest-requests-to-hkiotcloud">
-<h4>Sending REST Requests to HKIoTCloud<a class="headerlink" href="#sending-rest-requests-to-hkiotcloud" title="Permalink to this headline">¶</a></h4>
-<p>Once the HKWHub App is running, you can now connect a client to HKIoTCloud and send REST requests to the server. We will explain about the REST APIs supported with a little more detailed example of <strong>curl</strong> commands in the next section.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">For a client to connect to HKIoTCloud, the same username and password are required.</p>
-</div>
-<p>As an example of client, HKIoTCloud hosts a Web-based client app, at <a class="reference external" href="http://hkiotcloud.herokuapp.com/webapp/">http://hkiotcloud.herokuapp.com/webapp/</a>. The following is a screenshot of the web app.</p>
-<div class="figure">
-<a class="reference internal image-reference" href="_images/cloudapp-login.png"><img alt="_images/cloudapp-login.png" src="_images/cloudapp-login.png" /></a>
-</div>
-<p>Once user authentication is done successfully, the Web app will switch the screen to the Playlist screen.</p>
-<div class="figure">
-<a class="reference internal image-reference" href="_images/cloudapp-medialist.png"><img alt="_images/cloudapp-medialist.png" src="_images/cloudapp-medialist.png" /></a>
-</div>
-<p>Now, you can click one of the titles in the list, and see how the web app is playing the title, showing the information of the title, volume, and playback time, and so on.</p>
-<div class="figure">
-<a class="reference internal image-reference" href="_images/cloudapp-mediaplayer.png"><img alt="_images/cloudapp-mediaplayer.png" src="_images/cloudapp-mediaplayer.png" /></a>
-</div>
-<p>If you click <strong>Speaker List</strong> menu on the left, you can see more detailed information of speakers like below, and can control speakers, like remove a speaker from the current playback session or add a speaker to playback.</p>
-<div class="figure">
-<a class="reference internal image-reference" href="_images/cloudapp-speakers.png"><img alt="_images/cloudapp-speakers.png" src="_images/cloudapp-speakers.png" /></a>
-</div>
-</div>
-</div>
-<div class="section" id="local-server-mode">
-<h3>Local Server Mode<a class="headerlink" href="#local-server-mode" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="running-local-server">
-<h4>Running Local Server<a class="headerlink" href="#running-local-server" title="Permalink to this headline">¶</a></h4>
-<p>Loca Server Mode is almost the same as HKIoTCloud, except that HKWHub app runs a web server inside, instead connecting to HKIoTCloud. Therefore, HKWHub app can receive REST requests directly from clients in the same network. If you want to connect speakers from any type of devices in the same local network, then Local Server mode can be easier solution.</p>
-<p>Once you click <strong>Run Local Web Server</strong> menu, then you will see the following screen. From the screen, you can see a URL indicating where a client should connect to. In this example, the client should enter the URL <strong>http://10.0.1.37:8080/</strong>  followed by REST command and parameters.</p>
-<p>The RESI APIs are almost the same as the ones of HKIoTCloud mode.</p>
-<div class="figure">
-<a class="reference internal image-reference" href="_images/hubappv2-localserver.jpg"><img alt="_images/hubappv2-localserver.jpg" src="_images/hubappv2-localserver.jpg" /></a>
-</div>
-</div>
-<div class="section" id="sending-rest-requests-to-localserver">
-<h4>Sending REST Requests to LocalServer<a class="headerlink" href="#sending-rest-requests-to-localserver" title="Permalink to this headline">¶</a></h4>
-<p>As a sample client app, you can use <strong>WebHubWebApp</strong> that you can download from Harman Developer web site (<a class="reference external" href="http://developer.harman.com">http://developer.harman.com</a>) or direclty from <code class="xref download docutils literal"><span class="pre">here</span></code>. The Web app is created using Polymer v0.5 (<a class="reference external" href="https://www.polymer-project.org/0.5/">https://www.polymer-project.org/0.5/</a>).</p>
-<p>Once you download the app, unzip it. You will see the following sub directories.</p>
-<ul class="simple">
-<li>bower_components: THis is the folder where polymer libraries are located.</li>
-<li>hkwhub: this is the folder containing the WebHubApp source code.</li>
-</ul>
-<div class="highlight-shell"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd </span>WebHubWebApp
-<span class="nv">$ </span>python -m SimpleHTTPServer
-</pre></div>
-</div>
-<p>You will get some log messages like &#8220;Serving HTTP on 0.0.0.0 port 8000 ...&#8221;</p>
-<p>Next, launch your web browser (Chrome, Safari, ...) and go to <a class="reference external" href="http://localhost:8000/hkwhub/">http://localhost:8000/hkwhub/</a></p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Your iOS device running HKWHub app and your Desktop PC running web browser should be in the same network.</p>
-</div>
-<p>At the fist screen looking like this:</p>
-<div class="figure">
-<a class="reference internal image-reference" href="_images/webapp-initial.png"><img alt="_images/webapp-initial.png" src="_images/webapp-initial.png" /></a>
-</div>
-<p>Enter the URL that the HKWHub app says: <a class="reference external" href="http://10.0.1.37:8080/">http://10.0.1.37:8080/</a>, like this:</p>
-<div class="figure">
-<a class="reference internal image-reference" href="_images/webapp-initial-url.png"><img alt="_images/webapp-initial-url.png" src="_images/webapp-initial-url.png" /></a>
-</div>
-<p>If you press <strong>Submit</strong>, then you will see the first screen like below. This is the list of media items available at the HKWHub app.</p>
-<div class="figure">
-<a class="reference internal image-reference" href="_images/webapp-afterlogin.png"><img alt="_images/webapp-afterlogin.png" src="_images/webapp-afterlogin.png" /></a>
-</div>
-<p>The UI of the Web app is exactly the same as HKIoTCloud web app. So, we skip to explain the rest parts of the app.</p>
-</div>
-</div>
-<div class="section" id="pubnub-server-mode">
-<h3>PubNub Server Mode<a class="headerlink" href="#pubnub-server-mode" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="connect-to-pubnub-server">
-<h4>Connect to PubNub Server<a class="headerlink" href="#connect-to-pubnub-server" title="Permalink to this headline">¶</a></h4>
-<p>With PubNub server mode, any PubNub client can connect to and control Omni speakes managed by HKWHub app. Just click <strong>Connect to PubNub Cloud</strong> menu in the main screen, then you will see the screen like below. Please check if the logs are saysing something like &#8220;Received: Hello from HKWHubApp&#8221; which is the message sent back from PubNub server after the HKWHub app published the message. This means the app is now connected to PubNub cloud.</p>
-<div class="figure">
-<a class="reference internal image-reference" href="_images/hubappv2-pubnub.jpg"><img alt="_images/hubappv2-pubnub.jpg" src="_images/hubappv2-pubnub.jpg" /></a>
-</div>
-<p>Differently from HKIoTCloud or Local Server mode that relies on <strong>REST API</strong> for control and playback of speakers, PubNub is using Publish/Subscribe messaging instead. And in order to route the message among clients, we should set <strong>PubNub Channel</strong> so that all the published messages are correctly routed to subscribed clients of the same channel.</p>
-<p>So, for HKWHub app successfully connects to PubNub cloud, user needs to set PubNub <strong>Publish Key</strong>, <strong>Subscribe Key</strong>, and <strong>Channel</strong>. As explained already, user can set these keys in the <strong>Settings/Set API Keys</strong> menu in the main screen.</p>
-</div>
-<div class="section" id="sending-rest-requests-to-pubnub-cloud">
-<h4>Sending REST Requests to PubNub Cloud<a class="headerlink" href="#sending-rest-requests-to-pubnub-cloud" title="Permalink to this headline">¶</a></h4>
-<p>Once the HKWHub app is connected to PubNub cloud, a PubNub client can send PubNub message. Even though it does not use REST API, but use PubNub&#8217;s Subscribe/Publish messaging instead, the content of the messages are almost the same as the REST APIs, and it is in JSON format.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">One biggest difference between REST API and Publish/Subscribe messaging is that Pub/Sub messaging does not need to do <strong>Polling</strong> for getting information from the server when an event occurs on the server side, because REST API does not support <strong>callback</strong> mechanism to notify an <strong>event</strong> to clients. However, Pub/Sub messaging is bidirectional, the client can get notified immediately from the server. Either client or server can publish a message to the channel being shared to notify an event to subsribers.</p>
-</div>
-<p>In this reason, the messages of request and response for speaker control are a littke different. For a client to send a command to speaker, the client <strong>publish</strong> the command to the channel. Then because HKWHub app is one of the clients, it receives the command, and process the command internally. If the command requires a response, then HKWHub app should send the response back to the client. To to that, HKWHub app also needs to <strong>publish</strong> the response to the channel. And, the client will get the response because it subscribed to the channel.</p>
-<p>If HKWHub app has some event to report to notify to clients, for example, device status changed, or playback time changed, etc., then HKWHub app publish the events to the channel, then all the client listening to the channel will receive the event.</p>
-</div>
-<div class="section" id="sample-web-app">
-<h4>Sample Web App<a class="headerlink" href="#sample-web-app" title="Permalink to this headline">¶</a></h4>
-<p>As a sample client app, you can use <strong>WebHubPubNubApp</strong> that you can download from Harman Developer web site (<a class="reference external" href="http://developer.harman.com">http://developer.harman.com</a>) or directly from <code class="xref download docutils literal"><span class="pre">here</span></code>.. Likewise, The Web app is created using Polymer v0.5 (<a class="reference external" href="https://www.polymer-project.org/0.5/">https://www.polymer-project.org/0.5/</a>).</p>
-<p>Once you download the app, unzip it. You will see the following sub directories.</p>
-<ul class="simple">
-<li>bower_components: THis is the folder where polymer libraries are located.</li>
-<li>hkwhub: this is the folder containing the WebHubApp source code.</li>
-</ul>
-<div class="highlight-shell"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd </span>WebHubPubNubApp
-<span class="nv">$ </span>python -m SimpleHTTPServer
-</pre></div>
-</div>
-<p>You will get some log messages like &#8220;Serving HTTP on 0.0.0.0 port 8000 ...&#8221;</p>
-<p>Next, launch your web browser (Chrome, Safari, ...) and go to <a class="reference external" href="http://localhost:8000/hkwhub/">http://localhost:8000/hkwhub/</a></p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Your iOS device running HKWHub app and your Desktop PC running web browser should be in the same network.</p>
-</div>
-<p>At the fist screen looking like below. Note that it looks different from the screen from Local Server mode, which requires only URL of the web server.</p>
-<div class="figure">
-<a class="reference internal image-reference" href="_images/pubnubapp-login.png"><img alt="_images/pubnubapp-login.png" src="_images/pubnubapp-login.png" /></a>
-</div>
-<p>Enter the same PubNub publish key, subscribe key, and channel name that you used for HKWHub app, and click <strong>Submit</strong>, as below.</p>
-<p><a class="reference external" href="https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop/related?hl=en">https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop/related?hl=en</a></p>
-<p>If you press <strong>Submit</strong>, then you will see the first screen like below. This is the list of media items available at the HKWHub app.</p>
-<div class="figure">
-<a class="reference internal image-reference" href="_images/pubnubapp-medialist.png"><img alt="_images/pubnubapp-medialist.png" src="_images/pubnubapp-medialist.png" /></a>
-</div>
-<p>The UI of the Web app is exactly the same as HKIoTCloud web app. So, we skip to explain the rest parts of the app.</p>
-</div>
-</div>
-<div class="section" id="use-curl-command-to-send-rest-requests">
-<h3>Use <code class="docutils literal"><span class="pre">curl</span></code> command to send REST requests<a class="headerlink" href="#use-curl-command-to-send-rest-requests" title="Permalink to this headline">¶</a></h3>
-<p>We show how to control Omni speakers by sending REST requests to HKIoTCloud. Sending REST requests to Local Server is almost the same.</p>
-<p>You can use <strong>curl</strong> command in your shell to send REST requests.</p>
-<p>If you are a chrome browser user, you can use <strong>Postman</strong> (<a class="reference external" href="https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop/related?hl=en">https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop/related?hl=en</a>) chrome extension to send HTTP requests with browser-based UI.</p>
-<div class="figure">
-<a class="reference internal image-reference" href="_images/postman.png"><img alt="_images/postman.png" src="_images/postman.png" /></a>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Before you do this, do not forget to run HKWHub App and connect to HKIoTCloud.</p>
-</div>
-<div class="section" id="get-an-access-token-and-refresh-token-hkiotcloud-mode-only">
-<h4>Get an Access Token and Refresh Token (HKIoTCloud mode only)<a class="headerlink" href="#get-an-access-token-and-refresh-token-hkiotcloud-mode-only" title="Permalink to this headline">¶</a></h4>
-<p>In case of HKIoTCloud more, the client should get an access token from the HKIoTCloud to be able to call the REST APIs. HKIoTCloud supports two authorization modes: <strong>password</strong> and <strong>authorization code</strong>. For mode detailed information, please refer to the section of <a class="reference external" href="http://harmandeveloperdocs.readthedocs.org/en/latest/iOS/hkwhub-spec.html#id2">OAuth2 Authorization API Specification</a>.</p>
-<p>With <strong>password</strong> grant mode, you can get an access token and a refresh token as shown below:</p>
-<ul class="simple">
-<li>curl -X POST -H &#8220;Authorization: Basic bjdIaGlUbktZakpkNHptTTpBTlJmQjl6OTR4dGN4RkdYcmQ1WEhYRWlLZzQzVVk=&#8221; -d &#8220;grant_type=password&amp;username=yyy&amp;password=xxx&#8221; <a class="reference external" href="http://hkiotcloud.herokuapp.com/oauth/token">http://hkiotcloud.herokuapp.com/oauth/token</a></li>
-</ul>
-<p>Result:</p>
-<div class="code highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&quot;token_type&quot;</span><span class="p">:</span><span class="s">&quot;bearer&quot;</span><span class="p">,</span>
- <span class="s">&quot;access_token&quot;</span><span class="p">:</span><span class="s">&quot;15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8&quot;</span><span class="p">,</span>
- <span class="s">&quot;expires_in&quot;</span><span class="p">:</span><span class="mi">3600</span><span class="p">,</span>
- <span class="s">&quot;refresh_token&quot;</span><span class="p">:</span><span class="s">&quot;1b470edc539681803de95c919bc3779acdf34e01&quot;</span><span class="p">}</span>
-</pre></div>
-</div>
-<p>When you call the HKIoTCloud API calls, you should pass the value of the access token into the request header. Specifically, create an <code class="docutils literal"><span class="pre">Authorization</span></code> header and give it the value <code class="docutils literal"><span class="pre">Bearer</span> <span class="pre">&lt;access</span> <span class="pre">token&gt;</span></code>.</p>
-</div>
-<div class="section" id="a-init-session">
-<h4>a. Init session<a class="headerlink" href="#a-init-session" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li>curl -H &#8220;Authorization: Bearer 15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8&#8221; <a class="reference external" href="http://hkiotcloud.herokuapp.com/api/v1/init_session">http://hkiotcloud.herokuapp.com/api/v1/init_session</a></li>
-</ul>
-<p>This returns the SessionToken. The returned SessionToken is used by all subsequent REST API request in the body.</p>
-<div class="code json highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&quot;ResponseOf&quot;</span><span class="p">:</span><span class="s">&quot;init_session&quot;</span><span class="p">,</span><span class="s">&quot;SessionToken&quot;</span><span class="p">:</span><span class="s">&quot;r:abciKaTbUgdpQFuvYtgMm0FRh&quot;</span><span class="p">}</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="b-add-alls-speaker-to-session">
-<h4>b. Add alls speaker to session<a class="headerlink" href="#b-add-alls-speaker-to-session" title="Permalink to this headline">¶</a></h4>
-<p>After HKWHub app is launched, none of speakers is selected for playback. You need to add one or more speakers to play audio. To add all speakers to playback session, use <code class="docutils literal"><span class="pre">set_party_mode</span></code>. <strong>Party Mode</strong> is the mode where all speakers are playing the same audio together with synchronization. So, by <code class="docutils literal"><span class="pre">set_party_mode</span></code>, you can select all speakers to play.</p>
-<ul class="simple">
-<li>curl -H &#8220;Authorization: Bearer 15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8&#8221; &#8220;<a class="reference external" href="http://hkiotcloud.herokuapp.com/api/v1/set_party_mode?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh">http://hkiotcloud.herokuapp.com/api/v1/set_party_mode?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh</a>&#8220;</li>
-</ul>
-<div class="code json highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&quot;Result&quot;</span><span class="p">:</span><span class="s">&quot;true&quot;</span><span class="p">,</span><span class="s">&quot;ResponseOf&quot;</span><span class="p">:</span><span class="s">&quot;set_party_mode&quot;</span><span class="p">}</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="c-get-the-list-of-speakers-available">
-<h4>c. Get the list of speakers available<a class="headerlink" href="#c-get-the-list-of-speakers-available" title="Permalink to this headline">¶</a></h4>
-<p>To control speakers individually, you can get the list of speakers available by using <strong>device_list</strong> command.</p>
-<ul class="simple">
-<li>curl -H &#8220;Authorization: Bearer 15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8&#8221; &#8220;<a class="reference external" href="http://hkiotcloud.herokuapp.com/api/v1/device_list?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh">http://hkiotcloud.herokuapp.com/api/v1/device_list?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh</a>&#8220;</li>
-</ul>
-<div class="code json highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&quot;DeviceList&quot;</span><span class="p">:[</span>
-        <span class="p">{</span>
-                <span class="s">&quot;IsPlaying&quot;</span><span class="p">:</span><span class="n">false</span><span class="p">,</span>
-                <span class="s">&quot;MacAddress&quot;</span><span class="p">:</span><span class="s">&quot;&quot;</span><span class="p">,</span>
-                <span class="s">&quot;GroupName&quot;</span><span class="p">:</span><span class="s">&quot;Garage&quot;</span><span class="p">,</span>
-                <span class="s">&quot;Role&quot;</span><span class="p">:</span><span class="mi">21</span><span class="p">,</span>
-                <span class="s">&quot;Version&quot;</span><span class="p">:</span><span class="s">&quot;0.1.6.2&quot;</span><span class="p">,</span>
-                <span class="s">&quot;Port&quot;</span><span class="p">:</span><span class="mi">44055</span><span class="p">,</span>
-                <span class="s">&quot;Active&quot;</span><span class="p">:</span><span class="n">true</span><span class="p">,</span>
-                <span class="s">&quot;GroupID&quot;</span><span class="p">:</span><span class="s">&quot;4625984469&quot;</span><span class="p">,</span>
-                <span class="s">&quot;ModelName&quot;</span><span class="p">:</span><span class="s">&quot;Omni Adapt&quot;</span><span class="p">,</span>
-                <span class="s">&quot;DeviceID&quot;</span><span class="p">:</span><span class="s">&quot;4625984469168&quot;</span><span class="p">,</span>
-                <span class="s">&quot;IPAddress&quot;</span><span class="p">:</span><span class="s">&quot;10.0.1.6&quot;</span><span class="p">,</span>
-                <span class="s">&quot;Volume&quot;</span><span class="p">:</span><span class="mi">17</span><span class="p">,</span>
-                <span class="s">&quot;DeviceName&quot;</span><span class="p">:</span><span class="s">&quot;Adapt&quot;</span><span class="p">,</span>
-                <span class="s">&quot;WifiSignalStrength&quot;</span><span class="p">:</span><span class="o">-</span><span class="mi">62</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-                <span class="s">&quot;IsPlaying&quot;</span><span class="p">:</span><span class="n">false</span><span class="p">,</span>
-                <span class="s">&quot;MacAddress&quot;</span><span class="p">:</span><span class="s">&quot;b0:38:29:11:19:54&quot;</span><span class="p">,</span>
-                <span class="s">&quot;GroupName&quot;</span><span class="p">:</span><span class="s">&quot;Living Room&quot;</span><span class="p">,</span>
-                <span class="s">&quot;Role&quot;</span><span class="p">:</span><span class="mi">21</span><span class="p">,</span>
-                <span class="s">&quot;Version&quot;</span><span class="p">:</span><span class="s">&quot;0.1.6.2&quot;</span><span class="p">,</span>
-                <span class="s">&quot;Port&quot;</span><span class="p">:</span><span class="mi">44055</span><span class="p">,</span>
-                <span class="s">&quot;Active&quot;</span><span class="p">:</span><span class="n">true</span><span class="p">,</span>
-                <span class="s">&quot;GroupID&quot;</span><span class="p">:</span><span class="s">&quot;9246663882&quot;</span><span class="p">,</span>
-                <span class="s">&quot;ModelName&quot;</span><span class="p">:</span><span class="s">&quot;Omni 10&quot;</span><span class="p">,</span>
-                <span class="s">&quot;DeviceID&quot;</span><span class="p">:</span><span class="s">&quot;92466638829744&quot;</span><span class="p">,</span>
-                <span class="s">&quot;IPAddress&quot;</span><span class="p">:</span><span class="s">&quot;10.0.1.9&quot;</span><span class="p">,</span>
-                <span class="s">&quot;Volume&quot;</span><span class="p">:</span><span class="mi">17</span><span class="p">,</span>
-                <span class="s">&quot;DeviceName&quot;</span><span class="p">:</span><span class="s">&quot;Omni Left&quot;</span><span class="p">,</span>
-                <span class="s">&quot;WifiSignalStrength&quot;</span><span class="p">:</span><span class="o">-</span><span class="mi">67</span>
-        <span class="p">}</span>
-<span class="p">],</span>
-<span class="s">&quot;ResponseOf&quot;</span><span class="p">:</span><span class="s">&quot;device_list&quot;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="d-add-a-speaker-to-session">
-<h4>d. Add a speaker to session<a class="headerlink" href="#d-add-a-speaker-to-session" title="Permalink to this headline">¶</a></h4>
-<p>If you want to add a speaker to session, use <code class="docutils literal"><span class="pre">add_device_to_session`.</span> <span class="pre">It</span> <span class="pre">requires</span> <span class="pre">``DeviceID</span></code> parameter to identify a speaker to add. This command does not impact other speakers regardless of their status.</p>
-<ul class="simple">
-<li>curl -H &#8220;Authorization: Bearer 15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8&#8221; &#8220;<a class="reference external" href="http://hkiotcloud.herokuapp.com/api/v1/add_device_to_session?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh&amp;DeviceID=4625984469168">http://hkiotcloud.herokuapp.com/api/v1/add_device_to_session?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh&amp;DeviceID=4625984469168</a>&#8220;</li>
-</ul>
-<div class="code json highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&quot;Result&quot;</span><span class="p">:</span><span class="s">&quot;true&quot;</span><span class="p">,</span><span class="s">&quot;ResponseOf&quot;</span><span class="p">:</span><span class="s">&quot;add_device_to_session&quot;</span><span class="p">}</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="e-get-the-media-list">
-<h4>e. Get the media list<a class="headerlink" href="#e-get-the-media-list" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li>curl -H &#8220;Authorization: Bearer 15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8&#8221; &#8220;<a class="reference external" href="http://hkiotcloud.herokuapp.com/api/v1/media_list?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh">http://hkiotcloud.herokuapp.com/api/v1/media_list?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh</a>&#8220;</li>
-</ul>
-<p>Here, SessionToken should be the session token you got from <code class="docutils literal"><span class="pre">init_session</span></code>. You will get a list of media in JSON like below</p>
-<div class="highlight-json"><div class="highlight"><pre><span class="p">{</span><span class="nt">&quot;MediaList&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span><span class="nt">&quot;PersistentID&quot;</span><span class="p">:</span><span class="s2">&quot;7387446959931482519&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;Title&quot;</span><span class="p">:</span><span class="s2">&quot;I Will Run To You&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;Artist&quot;</span><span class="p">:</span><span class="s2">&quot;Hillsong&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;Duration&quot;</span><span class="p">:</span><span class="mi">436</span><span class="p">,</span>
-        <span class="nt">&quot;AlbumTitle&quot;</span><span class="p">:</span><span class="s2">&quot;Simply Worship&quot;</span>
-        <span class="p">},</span>
-        <span class="p">{</span><span class="nt">&quot;PersistentID&quot;</span><span class="p">:</span><span class="s2">&quot;5829171347867182746&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;Title&quot;</span><span class="p">:</span><span class="s2">&quot;I&#39;m Yours [ORIGINAL DEMO]&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;Artist&quot;</span><span class="p">:</span><span class="s2">&quot;Jason Mraz&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;Duration&quot;</span><span class="p">:</span><span class="mi">257</span><span class="p">,</span>
-        <span class="nt">&quot;AlbumTitle&quot;</span><span class="p">:</span><span class="s2">&quot;Wordplay [SINGLE EP]&quot;</span><span class="p">}</span>
-<span class="p">]}</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="f-play-a-media-item-listed-in-the-hkwhub-app">
-<h4>f. Play a media item listed in the HKWHub app<a class="headerlink" href="#f-play-a-media-item-listed-in-the-hkwhub-app" title="Permalink to this headline">¶</a></h4>
-<p>If you want to play a media item listed in the HKWHub app, use <code class="docutils literal"><span class="pre">play_hub_media</span></code> by specifying the media item with <code class="docutils literal"><span class="pre">PersistentID</span></code>. The <code class="docutils literal"><span class="pre">PersistentID</span></code> is available from the response of <code class="docutils literal"><span class="pre">media_list</span></code> command.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Note that, before calling <code class="docutils literal"><span class="pre">play_hub_media</span></code>, at least one or more speakers must be selected (added to session) in advance. If not, then the playback will fail.</p>
-</div>
-<ul class="simple">
-<li>curl -H &#8220;Authorization: Bearer 15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8&#8221; &#8220;<a class="reference external" href="http://hkiotcloud.herokuapp.com/api/v1/play_hub_media?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh&amp;PersistentID=1062764963669236741">http://hkiotcloud.herokuapp.com/api/v1/play_hub_media?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh&amp;PersistentID=1062764963669236741</a>&#8220;</li>
-</ul>
-<div class="highlight-json"><div class="highlight"><pre><span class="p">{</span><span class="nt">&quot;Result&quot;</span><span class="p">:</span><span class="s2">&quot;true&quot;</span><span class="p">,</span><span class="nt">&quot;ResponseOf&quot;</span><span class="p">:</span><span class="s2">&quot;play_hub_media&quot;</span><span class="p">}</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="f-play-a-media-item-in-the-hkwhub-by-specifying-a-speaker-list-to-play">
-<h4>f. Play a media item in the HKWHub by specifying a speaker list to play<a class="headerlink" href="#f-play-a-media-item-in-the-hkwhub-by-specifying-a-speaker-list-to-play" title="Permalink to this headline">¶</a></h4>
-<p>You can play a media item in the HKWHub app by specifying the list of speakers.</p>
-<ul class="simple">
-<li>curl -H &#8220;Authorization: Bearer 15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8&#8221; &#8220;<a class="reference external" href="http://hkiotcloud.herokuapp.com/api/v1/play_hub_media_selected_speakers?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh&amp;PersistentID=1062764963669236741&amp;DeviceIDList=34317244381360,129321920968880">http://hkiotcloud.herokuapp.com/api/v1/play_hub_media_selected_speakers?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh&amp;PersistentID=1062764963669236741&amp;DeviceIDList=34317244381360,129321920968880</a>&#8220;</li>
-</ul>
-<p>The list of speakers are listed by the parameter <code class="docutils literal"><span class="pre">DeviceIDList</span></code> with delimitor &#8221;,&#8221;.</p>
-<div class="highlight-json"><div class="highlight"><pre><span class="p">{</span><span class="nt">&quot;Result&quot;</span><span class="p">:</span><span class="s2">&quot;true&quot;</span><span class="p">,</span><span class="nt">&quot;ResponseOf&quot;</span><span class="p">:</span><span class="s2">&quot;play_hub_media_selected_speakers&quot;</span><span class="p">}</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="g-play-a-http-streaming-media-as-party-mode">
-<h4>g. Play a HTTP streaming media as party mode<a class="headerlink" href="#g-play-a-http-streaming-media-as-party-mode" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li>curl -H &#8220;Authorization: Bearer 15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8&#8221; &#8220;<a class="reference external" href="http://hkiotcloud.herokuapp.com/api/v1/play_web_media_party_mode?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh&amp;MediaUrl=http://seonman.github.io/music/hyolyn.mp3">http://hkiotcloud.herokuapp.com/api/v1/play_web_media_party_mode?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh&amp;MediaUrl=http://seonman.github.io/music/hyolyn.mp3</a>&#8220;</li>
-</ul>
-<div class="highlight-json"><div class="highlight"><pre><span class="p">{</span><span class="nt">&quot;Result&quot;</span><span class="p">:</span><span class="s2">&quot;true&quot;</span><span class="p">,</span><span class="nt">&quot;ResponseOf&quot;</span><span class="p">:</span><span class="s2">&quot;play_web_media_party_mode&quot;</span><span class="p">}</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="h-stop-playing">
-<h4>h. Stop playing<a class="headerlink" href="#h-stop-playing" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li>curl -H &#8220;Authorization: Bearer 15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8&#8221; &#8220;<a class="reference external" href="http://hkiotcloud.herokuapp.com/api/v1/stop_play?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh">http://hkiotcloud.herokuapp.com/api/v1/stop_play?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh</a>&#8220;</li>
-</ul>
-<div class="highlight-json"><div class="highlight"><pre><span class="p">{</span><span class="nt">&quot;Result&quot;</span><span class="p">:</span><span class="s2">&quot;true&quot;</span><span class="p">,</span><span class="nt">&quot;ResponseOf&quot;</span><span class="p">:</span><span class="s2">&quot;stop_play&quot;</span><span class="p">}</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="i-set-volume">
-<h4>i. Set Volume<a class="headerlink" href="#i-set-volume" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li>curl -H &#8220;Authorization: Bearer 15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8&#8221; &#8220;<a class="reference external" href="http://hkiotcloud.herokuapp.com/api/v1/set_volume?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh&amp;Volume=30">http://hkiotcloud.herokuapp.com/api/v1/set_volume?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh&amp;Volume=30</a>&#8220;</li>
-</ul>
-<div class="highlight-json"><div class="highlight"><pre><span class="p">{</span><span class="nt">&quot;Result&quot;</span><span class="p">:</span><span class="s2">&quot;true&quot;</span><span class="p">,</span><span class="nt">&quot;ResponseOf&quot;</span><span class="p">:</span><span class="s2">&quot;set_volume&quot;</span><span class="p">}</span>
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Please see the REST API specification for more information and examples.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="section" id="playback-session-management">
-<h2>Playback Session Management<a class="headerlink" href="#playback-session-management" title="Permalink to this headline">¶</a></h2>
-<p>Since the HKWHub app should be able to handle REST HTTP requests from more than one clients at the same time, the HKWHub app manages the requests with session information associated with the priority when a new playback is initiated.</p>
-<p>The following is the policy of the session management:</p>
-<div class="section" id="playback-session-creation">
-<h3>Playback Session Creation<a class="headerlink" href="#playback-session-creation" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li>When a client wants to start a playback, it sets the priority of the session (using <code class="docutils literal"><span class="pre">Priority=&lt;priority</span> <span class="pre">value&gt;</span></code> parameter).</li>
-<li>If Priority parameter is not specified, HKWHub app assumes it as default value, that is, 100.</li>
-</ul>
-</div>
-<div class="section" id="priority-of-session">
-<h3>Priority of Session<a class="headerlink" href="#priority-of-session" title="Permalink to this headline">¶</a></h3>
-<ul>
-<li><p class="first">Each session is associated with a priority value which will be used to determine which request can override the current on-going playback session.</p>
-</li>
-<li><dl class="first docutils">
-<dt>The priority value is specified as parameter (<code class="docutils literal"><span class="pre">Priority</span></code>) when the client calls <code class="docutils literal"><span class="pre">play_xxx</span></code>.</dt>
-<dd><ul class="first last simple">
-<li>If the command does not specify the Priority parameter, 100 is set as default value.</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>If the priority of a new playback request, such as <code class="docutils literal"><span class="pre">play_hub_media</span></code> or <code class="docutils literal"><span class="pre">play_web_media</span></code>, and so on, is greater than or equal to the priority of the current playback session, then it interrupts the current playback session, that is, stops the current playback session and start a new playback for itself.</dt>
-<dd><ul class="first last simple">
-<li>The playback status of the interrupted session becomes <code class="docutils literal"><span class="pre">PlayerStateStopped</span></code>. (see the related API in the next section)</li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-<p>The following diagrams show how HKWHub app handles incoming playback request based on the session priorities.</p>
-<div class="figure">
-<img alt="Session management flow diagram" src="_images/session-management.png" />
-</div>
-</div>
-<div class="section" id="session-timeout">
-<h3>Session Timeout<a class="headerlink" href="#session-timeout" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li>A session becomes expired and invalid when about 60 minutes is passed since the last command was received.</li>
-<li>Session timer is extended (renewed) once a playback is executed successfully.</li>
-<li>All requests with expired session will be denied and &#8220;SessionNotFound&#8221; error returns.</li>
-</ul>
-</div>
-</div>
-<hr class="docutils" />
-<div class="section" id="rest-api-specification-including-pubnub-json-format">
-<h2>REST API Specification (including PubNub JSON format)<a class="headerlink" href="#rest-api-specification-including-pubnub-json-format" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="rest-api-specification-including-pubnub-json-format">
+<h1>REST API Specification (including PubNub JSON format)<a class="headerlink" href="#rest-api-specification-including-pubnub-json-format" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>REST API Specification (including PubNub JSON format)<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p>This specification describes about the REST APIs to control HK Omni speakers and stream audio to the speakers via HKWHub app.</p>
 <p>All the APIS are in REST API protocol.</p>
 <div class="admonition note">
@@ -1853,8 +1286,8 @@ Result = true
 </ul>
 </div>
 <hr class="docutils" />
-<div class="section" id="id1">
-<h4>Play a Song from Web Server with selected speakers<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id2">
+<h4>Play a Song from Web Server with selected speakers<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
 <p>Plays a Text-to-Speech audio from VoiceRRS server with selected speakers. The Text to play is specified by <code class="docutils literal"><span class="pre">Text</span></code> parameter. The selected speakers are represented in <code class="docutils literal"><span class="pre">DeviceIDList</span></code> parameter as a list of <code class="docutils literal"><span class="pre">DeviceID</span></code> separated by &#8221;,&#8221;.</p>
 <ul>
 <li><p class="first">API: GET /api/v1/play_tts_selected_speakers?SessionToken=&lt;Session Token&gt;&amp;Text=&lt;Text&gt;&amp;DeviceIDList=&lt;xxx,xxx,...&gt;</p>
@@ -2633,8 +2066,8 @@ SessionToken = &quot;PubNub-1000&quot;
 </div>
 </div>
 <hr class="docutils" />
-<div class="section" id="id2">
-<h2>OAuth2 Authorization API Specification<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="oauth2-authorization-api-specification">
+<h2>OAuth2 Authorization API Specification<a class="headerlink" href="#oauth2-authorization-api-specification" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="introduction">
 <h3>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h3>
 <p>In order to access the HKIoTCloud REST APIs to control Omni speakers, your HKIoTCloud-enabled product needs to obtain a HKIoTCloud access token that grans access to the APIs on behalf of the product&#8217;s user.</p>
@@ -2827,62 +2260,8 @@ grant_type=refresh_token&amp;refresh_token=5defcb0a9a49ac9b2403b8c78600638238d81
             </a></p>
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Connecting Omni speakers to your services or devices</a><ul>
-<li><a class="reference internal" href="#overview-of-hwkhub">Overview of HWKHub</a><ul>
-<li><a class="reference internal" href="#use-cases">Use Cases</a></li>
-<li><a class="reference internal" href="#hub-speaker">Hub Speaker</a></li>
-<li><a class="reference internal" href="#hkwhub-app">HKWHub App</a><ul>
-<li><a class="reference internal" href="#features">Features</a></li>
-<li><a class="reference internal" href="#usage">Usage</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#overall-architecture">Overall Architecture</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#quick-getting-started-guide-to-hkwhub-app">Quick Getting Started Guide to HKWHub App</a><ul>
-<li><a class="reference internal" href="#overview-of-hkwhubapp">Overview of HKWHubApp</a><ul>
-<li><a class="reference internal" href="#main-screen">Main Screen</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#hkiotcloud-mode">HKIoTCloud Mode</a><ul>
-<li><a class="reference internal" href="#connecting-to-hkiotcloud">Connecting to HKIoTCloud</a></li>
-<li><a class="reference internal" href="#sending-rest-requests-to-hkiotcloud">Sending REST Requests to HKIoTCloud</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#local-server-mode">Local Server Mode</a><ul>
-<li><a class="reference internal" href="#running-local-server">Running Local Server</a></li>
-<li><a class="reference internal" href="#sending-rest-requests-to-localserver">Sending REST Requests to LocalServer</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#pubnub-server-mode">PubNub Server Mode</a><ul>
-<li><a class="reference internal" href="#connect-to-pubnub-server">Connect to PubNub Server</a></li>
-<li><a class="reference internal" href="#sending-rest-requests-to-pubnub-cloud">Sending REST Requests to PubNub Cloud</a></li>
-<li><a class="reference internal" href="#sample-web-app">Sample Web App</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#use-curl-command-to-send-rest-requests">Use <code class="docutils literal"><span class="pre">curl</span></code> command to send REST requests</a><ul>
-<li><a class="reference internal" href="#get-an-access-token-and-refresh-token-hkiotcloud-mode-only">Get an Access Token and Refresh Token (HKIoTCloud mode only)</a></li>
-<li><a class="reference internal" href="#a-init-session">a. Init session</a></li>
-<li><a class="reference internal" href="#b-add-alls-speaker-to-session">b. Add alls speaker to session</a></li>
-<li><a class="reference internal" href="#c-get-the-list-of-speakers-available">c. Get the list of speakers available</a></li>
-<li><a class="reference internal" href="#d-add-a-speaker-to-session">d. Add a speaker to session</a></li>
-<li><a class="reference internal" href="#e-get-the-media-list">e. Get the media list</a></li>
-<li><a class="reference internal" href="#f-play-a-media-item-listed-in-the-hkwhub-app">f. Play a media item listed in the HKWHub app</a></li>
-<li><a class="reference internal" href="#f-play-a-media-item-in-the-hkwhub-by-specifying-a-speaker-list-to-play">f. Play a media item in the HKWHub by specifying a speaker list to play</a></li>
-<li><a class="reference internal" href="#g-play-a-http-streaming-media-as-party-mode">g. Play a HTTP streaming media as party mode</a></li>
-<li><a class="reference internal" href="#h-stop-playing">h. Stop playing</a></li>
-<li><a class="reference internal" href="#i-set-volume">i. Set Volume</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a class="reference internal" href="#playback-session-management">Playback Session Management</a><ul>
-<li><a class="reference internal" href="#playback-session-creation">Playback Session Creation</a></li>
-<li><a class="reference internal" href="#priority-of-session">Priority of Session</a></li>
-<li><a class="reference internal" href="#session-timeout">Session Timeout</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#rest-api-specification-including-pubnub-json-format">REST API Specification (including PubNub JSON format)</a><ul>
+<li><a class="reference internal" href="#">REST API Specification (including PubNub JSON format)</a><ul>
+<li><a class="reference internal" href="#id1">REST API Specification (including PubNub JSON format)</a><ul>
 <li><a class="reference internal" href="#session-management">Session Management</a><ul>
 <li><a class="reference internal" href="#start-session">Start Session</a></li>
 <li><a class="reference internal" href="#close-session">Close Session</a></li>
@@ -2907,7 +2286,7 @@ grant_type=refresh_token&amp;refresh_token=5defcb0a9a49ac9b2403b8c78600638238d81
 <li><a class="reference internal" href="#play-a-song-from-web-server-with-selected-speakers">Play a Song from Web Server with selected speakers</a></li>
 <li><a class="reference internal" href="#play-tts-text-to-speech">Play TTS (Text-to-Speech)</a></li>
 <li><a class="reference internal" href="#play-tts-text-to-speech-as-party-mode">Play TTS (Text-to-Speech) as party mode</a></li>
-<li><a class="reference internal" href="#id1">Play a Song from Web Server with selected speakers</a></li>
+<li><a class="reference internal" href="#id2">Play a Song from Web Server with selected speakers</a></li>
 <li><a class="reference internal" href="#pause-the-current-playback">Pause the Current Playback</a></li>
 <li><a class="reference internal" href="#resume-the-current-playback-with-hub-media">Resume the Current Playback with Hub Media</a></li>
 <li><a class="reference internal" href="#resume-the-current-playback-with-hub-media-as-party-mode">Resume the Current Playback with Hub Media as Party Mode</a></li>
@@ -2927,7 +2306,7 @@ grant_type=refresh_token&amp;refresh_token=5defcb0a9a49ac9b2403b8c78600638238d81
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id2">OAuth2 Authorization API Specification</a><ul>
+<li><a class="reference internal" href="#oauth2-authorization-api-specification">OAuth2 Authorization API Specification</a><ul>
 <li><a class="reference internal" href="#introduction">Introduction</a></li>
 <li><a class="reference internal" href="#types-of-authorization">Types of Authorization</a></li>
 <li><a class="reference internal" href="#using-the-password-grant-type">Using the Password Grant Type</a></li>
@@ -2941,16 +2320,10 @@ grant_type=refresh_token&amp;refresh_token=5defcb0a9a49ac9b2403b8c78600638238d81
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="architecture-overview.html"
-                        title="previous chapter">Architecture Overview</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="playback-session-management.html"
-                        title="next chapter">Playback Session Management</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/hub-overview.txt"
+      <li><a href="_sources/restapi-specification.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -2977,12 +2350,6 @@ grant_type=refresh_token&amp;refresh_token=5defcb0a9a49ac9b2403b8c78600638238d81
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
-        <li class="right" >
-          <a href="playback-session-management.html" title="Playback Session Management"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="architecture-overview.html" title="Architecture Overview"
-             >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">Harman Developer 1.0 documentation</a> &raquo;</li> 
       </ul>
     </div>
