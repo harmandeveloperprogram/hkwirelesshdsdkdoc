@@ -29,6 +29,9 @@ This documentation is organized into a few different sections as follows:
 `Connecting Omni Speakers to your services`_
 	This section explains how your apps or services can connect Omni speakers using HKWirelessHD REST APIs.
 	
+`Getting start with HKWHub App`_
+	This section explains how to use HKWHub App (iOS) to simulate Hub Speaker to control other HK Omni speakers.
+
 ----
 
 .. _Introduction: introduction.html
@@ -36,6 +39,8 @@ This documentation is organized into a few different sections as follows:
 .. _Architecture Overview: architecture-overview.html
 
 .. _Connecting Omni Speakers to your services: hub-overview.html
+
+.. _Getting start with HKWHub App: hkwhub-gettingstarted.html
 
 ----
 
@@ -68,6 +73,13 @@ Connecting Omni Speakers to your services
 
 	hub-overview
 	
+Getting start with HKWHub App
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. toctree::
+	:maxdepth: 2
+
+	hkwhub-gettingstarted
 	
 Search
 ======

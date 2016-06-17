@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Connecting Omni speakers to your services or devices &mdash; Harman Developer 1.0 documentation</title>
+    <title>Quick Getting Started Guide to HKWHub App &mdash; Harman Developer 1.0 documentation</title>
     
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -24,8 +24,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Harman Developer 1.0 documentation" href="index.html" />
-    <link rel="next" title="Quick Getting Started Guide to HKWHub App" href="hkwhub-gettingstarted.html" />
-    <link rel="prev" title="Architecture Overview" href="architecture-overview.html" /> 
+    <link rel="prev" title="Connecting Omni speakers to your services or devices" href="hub-overview.html" /> 
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
@@ -35,10 +34,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="hkwhub-gettingstarted.html" title="Quick Getting Started Guide to HKWHub App"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="architecture-overview.html" title="Architecture Overview"
+          <a href="hub-overview.html" title="Connecting Omni speakers to your services or devices"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">Harman Developer 1.0 documentation</a> &raquo;</li> 
       </ul>
@@ -49,107 +45,10 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="connecting-omni-speakers-to-your-services-or-devices">
-<h1>Connecting Omni speakers to your services or devices<a class="headerlink" href="#connecting-omni-speakers-to-your-services-or-devices" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="overview-of-hwkhub">
-<h2>Overview of HWKHub<a class="headerlink" href="#overview-of-hwkhub" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="use-cases">
-<h3>Use Cases<a class="headerlink" href="#use-cases" title="Permalink to this headline">¶</a></h3>
-<div class="figure">
-<img alt="_images/hub-use-cases.png" src="_images/hub-use-cases.png" />
-</div>
-</div>
-<div class="section" id="hub-speaker">
-<h3>Hub Speaker<a class="headerlink" href="#hub-speaker" title="Permalink to this headline">¶</a></h3>
-<p>To enable your Omni speakers to be controlled by other services or devices either in the Internet or in local network, one of your speakers should become a Hub Speaker. A Hub speaker is just a regular HK Omni speaker, but is configured as a Hub. A Hub device can control other HK Omni speakers when it receives a REST requests from other clients. Hub speaker needs to be connected all the time to the HKIoTCloud which actually receives HTTP request from client in the Internet. HKIoTCloud forwards the command to the Hub speaker to control other speakers as well as Hub speaker.</p>
-<p>In addition, to handle HTTP requests from devices in local network, not through HKIoTCloud, Hub Speaker runs a web server inside.</p>
-</div>
-<div class="section" id="hkwhub-app">
-<h3>HKWHub App<a class="headerlink" href="#hkwhub-app" title="Permalink to this headline">¶</a></h3>
-<p>HKWHub app is an iOS app that uses HKWirelessHD SDK and acts as a Hub Speaker that handles REST requests to control speakers. Like Hub Speaker, HKWHub App is always connected to HKIoTCloud and also runs a web server inside that handles HTTP requests of REST API.</p>
-<div class="section" id="features">
-<h4>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h4>
-<ul>
-<li><dl class="first docutils">
-<dt>Supports integration with cloud-based services, smart devices or sensors</dt>
-<dd><ul class="first last simple">
-<li>Receives the requests from clouds (web service) outside or sensors in the house</li>
-<li>Translates the requests into HKWirelessHD commands and controls the speakers based on the requests.</li>
-<li>Sends response with status of speakers to the cloud if necessary</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Central Music Playlist manager</dt>
-<dd><ul class="first last simple">
-<li>Maintain user’s media list from iOS local music library or streaming services, like MixRadio, etc.</li>
-<li>Maintain a collection of sound files used for IoT use cases, like door bell, etc.</li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</div>
-<div class="section" id="usage">
-<h4>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li>User may place an iOS device on the cradle and run WebHub app. Then the app acts as Web Hub. (A stationary device in a house lik AppleTV can be a nice iOS device for WebHub.)</li>
-</ul>
-<div class="figure">
-<img alt="_images/hub-app.png" src="_images/hub-app.png" />
-</div>
-</div>
-</div>
-<div class="section" id="overall-architecture">
-<h3>Overall Architecture<a class="headerlink" href="#overall-architecture" title="Permalink to this headline">¶</a></h3>
-<p>HKWHub App handles requests from and sends responses to sensors, smart devices or cloud-based services to control audio playback with wireless speakers in the house.</p>
-<div class="figure">
-<img alt="_images/architecture.png" src="_images/architecture.png" />
-</div>
-<p>The latest version of HKWHub app supports the following three modes:</p>
-<ul>
-<li><dl class="first docutils">
-<dt>Cloud mode (HKIoTCloud)</dt>
-<dd><ul class="first last simple">
-<li>HKWHub app communicates with HKIoTCloud to receive speaker control commands by REST API call from 3rd party services or clients.</li>
-<li>HKIoTCloud handles the REST API request from any clients in the Internet. The clients can be 3rd party apps or services or devices like smartphone or sensors.</li>
-<li>In this mode, any 3rd party services or clients in the Internet can reach out to HKWHub app and then control speakers and playback of audio.</li>
-<li>All the 3rd party apps or services should be authorized with OAuth2 to get access token. An access token is required when 3rd party apps call the REST APIs. The detailed information about OAuth2 is available at <a class="reference external" href="http://harmandeveloperdocs.readthedocs.org/en/latest/iOS/hkwhub-spec.html#id2">this link</a>.</li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-<ul>
-<li><dl class="first docutils">
-<dt>Local Server Mode</dt>
-<dd><ul class="first last simple">
-<li>HKWHub app lauches a web server internally, and then handles the REST API requests for speaker control and playback from devices, sensors or applications in the same local network.</li>
-<li>HKWHub app opens a HTTP port in the local network, so if devices or services outside of the local network want to reach out to HKWHub (and then speakers) then user needs to configure the route so that a request coming from outside can be routed to HKWHub app accordingly, such as firewall, etc.</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>PubNub Cloud mode</dt>
-<dd><ul class="first last simple">
-<li>HKWHub app uses PubNub API/SDK to connect to PubNub server and communicate with it to receive commands from other PubNub clients, and also sends events to other PubNub client, through a common PubNub channel.</li>
-<li>By setting the same PubNub channel, any client devices or services can communicate with the HKWHub app, and then control speakers and playback of audio.</li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-<p>The following figure shows how HKWHub app handles three modes.</p>
-<div class="figure">
-<img alt="_images/HubAppV2.png" src="_images/HubAppV2.png" />
-</div>
-</div>
-</div>
-<hr class="docutils" />
-<div class="section" id="quick-getting-started-guide-to-hkwhub-app">
-<h2>Quick Getting Started Guide to HKWHub App<a class="headerlink" href="#quick-getting-started-guide-to-hkwhub-app" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="quick-getting-started-guide-to-hkwhub-app">
+<h1>Quick Getting Started Guide to HKWHub App<a class="headerlink" href="#quick-getting-started-guide-to-hkwhub-app" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>Quick Getting Started Guide to HKWHub App<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="overview-of-hkwhubapp">
 <h3>Overview of HKWHubApp<a class="headerlink" href="#overview-of-hkwhubapp" title="Permalink to this headline">¶</a></h3>
 <div class="admonition note">
@@ -1853,8 +1752,8 @@ Result = true
 </ul>
 </div>
 <hr class="docutils" />
-<div class="section" id="id1">
-<h4>Play a Song from Web Server with selected speakers<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id2">
+<h4>Play a Song from Web Server with selected speakers<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
 <p>Plays a Text-to-Speech audio from VoiceRRS server with selected speakers. The Text to play is specified by <code class="docutils literal"><span class="pre">Text</span></code> parameter. The selected speakers are represented in <code class="docutils literal"><span class="pre">DeviceIDList</span></code> parameter as a list of <code class="docutils literal"><span class="pre">DeviceID</span></code> separated by &#8221;,&#8221;.</p>
 <ul>
 <li><p class="first">API: GET /api/v1/play_tts_selected_speakers?SessionToken=&lt;Session Token&gt;&amp;Text=&lt;Text&gt;&amp;DeviceIDList=&lt;xxx,xxx,...&gt;</p>
@@ -2633,8 +2532,8 @@ SessionToken = &quot;PubNub-1000&quot;
 </div>
 </div>
 <hr class="docutils" />
-<div class="section" id="id2">
-<h2>OAuth2 Authorization API Specification<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h2>OAuth2 Authorization API Specification<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="introduction">
 <h3>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h3>
 <p>In order to access the HKIoTCloud REST APIs to control Omni speakers, your HKIoTCloud-enabled product needs to obtain a HKIoTCloud access token that grans access to the APIs on behalf of the product&#8217;s user.</p>
@@ -2827,19 +2726,8 @@ grant_type=refresh_token&amp;refresh_token=5defcb0a9a49ac9b2403b8c78600638238d81
             </a></p>
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Connecting Omni speakers to your services or devices</a><ul>
-<li><a class="reference internal" href="#overview-of-hwkhub">Overview of HWKHub</a><ul>
-<li><a class="reference internal" href="#use-cases">Use Cases</a></li>
-<li><a class="reference internal" href="#hub-speaker">Hub Speaker</a></li>
-<li><a class="reference internal" href="#hkwhub-app">HKWHub App</a><ul>
-<li><a class="reference internal" href="#features">Features</a></li>
-<li><a class="reference internal" href="#usage">Usage</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#overall-architecture">Overall Architecture</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#quick-getting-started-guide-to-hkwhub-app">Quick Getting Started Guide to HKWHub App</a><ul>
+<li><a class="reference internal" href="#">Quick Getting Started Guide to HKWHub App</a><ul>
+<li><a class="reference internal" href="#id1">Quick Getting Started Guide to HKWHub App</a><ul>
 <li><a class="reference internal" href="#overview-of-hkwhubapp">Overview of HKWHubApp</a><ul>
 <li><a class="reference internal" href="#main-screen">Main Screen</a></li>
 </ul>
@@ -2907,7 +2795,7 @@ grant_type=refresh_token&amp;refresh_token=5defcb0a9a49ac9b2403b8c78600638238d81
 <li><a class="reference internal" href="#play-a-song-from-web-server-with-selected-speakers">Play a Song from Web Server with selected speakers</a></li>
 <li><a class="reference internal" href="#play-tts-text-to-speech">Play TTS (Text-to-Speech)</a></li>
 <li><a class="reference internal" href="#play-tts-text-to-speech-as-party-mode">Play TTS (Text-to-Speech) as party mode</a></li>
-<li><a class="reference internal" href="#id1">Play a Song from Web Server with selected speakers</a></li>
+<li><a class="reference internal" href="#id2">Play a Song from Web Server with selected speakers</a></li>
 <li><a class="reference internal" href="#pause-the-current-playback">Pause the Current Playback</a></li>
 <li><a class="reference internal" href="#resume-the-current-playback-with-hub-media">Resume the Current Playback with Hub Media</a></li>
 <li><a class="reference internal" href="#resume-the-current-playback-with-hub-media-as-party-mode">Resume the Current Playback with Hub Media as Party Mode</a></li>
@@ -2927,7 +2815,7 @@ grant_type=refresh_token&amp;refresh_token=5defcb0a9a49ac9b2403b8c78600638238d81
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id2">OAuth2 Authorization API Specification</a><ul>
+<li><a class="reference internal" href="#id3">OAuth2 Authorization API Specification</a><ul>
 <li><a class="reference internal" href="#introduction">Introduction</a></li>
 <li><a class="reference internal" href="#types-of-authorization">Types of Authorization</a></li>
 <li><a class="reference internal" href="#using-the-password-grant-type">Using the Password Grant Type</a></li>
@@ -2942,15 +2830,12 @@ grant_type=refresh_token&amp;refresh_token=5defcb0a9a49ac9b2403b8c78600638238d81
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="architecture-overview.html"
-                        title="previous chapter">Architecture Overview</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="hkwhub-gettingstarted.html"
-                        title="next chapter">Quick Getting Started Guide to HKWHub App</a></p>
+  <p class="topless"><a href="hub-overview.html"
+                        title="previous chapter">Connecting Omni speakers to your services or devices</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/hub-overview.txt"
+      <li><a href="_sources/hkwhub-gettingstarted.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -2978,10 +2863,7 @@ grant_type=refresh_token&amp;refresh_token=5defcb0a9a49ac9b2403b8c78600638238d81
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="hkwhub-gettingstarted.html" title="Quick Getting Started Guide to HKWHub App"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="architecture-overview.html" title="Architecture Overview"
+          <a href="hub-overview.html" title="Connecting Omni speakers to your services or devices"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">Harman Developer 1.0 documentation</a> &raquo;</li> 
       </ul>
