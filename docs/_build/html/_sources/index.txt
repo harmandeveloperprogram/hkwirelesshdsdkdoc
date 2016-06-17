@@ -48,6 +48,8 @@ This documentation is organized into a few different sections as follows:
 
 .. _Playback Session Management: playback-session-management.html
 
+.. _REST API Specification: restapi-specification.html
+	
 .. _Getting start with HKWHub App: hkwhub-gettingstarted.html
 
 ----
@@ -88,7 +90,14 @@ Playback Session Management
 	:maxdepth: 2
 
 	playback-session-management
-	
+
+REST API Specification
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. toctree::
+	:maxdepth: 2
+
+	restapi-specification
 	
 Getting start with HKWHub App
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
