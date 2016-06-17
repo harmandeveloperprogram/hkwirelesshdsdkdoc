@@ -35,7 +35,7 @@ This documentation is organized into a few different sections as follows:
 
 .. _Architecture Overview: architecture-overview.html
 
-.. _Connecting Omni Speakers to your services: architecture-overview.html
+.. _Connecting Omni Speakers to your services: hub-overview.html
 
 ----
 

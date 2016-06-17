@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>HKWHub App - Connecting your Omni speakers to any 3rd party services or devices (iOS) &mdash; Harman Developer 1.0 documentation</title>
+    <title>Connecting Omni speakers to your services or devices &mdash; Harman Developer 1.0 documentation</title>
     
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -45,24 +45,23 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="hkwhub-app-connecting-your-omni-speakers-to-any-3rd-party-services-or-devices-ios">
-<h1>HKWHub App - Connecting your Omni speakers to any 3rd party services or devices (iOS)<a class="headerlink" href="#hkwhub-app-connecting-your-omni-speakers-to-any-3rd-party-services-or-devices-ios" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="connecting-omni-speakers-to-your-services-or-devices">
+<h1>Connecting Omni speakers to your services or devices<a class="headerlink" href="#connecting-omni-speakers-to-your-services-or-devices" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="overview-of-hwkhub">
 <h2>Overview of HWKHub<a class="headerlink" href="#overview-of-hwkhub" title="Permalink to this headline">¶</a></h2>
-<p>HKWHub app is an iOS that that uses HKWirelessHD SDK and acts as a Web Hub that handles HTTP requests to control speakers and stream music. It enables any type of &#8220;connected&#8221; devices (like sensors or smart devices) and cloud-based service to connect HK Omni speakers and stream music.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p>Please note that HKWHub app is an on-going project, and not yet ready for production. We hope developers play around with this app and implement their own apps or services by integrating many other IoT devices or services and adding intelligence to the Hub app.</p>
-<p class="last">Any feedback or request for new APIs and features are always welcome.</p>
-</div>
 <div class="section" id="use-cases">
 <h3>Use Cases<a class="headerlink" href="#use-cases" title="Permalink to this headline">¶</a></h3>
 <div class="figure">
 <img alt="_images/hub-use-cases.png" src="_images/hub-use-cases.png" />
 </div>
 </div>
+<div class="section" id="hub-speaker">
+<h3>Hub Speaker<a class="headerlink" href="#hub-speaker" title="Permalink to this headline">¶</a></h3>
+<p>To enable your Omni speakers to be controlled by other services or devices either in the Internet or in local network, one of your speakers should become a Hub Speaker. A Hub speaker is a regular HK Omni speaker that is configured as a Hub. A Hub device can control other HK Omni speakers when it receives a REST request from other clients. Hub speaker needs to be connected all the time to the HKIoTCloud which actually receives HTTP request from client in the Internet, and forward the command to the Hub speaker to control other speakers. To handle a HTTP request from devices in local network, Hub Speaker runs a web server inside.</p>
+</div>
 <div class="section" id="hkwhub-app">
 <h3>HKWHub App<a class="headerlink" href="#hkwhub-app" title="Permalink to this headline">¶</a></h3>
+<p>HKWHub app is an iOS app that uses HKWirelessHD SDK and acts as a Hub Speaker that handles REST requests to control speakers and stream music. Like Hub Speaker, HKWHub is always connected to HKIoTCloud and runs a web server inside that handles HTTP requests of REST API.</p>
 <p>Web Hub handles all the requests from and response to smart devices, sensors or clouds to control audio playback with wireless speakers in the house.</p>
 <div class="section" id="features">
 <h4>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h4>
@@ -2824,9 +2823,10 @@ grant_type=refresh_token&amp;refresh_token=5defcb0a9a49ac9b2403b8c78600638238d81
             </a></p>
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">HKWHub App - Connecting your Omni speakers to any 3rd party services or devices (iOS)</a><ul>
+<li><a class="reference internal" href="#">Connecting Omni speakers to your services or devices</a><ul>
 <li><a class="reference internal" href="#overview-of-hwkhub">Overview of HWKHub</a><ul>
 <li><a class="reference internal" href="#use-cases">Use Cases</a></li>
+<li><a class="reference internal" href="#hub-speaker">Hub Speaker</a></li>
 <li><a class="reference internal" href="#hkwhub-app">HKWHub App</a><ul>
 <li><a class="reference internal" href="#features">Features</a></li>
 <li><a class="reference internal" href="#usage">Usage</a></li>

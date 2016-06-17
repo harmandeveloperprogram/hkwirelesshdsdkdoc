@@ -1,18 +1,8 @@
-HKWHub App - Connecting your Omni speakers to any 3rd party services or devices (iOS)
+Connecting Omni speakers to your services or devices
 ==============================================================================================
 
 Overview of HWKHub
 ---------------------
-
-HKWHub app is an iOS that that uses HKWirelessHD SDK and acts as a Web Hub that handles HTTP requests to control speakers and stream music. It enables any type of "connected" devices (like sensors or smart devices) and cloud-based service to connect HK Omni speakers and stream music.
-
-.. note::
-
-	Please note that HKWHub app is an on-going project, and not yet ready for production. We hope developers play around with this app and implement their own apps or services by integrating many other IoT devices or services and adding intelligence to the Hub app.
-	
-	Any feedback or request for new APIs and features are always welcome.
-
-
 
 Use Cases
 ~~~~~~~~~~~~
@@ -20,8 +10,16 @@ Use Cases
 .. figure:: img/hub/hub-use-cases.png
 
 
-HKWHub App 
+Hub Speaker
+~~~~~~~~~~~~~
+
+To enable your Omni speakers to be controlled by other services or devices either in the Internet or in local network, one of your speakers should become a Hub Speaker. A Hub speaker is a regular HK Omni speaker that is configured as a Hub. A Hub device can control other HK Omni speakers when it receives a REST request from other clients. Hub speaker needs to be connected all the time to the HKIoTCloud which actually receives HTTP request from client in the Internet, and forward the command to the Hub speaker to control other speakers. To handle a HTTP request from devices in local network, Hub Speaker runs a web server inside. 
+
+
+HKWHub App
 ~~~~~~~~~~~~
+
+HKWHub app is an iOS app that uses HKWirelessHD SDK and acts as a Hub Speaker that handles REST requests to control speakers and stream music. Like Hub Speaker, HKWHub is always connected to HKIoTCloud and runs a web server inside that handles HTTP requests of REST API.
 
 Web Hub handles all the requests from and response to smart devices, sensors or clouds to control audio playback with wireless speakers in the house.
 
