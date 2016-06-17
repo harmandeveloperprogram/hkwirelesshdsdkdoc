@@ -26,7 +26,8 @@ This documentation is organized into a few different sections as follows:
 `Architecture Overview`_
     This section explains about the overall architecture HKWirelessHD technology.
 
-
+`Connecting Omni Speakers to your services`_
+	This section explains how your apps or services can connect Omni speakers using HKWirelessHD REST APIs.
 	
 ----
 
@@ -34,6 +35,7 @@ This documentation is organized into a few different sections as follows:
 
 .. _Architecture Overview: architecture-overview.html
 
+.. _Connecting Omni Speakers to your services: architecture-overview.html
 
 ----
 
@@ -58,7 +60,15 @@ Architecture Overview
 	architecture-overview
 	
 
+Connecting Omni Speakers to your services
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. toctree::
+	:maxdepth: 2
+
+	hub-overview
+	
+	
 Search
 ======
 
