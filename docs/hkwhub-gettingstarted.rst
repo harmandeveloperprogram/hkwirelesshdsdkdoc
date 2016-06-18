@@ -479,6 +479,4 @@ Session Timeout
 - Session timer is extended (renewed) once a playback is executed successfully.
 - All requests with expired session will be denied and "SessionNotFound" error returns.
 
-
-
 ----
