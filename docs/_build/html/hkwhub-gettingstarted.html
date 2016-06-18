@@ -461,53 +461,6 @@
 </div>
 </div>
 </div>
-<div class="section" id="playback-session-management">
-<h2>Playback Session Management<a class="headerlink" href="#playback-session-management" title="Permalink to this headline">¶</a></h2>
-<p>Since the HKWHub app should be able to handle REST HTTP requests from more than one clients at the same time, the HKWHub app manages the requests with session information associated with the priority when a new playback is initiated.</p>
-<p>The following is the policy of the session management:</p>
-<div class="section" id="playback-session-creation">
-<h3>Playback Session Creation<a class="headerlink" href="#playback-session-creation" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li>When a client wants to start a playback, it sets the priority of the session (using <code class="docutils literal"><span class="pre">Priority=&lt;priority</span> <span class="pre">value&gt;</span></code> parameter).</li>
-<li>If Priority parameter is not specified, HKWHub app assumes it as default value, that is, 100.</li>
-</ul>
-</div>
-<div class="section" id="priority-of-session">
-<h3>Priority of Session<a class="headerlink" href="#priority-of-session" title="Permalink to this headline">¶</a></h3>
-<ul>
-<li><p class="first">Each session is associated with a priority value which will be used to determine which request can override the current on-going playback session.</p>
-</li>
-<li><dl class="first docutils">
-<dt>The priority value is specified as parameter (<code class="docutils literal"><span class="pre">Priority</span></code>) when the client calls <code class="docutils literal"><span class="pre">play_xxx</span></code>.</dt>
-<dd><ul class="first last simple">
-<li>If the command does not specify the Priority parameter, 100 is set as default value.</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>If the priority of a new playback request, such as <code class="docutils literal"><span class="pre">play_hub_media</span></code> or <code class="docutils literal"><span class="pre">play_web_media</span></code>, and so on, is greater than or equal to the priority of the current playback session, then it interrupts the current playback session, that is, stops the current playback session and start a new playback for itself.</dt>
-<dd><ul class="first last simple">
-<li>The playback status of the interrupted session becomes <code class="docutils literal"><span class="pre">PlayerStateStopped</span></code>. (see the related API in the next section)</li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-<p>The following diagrams show how HKWHub app handles incoming playback request based on the session priorities.</p>
-<div class="figure">
-<img alt="Session management flow diagram" src="_images/session-management.png" />
-</div>
-</div>
-<div class="section" id="session-timeout">
-<h3>Session Timeout<a class="headerlink" href="#session-timeout" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li>A session becomes expired and invalid when about 60 minutes is passed since the last command was received.</li>
-<li>Session timer is extended (renewed) once a playback is executed successfully.</li>
-<li>All requests with expired session will be denied and &#8220;SessionNotFound&#8221; error returns.</li>
-</ul>
-</div>
-</div>
 </div>
 
 
@@ -557,12 +510,6 @@
 <li><a class="reference internal" href="#i-set-volume">i. Set Volume</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li><a class="reference internal" href="#playback-session-management">Playback Session Management</a><ul>
-<li><a class="reference internal" href="#playback-session-creation">Playback Session Creation</a></li>
-<li><a class="reference internal" href="#priority-of-session">Priority of Session</a></li>
-<li><a class="reference internal" href="#session-timeout">Session Timeout</a></li>
 </ul>
 </li>
 </ul>
