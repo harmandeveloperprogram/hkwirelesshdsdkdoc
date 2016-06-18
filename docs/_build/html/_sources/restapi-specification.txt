@@ -82,7 +82,8 @@ Close the session. The SessionToken information is removed from the session tabl
 	
 	.. code-block:: json	
 	
-		http://<server_host>/api/v1/close_session?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh
+		http://<server_host>/api/v1/close_session?SessionToken=
+		    r:abciKaTbUgdpQFuvYtgMm0FRh
 		
 	- Response: 
 
@@ -129,7 +130,8 @@ Returns the number of speakers available in the network.
 	
 	.. code-block:: json
 	
-		http://<server_host>/api/v1/device_count?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh
+		http://<server_host>/api/v1/device_count?SessionToken=
+		      r:abciKaTbUgdpQFuvYtgMm0FRh
 		
 	- Response: 
 
@@ -175,7 +177,8 @@ Returns the list of speakers and their information including several status info
 	
 	.. code-block:: json	
 	
-		http://<server_host>/api/v1/device_list?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh
+		http://<server_host>/api/v1/device_list?SessionToken=
+		      r:abciKaTbUgdpQFuvYtgMm0FRh
 	
 	- Response: 
 
@@ -283,7 +286,8 @@ Gets the device information of a particular device (speaker) identified by Devic
 	
 	.. code-block:: json
 	
-		http://<server_host>/api/v1/device_info?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh&DeviceID=129321920968880
+		http://<server_host>/api/v1/device_info?SessionToken=
+		       r:abciKaTbUgdpQFuvYtgMm0FRh&DeviceID=129321920968880
 
 	- Response: 
 
@@ -353,7 +357,8 @@ Add a speaker to playback session. Once a speaker is added, then the speaker wil
 	
 	.. code-block:: json
 	
-		http://<server_host>/api/v1/add_device_to_session?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh&DeviceID=129321920968880
+		http://<server_host>/api/v1/add_device_to_session?SessionToken=
+		       r:abciKaTbUgdpQFuvYtgMm0FRh&DeviceID=129321920968880
 
 	- Response: 
 
@@ -399,7 +404,8 @@ Removes a speaker from playback session. Once a speaker is removed, then the spe
 	
 	.. code-block:: json
 	
-		http://<server_host>/api/v1/remove_device_from_session?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh&DeviceID=129321920968880
+		http://<server_host>/api/v1/remove_device_from_session?SessionToken=
+		       r:abciKaTbUgdpQFuvYtgMm0FRh&DeviceID=129321920968880
 		
 	- Response: 
 	
@@ -567,7 +573,8 @@ Plays a song in the Media List of the Hub app. Each music item is identified wit
 	
 	.. code-block:: json
 	
-		http://<server_host>/api/v1/play_hub_media?SessionToken=r:abciKaTbUgdpQFuvYtgMm0F&PersistentID=7387446959931482519
+		http://<server_host>/api/v1/play_hub_media?SessionToken=
+		           r:abciKaTbUgdpQFuvYtgMm0F&PersistentID=7387446959931482519
 
 	- Response: 
 
@@ -612,7 +619,8 @@ Plays a song in the Media List with all speakers available. So, regardless of cu
 	
 	.. code-block:: json 
 		
-		http://<server_host>/api/v1/play_hub_media_party_mode?SessionToken=r:abciKaTbUgdpQFuvYtgMm0F&PersistentID=7387446959931482519
+		http://<server_host>/api/v1/play_hub_media_party_mode?SessionToken=
+		           r:abciKaTbUgdpQFuvYtgMm0F&PersistentID=7387446959931482519
 		
 	- Response: 
 
@@ -657,7 +665,9 @@ Plays a song in the Media List with selected speakers. The selected speakers are
 	
 	.. code-block:: json
 	
-		http://<server_host>/api/v1/play_hub_media_selected_speakers?SessionToken=r:abciKaTbUgdpQFuvYtgMm0F&PersistentID=7387446959931482519&DeviceIDList=34317244381360,129321920968880
+		http://<server_host>/api/v1/play_hub_media_selected_speakers?SessionToken=
+		            r:abciKaTbUgdpQFuvYtgMm0F&PersistentID=7387446959931482519&
+					DeviceIDList=34317244381360,129321920968880
 
 	- Response: 
 
@@ -712,7 +722,8 @@ Plays a song from Web (http:) or rstp (rstp:) or mms (mms:) server. The URL of t
 	
 	.. code-block:: json
 	
-		http://<server_host_name>/api/v1/play_web_media?SessionToken=r:abciKaTbUgdpQFuvYtgMm0F&MediaUrl=http://seonman.github.io/music/hyolyn.mp3
+		http://<server_host_name>/api/v1/play_web_media?SessionToken=
+		          r:abciKaTbUgdpQFuvYtgMm0F&MediaUrl=http://seonman.github.io/music/hyolyn.mp3
 			
 	- Response: 
 
@@ -765,7 +776,8 @@ Plays a song from Web server with all speakers. The URL of the song to play is s
 	
 	.. code-block:: json
 	
-		http://<server_host>/api/v1/play_web_media_party_mode?SessionToken=r:abciKaTbUgdpQFuvYtgMm0F&MediaUrl=http://seonman.github.io/music/hyolyn.mp3
+		http://<server_host>/api/v1/play_web_media_party_mode?SessionToken=
+		         r:abciKaTbUgdpQFuvYtgMm0F&MediaUrl=http://seonman.github.io/music/hyolyn.mp3
 			
 	- Response: 
 
@@ -817,7 +829,9 @@ Plays a song from Web server with selected speakers. The URL of the song to play
 	
 	.. code-block:: json
 	
-		http://<server_host>/api/v1/play_web_media_selected_speakers?SessionToken=r:abciKaTbUgdpQFuvYtgMm0F&MediaUrl=http://seonman.github.io/music/hyolyn.mp3&DeviceIDList=34317244381360,129321920968880
+		http://<server_host>/api/v1/play_web_media_selected_speakers?SessionToken=
+		         r:abciKaTbUgdpQFuvYtgMm0F&MediaUrl=http://seonman.github.io/music/hyolyn.mp3&
+				 DeviceIDList=34317244381360,129321920968880
 
 	- Response: 
 
@@ -978,7 +992,9 @@ Plays a Text-to-Speech audio from VoiceRRS server with selected speakers. The Te
 	
 	.. code-block:: json
 	
-		http://<server_host>/api/v1/play_tts_selected_speakers?SessionToken=r:abciKaTbUgdpQFuvYtgMm0F&Text="Hello World. How are you today?"&DeviceIDList=34317244381360,129321920968880
+		http://<server_host>/api/v1/play_tts_selected_speakers?SessionToken=
+		      r:abciKaTbUgdpQFuvYtgMm0F&Text="Hello World. How are you today?"&
+			  DeviceIDList=34317244381360,129321920968880
 
 	- Response: 
 
@@ -1072,7 +1088,8 @@ Resume the Current Playback with Hub Media
 	
 	.. code-block:: json
 	
-		http://<server_host>/api/v1/resume_hub_media?SessionToken=r:abciKaTbUgdpQFuvYtgMm0F&PersistentID=7387446959931482519
+		http://<server_host>/api/v1/resume_hub_media?SessionToken=
+		       r:abciKaTbUgdpQFuvYtgMm0F&PersistentID=7387446959931482519
 		
 	- Response: 
 
@@ -1116,7 +1133,8 @@ Resume the Current Playback with Hub Media as Party Mode
 	
 	.. code-block:: json
 	
-		http://<server_host>/api/v1/resume_hub_media_party_mode?SessionToken=r:abciKaTbUgdpQFuvYtgMm0F&PersistentID=7387446959931482519
+		http://<server_host>/api/v1/resume_hub_media_party_mode?SessionToken=
+		          r:abciKaTbUgdpQFuvYtgMm0F&PersistentID=7387446959931482519
 
 	- Response: 
 
@@ -1160,7 +1178,9 @@ Resume the Current Playback with Hub Media with selected speakers
 	
 	.. code-block:: json
 
-		http://<server_host>/api/v1/resume_hub_media_selected_speakers?SessionToken=r:abciKaTbUgdpQFuvYtgMm0F&PersistentID=7387446959931482519&DeviceIDList=34317244381360,129321920968880
+		http://<server_host>/api/v1/resume_hub_media_selected_speakers?SessionToken=
+		         r:abciKaTbUgdpQFuvYtgMm0F&PersistentID=7387446959931482519&
+				 DeviceIDList=34317244381360,129321920968880
 
 	- Response: 
 
@@ -1382,7 +1402,8 @@ Get Volume for a particular device
 	
 	.. code-block:: json
 
-		http://<server_host>/api/v1/get_volume_device?SessionToken=r:abciKaTbUgdpQFuvYtgMm0F&DeviceID=1234567
+		http://<server_host>/api/v1/get_volume_device?SessionToken=
+		             r:abciKaTbUgdpQFuvYtgMm0F&DeviceID=1234567
 		
 	- Response: 
 
@@ -1470,7 +1491,8 @@ Set Volume for a particular device
 	
 	.. code-block:: json
 	
-		http://<server_host>/api/v1/set_volume_device?SessionToken=r:abciKaTbUgdpQFuvYtgMm0F&DeviceID=1234567&Volume=10
+		http://<server_host>/api/v1/set_volume_device?SessionToken=
+		            r:abciKaTbUgdpQFuvYtgMm0F&DeviceID=1234567&Volume=10
 		
 	- Response: 
 
@@ -1627,7 +1649,8 @@ Send as GET request.
 
 .. code-block:: json
 
-	https://hkiotcloud.herokuapp.com/oauth/authorize?response_type=code&client_id=n7HhiTnKYjJd4zmM&redirect_uri=https://your.app.com/oauthCallbackHKIoTCloud
+	https://hkiotcloud.herokuapp.com/oauth/authorize?response_type=code&
+	          client_id=n7HhiTnKYjJd4zmM&redirect_uri=https://your.app.com/oauthCallbackHKIoTCloud
 
 
 HKIoTCloud Returns a Response to Your Registration Website
@@ -1669,7 +1692,9 @@ Next, your service leverages the returned authorization code to ask for an acces
 	Content-Type: application/x-www-form-urlencoded
 	Cache-Control: no-cache
  
-	grant_type=authorization_code&code=2b3711911f4f2263e785eeda386046ccc8da6aee&client_id=n7HhiTnKYjJd4zmM&client_secret=ANRfB9z94xtcxFGXrd5XHXEiKg43UY&redirect_uri=https://hkvoicecloud.herokuapp.com/oauthCallbackHKIoTCloud
+	grant_type=authorization_code&code=2b3711911f4f2263e785eeda386046ccc8da6aee&
+	    client_id=n7HhiTnKYjJd4zmM&client_secret=ANRfB9z94xtcxFGXrd5XHXEiKg43UY
+		&redirect_uri=https://hkvoicecloud.herokuapp.com/oauthCallbackHKIoTCloud
 
 
 **Sample Response:**
@@ -1729,7 +1754,8 @@ The access token is valid for one hour. When the access token expires or is abou
 	Content-Type: application/x-www-form-urlencoded
 	Cache-Control: no-cache
  
-	grant_type=refresh_token&refresh_token=5defcb0a9a49ac9b2403b8c78600638238d81011&client_id=n7HhiTnKYjJd4zmM&client_secret=ANRfB9z94xtcxFGXrd5XHXEiKg43UY
+	grant_type=refresh_token&refresh_token=5defcb0a9a49ac9b2403b8c78600638238d81011&
+	client_id=n7HhiTnKYjJd4zmM&client_secret=ANRfB9z94xtcxFGXrd5XHXEiKg43UY
 
 
 **Sample Response:**
