@@ -69,7 +69,6 @@ This starts a new session. As a response, the client will receive a SessionToken
 		ResponseOf = "init_session"
 		}
 			
-----
 
 Close Session
 ^^^^^^^^^^^^^^
