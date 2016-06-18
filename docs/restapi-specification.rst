@@ -42,7 +42,8 @@ This starts a new session. As a response, the client will receive a SessionToken
 	
 	.. code-block:: json
 	
-		curl -H "Authorization: Bearer 15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8" http://<server_host>/api/v1/init_session
+		curl -H "Authorization: Bearer 15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8" 
+		    http://<server_host>/api/v1/init_session
 
 	- Response: 
 
