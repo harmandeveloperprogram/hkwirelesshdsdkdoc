@@ -14,7 +14,7 @@ In case of multi-channel streaming, each speaker is assigned with a role to proc
 Source device can be a mobile device like iPhone or Android phone, but Harman Kardon or JBL speakers, that is, a HK/JBL speaker can stream an audio to other speakers. Destination devices are Harman Kardon Omni speakers (Omni Adapt, Omni 10, Omni 20, Omni Bar, etc.) and JBL Link speakers. You can find more information on HK Omni speakers at http://www.harmankardon.com/content?ContentID=omni-v2.
 
 .. figure:: img/hub/architecture-hub.png
-
+	:caption: Hub Speaker controlling other speakers
 
 Use of HKWirelessHD API to stream audio to Omni Speakers
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
