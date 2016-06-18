@@ -1,4 +1,4 @@
-Architecture Overview 
+HKWirelessHD Architecture Overview 
 ===========================
 
 Overview

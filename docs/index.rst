@@ -66,8 +66,8 @@ Introduction
 	introduction
 	
 
-Architecture Overview
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+HKWirelessHD Architecture Overview
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. toctree::
 	:maxdepth: 2
