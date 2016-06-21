@@ -139,14 +139,10 @@ Hub Speaker (or HKWHub App) supports the following two modes:
 .. _this link: http://harmandeveloperdocs.readthedocs.org/en/latest/iOS/hkwhub-spec.html#id2
 
 - Local Server Mode
-	- HKWHub app lauches a web server internally, and then handles the REST API requests for speaker control and playback from devices, sensors or applications in the same local network. 
-	- HKWHub app opens a HTTP port in the local network, so if devices or services outside of the local network want to reach out to HKWHub (and then speakers) then user needs to configure the route so that a request coming from outside can be routed to HKWHub app accordingly, such as firewall, etc.
-
-- PubNub Cloud mode
-	- HKWHub app uses PubNub API/SDK to connect to PubNub server and communicate with it to receive commands from other PubNub clients, and also sends events to other PubNub client, through a common PubNub channel.
-	- By setting the same PubNub channel, any client devices or services can communicate with the HKWHub app, and then control speakers and playback of audio.
+	- Hub Speaker or HKWHub app runs a web server internally, and  handles the REST requests for speaker control and playback from devices, sensors or applications in the same local network. 
+	- Hub Speaker or HKWHub app opens a HTTP port in the local network, so if devices or services outside of the local network want to reach out to HKWHub (and then speakers) then user needs to configure the route so that a request coming from outside can be routed to HKWHub app accordingly, such as firewall, etc.
 	
-The following figure shows how HKWHub app handles three modes.
+The following figure explains how HKWHub app handles the different modes.
 
 .. figure:: img/hub/HubAppV2.png
 
