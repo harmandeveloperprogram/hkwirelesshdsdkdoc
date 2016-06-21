@@ -33,13 +33,11 @@ There are two types of users as below, and HKWirelessHD API and SDK is intended 
 Harman Devices
 ~~~~~~~~~~~~~~~~~~
 
-- The audio devices – speakers, headphone, amplifiers, etc. - branded of Harman Kardon, JBL, or other Harman brands.
-	- For Phase 1, we consider Harman Kardon Omni MK2 and JBL Link
-- It should also need to communicate with user’s smartphone app for setup, configuration and control.
+Harman Kardon Omni and JBL Link  wireless speakers
 
 Common device functions
 ^^^^^^^^^^^^^^^^^^^^^^^^^
-Regardless of Hub capability, every Harman device should support the following functions:
+Every Harman devices support the following functions:
 
 - Play Firecast-based multi-room audio
 - Support 3rd party streaming services, like Google Cast or Spotify
