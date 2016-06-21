@@ -8,8 +8,6 @@ Connecting Omni speakers to your services or devices
 
 HKWirelessHD API is designed for Harman Kardon and JBL wireless speakers to be connected with third-party services or devices in standard base web protocols. This section describes the overall use cases and architecture of HKWirelessHD API.
 
-Context Diagram
-~~~~~~~~~~~~~~~~~~~~
 
 The following figures show the brief diagram of context diagram explaining how the Harman Kardon and JBL speakers can be connected with other devices or services.
 
@@ -18,79 +16,90 @@ The following figures show the brief diagram of context diagram explaining how t
 	Context Diagram
 
 Users (End Customer and Developer)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Harman cloud should support two types of users:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-•	End user
-o	Install Harman Devices and use to play sound
-o	Use Harman device to work with 3rd party devices or services to perform IoT functions
-o	User can use voice commands to control 3rd party devices or to do voice search.
+There are two types of users as below, and HKWirelessHD API and SDK is intended to support developers to create Harman Kardon and JBL compatible applications or services for end user.
 
-•	Developer
-o	3rd party developers create HK/JBL applications or services for end user based on Harman APIs or 3rd party APIs that Harman device supports.
--	e.g. Harman Cloud REST APIs
--	e.g. REST APIs provided by Harman device directly
--	e.g. 3rd party APIs, like Google Weave, etc.
+- End user
+	- Install Harman Kardon/JBL speakers and use to play sound
+	- Use Harman speakers to work with 3rd party devices or services to perform IoT functions
+	- Optionally, user can use voice commands to control 3rd party devices or to do voice search (this feature is not supported by the API yet.)
 
-1.2.2.	Harman Devices
-The device that the project needs to build.
+- Developer
+	- 3rd party developers create Harman Kardon/JBL applications or services for end user based on Harman APIs or 3rd party APIs that Harman device supports.
+		- e.g. Harman Cloud REST APIs
+		- e.g. REST APIs provided by Harman device directly
 
-•	The audio devices – speakers, headphone, amplifiers, etc. - branded of Harman Kardon, JBL, or other Harman brands.
-o	For Phase 1, we consider Harman Kardon Omni MK2 and JBL Link
-•	It should also need to communicate with user’s smartphone app for setup, configuration and control.
+Harman Devices
+~~~~~~~~~~~~~~~~~~
 
-1.2.2.1.	Common device functions
+- The audio devices – speakers, headphone, amplifiers, etc. - branded of Harman Kardon, JBL, or other Harman brands.
+	- For Phase 1, we consider Harman Kardon Omni MK2 and JBL Link
+- It should also need to communicate with user’s smartphone app for setup, configuration and control.
+
+Common device functions
+^^^^^^^^^^^^^^^^^^^^^^^^^
 Regardless of Hub capability, every Harman device should support the following functions:
 
-•	Play Firecast-based multi-room audio
-•	Support 3rd party streaming services, like Google Cast or Spotify
-•	Voice command
-o	User can talk to any Harman device (regardless of Hub enabled or not) to initiate voice commands.
-o	The response of voice command should return to the origin of the voice commands, regardless of Hub enabled or not.
-•	Data Analytics
-o	Every Harman device needs to connect to Harman Data Analytics server to send the logs collected during the operation.
+- Play Firecast-based multi-room audio
+- Support 3rd party streaming services, like Google Cast or Spotify
+- Voice command
+	- User can talk to any Harman device (regardless of Hub enabled or not) to initiate voice commands.
+	- The response of voice command should return to the origin of the voice commands, regardless of Hub enabled or not.
+- Data Analytics
+	- Every Harman device needs to connect to Harman Data Analytics server to send the logs collected during the operation.
 
-1.2.2.2.	Hub-specific function
+Hub-specific function
+^^^^^^^^^^^^^^^^^^^^^^^^
 Any Harman device will be enabled with Hub-specific functions, but only one Harman device should be selected as Hub device. (In this document, we call the Hub function-enabled devices as “Hub Device”. And the device with no hub-function enabled as “Non-Hub Device”.)
 
 Hub device needs to perform the following additional functions:
 
-•	Communicate with the Harman Cloud to handle multi-room audio requests.
-•	Control local IoT devices when receiving requests from Harman cloud or voice service
+- Communicate with the Harman Cloud to handle multi-room audio requests.
+- Control local IoT devices when receiving requests from Harman cloud or voice service
 
-1.2.3.	Mobile App 
+Mobile App 
+~~~~~~~~~~~~~
+
 The mobile app will be used for initial setup, configuration and in some cases control of Harman devices, for example, for network setting, 3rd party service or device authorization, and so on.
 
 It may need to communicate with Harman Cloud to get and set the configuration information from/to the cloud.
 
 In some scenarios, it may be desirable to have remote control (off local network) of Harman devices using the cloud system as a control hub, e.g. remote paging functionality.
-1.2.4.	Harman Cloud Servers
+
+Harman Cloud Servers
+~~~~~~~~~~~~~~~~~~~~~~
+
 Harman Cloud communicates all with Harman users (via smartphone app or web page), Harman devices, 3rd party clients (services or devices), 3rd party providers, and other Harman internal clouds like device management (e.g. Redbend cloud, etc.) and data analytics servers.
 
 
-1.2.5.	3rd Party client service or device
+3rd Party client service or device
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 3rd party client service or device will connect to Harman Cloud and send REST API request to control Harman devices.
 
 The following 3rd party clients are mandatory to support:
 
-•	IFTTT (https://developers.ifttt.com)
-1.2.6.	3rd Party service providers
+- IFTTT (https://developers.ifttt.com)
+
+
+3rd Party service providers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Harman Cloud can connect to 3rd party service providers to control 3rd party devices or to receive services on behalf of end customer. In most case, user will use voice commands or button presses to initiate a command to control 3rd party devices via 3rd party service provider.
 
 For example, user will say a voice command to speaker (Harman device), then the speaker send the voice to or get it interpreted by 3rd party voice services. The result will be sent to Harman Cloud. Then, Harman Cloud connects Nest server or SmartThings servers to control user’s Nest or SmartThings devices through the 3rd party servers.
 
 The following 3rd party services are mandatory to support:
 
-•	NEST (https://developer.nest.com)
-•	SmartThings (https://developer.smartthings.com)
+- NEST (https://developer.nest.com)
+- SmartThings (https://developer.smartthings.com)
 
-1.2.7.	Voice Recognition Cloud
-The voice command will be interpreted by 3rd party Voice services. The following voice service should be integrated.
 
-•	Amazon Alexa
-•	Houndify
+3rd Party Local clients
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-1.2.8.	3rd Party Local clients
+
 3rd party client devices or application which is connected in the local network can also send requests to Harman device to control audio playback or other device control using voice command.
 
 To support this feature, Harman devices should be able to handle REST requests from the local devices.
