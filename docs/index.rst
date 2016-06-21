@@ -29,6 +29,9 @@ This documentation is organized into a few different sections as follows:
 `REST API Specification`_
 	This section describe on REST APIs.
 	
+`OAuth2 API Specification`_
+	This section describe on OAuth2 REST APIs.
+	
 `Getting start with HKWHub App`_
 	This section explains how to use HKWHub App (iOS) to simulate Hub Speaker to control other HK Omni speakers.
 
@@ -43,6 +46,8 @@ This documentation is organized into a few different sections as follows:
 
 .. _REST API Specification: restapi-specification.html
 	
+.. _OAuth2 API Specification: oauth.html
+
 .. _Getting start with HKWHub App: hkwhub-gettingstarted.html
 
 .. _Playback Session Management: playback-session-management.html
@@ -78,6 +83,14 @@ REST API Specification
 	:maxdepth: 2
 
 	restapi-specification
+	
+OAuth2 API Specification
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. toctree::
+	:maxdepth: 2
+
+	oauth
 	
 Getting start with HKWHub App
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -48,7 +48,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Harman Developer'
-copyright = u'2015, Harman International'
+copyright = u'2016, Harman International'
 author = u'Harman International Developer Program'
 
 # The version info for the project you're documenting, acts as replacement for

@@ -128,10 +128,10 @@ Hub Device or HKWHub App handles requests from and sends responses to sensors, s
 .. figure:: img/hub/architecture.png
 
 
-The latest version of HKWHub app supports the following three modes:
+Hub Speaker (or HKWHub App) supports the following two modes:
 
 - Cloud mode (HKIoTCloud)
-	- HKWHub app communicates with HKIoTCloud to receive speaker control commands by REST API call from 3rd party services or clients.
+	- Hub Speaker or HKWHub app communicates with HKIoTCloud to receive speaker control commands by REST API call from 3rd party services or clients.
 	- HKIoTCloud handles the REST API request from any clients in the Internet. The clients can be 3rd party apps or services or devices like smartphone or sensors.
 	- In this mode, any 3rd party services or clients in the Internet can reach out to HKWHub app and then control speakers and playback of audio.
 	- All the 3rd party apps or services should be authorized with OAuth2 to get access token. An access token is required when 3rd party apps call the REST APIs. The detailed information about OAuth2 is available at `this link`_.
