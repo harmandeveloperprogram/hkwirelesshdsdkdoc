@@ -60,10 +60,10 @@ The mobile app is used for initial setup and configuration. In some cases, mobil
 It communicates with Harman Cloud to get and set the configuration information from/to the cloud.
 
 
-Harman Cloud Servers
-~~~~~~~~~~~~~~~~~~~~~~
+Harman Cloud Servers (HKIoTCloud)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Harman Cloud communicates with Harman users (via mobile app or web page), Harman devices, 3rd party clients (services or devices), 3rd party providers. Harman Cloud allows the users or services in the Internet (outside of local network) to access HK/JBL speakers located in the local home network.
+Harman Cloud, or HKIoTCloud, communicates with Harman users (via mobile app or web page), Harman devices, 3rd party clients (services or devices), 3rd party providers. Harman Cloud allows the users or services in the Internet (outside of local network) to access HK/JBL speakers located in the local home network.
 
 3rd Party client service or device
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -96,7 +96,7 @@ Use Cases Illustration
 Hub Speaker
 ~~~~~~~~~~~~~
 
-To enable your Omni speakers to be controlled by other services or devices either in the Internet or in local network, one of your speakers should become a Hub Speaker. A Hub speaker is just a regular HK Omni speaker, but is configured as a Hub. A Hub device can control other HK Omni speakers when it receives a REST requests from other clients. Hub speaker needs to be connected all the time to the HKIoTCloud which actually receives HTTP request from client in the Internet. HKIoTCloud forwards the command to the Hub speaker to control other speakers as well as Hub speaker. 
+To enable your Omni speakers to be controlled by other services or devices either in the Internet or in local network, one of your speakers should become a Hub Speaker. A Hub speaker is just a regular HK Omni speaker, but is configured as a Hub. A Hub device can control other HK Omni speakers when it receives a REST requests from other clients. Hub speaker needs to be connected all the time to the Harman Cloud (or HKIoTCloud) which actually receives HTTP request from client in the Internet. Harman Cloud forwards the command to the Hub speaker to control other speakers as well as Hub speaker. 
 
 In addition, to handle HTTP requests from devices in local network, not through HKIoTCloud, Hub Speaker runs a web server inside. 
 
@@ -104,11 +104,11 @@ In addition, to handle HTTP requests from devices in local network, not through 
 HKWHub App
 ~~~~~~~~~~~~
 
-HKWHub app is an iOS app that uses HKWirelessHD SDK and acts as a Hub Speaker that handles REST requests to control speakers. Like Hub Speaker, HKWHub App is always connected to HKIoTCloud and also runs a web server inside that handles HTTP requests of REST API.
+HKWHub app is an iOS app that simulates Hub speaker with HKWirelessHD SDK. It acts like a Hub Speaker that handles REST requests to control speakers. Like Hub Speaker, HKWHub App is always connected to HKIoTCloud and also runs a web server inside that handles HTTP requests of REST API.
 
 
-Features
-^^^^^^^^^
+HKWHub App has following features:
+
 - Supports integration with cloud-based services, smart devices or sensors
 	- Receives the requests from clouds (web service) outside or sensors in the house
 	- Translates the requests into HKWirelessHD commands and controls the speakers based on the requests.
@@ -117,17 +117,13 @@ Features
 	- Maintain user’s media list from iOS local music library or streaming services, like MixRadio, etc.
 	- Maintain a collection of sound files used for IoT use cases, like door bell, etc.
 
-Usage
-^^^^^^^^
-- User may place an iOS device on the cradle and run WebHub app. Then the app acts as Web Hub. (A stationary device in a house lik AppleTV can be a nice iOS device for WebHub.)
-
 
 .. figure:: img/hub/hub-app.png
 
-Overall Architecture
-~~~~~~~~~~~~~~~~~~~~~~~
+Overall Architecture Hub Device (or Hub App)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-HKWHub App handles requests from and sends responses to sensors, smart devices or cloud-based services to control audio playback with wireless speakers in the house.
+Hub Device or HKWHub App handles requests from and sends responses to sensors, smart devices or cloud-based services to control audio playback with wireless speakers in the house.
 
 .. figure:: img/hub/architecture.png
 

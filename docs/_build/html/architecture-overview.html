@@ -118,9 +118,9 @@
 <p>The mobile app is used for initial setup and configuration. In some cases, mobile app can be used to provide user interface for 3rd party authorization, and so on.</p>
 <p>It communicates with Harman Cloud to get and set the configuration information from/to the cloud.</p>
 </div>
-<div class="section" id="harman-cloud-servers">
-<h3>Harman Cloud Servers<a class="headerlink" href="#harman-cloud-servers" title="Permalink to this headline">¶</a></h3>
-<p>Harman Cloud communicates with Harman users (via mobile app or web page), Harman devices, 3rd party clients (services or devices), 3rd party providers. Harman Cloud allows the users or services in the Internet (outside of local network) to access HK/JBL speakers located in the local home network.</p>
+<div class="section" id="harman-cloud-servers-hkiotcloud">
+<h3>Harman Cloud Servers (HKIoTCloud)<a class="headerlink" href="#harman-cloud-servers-hkiotcloud" title="Permalink to this headline">¶</a></h3>
+<p>Harman Cloud, or HKIoTCloud, communicates with Harman users (via mobile app or web page), Harman devices, 3rd party clients (services or devices), 3rd party providers. Harman Cloud allows the users or services in the Internet (outside of local network) to access HK/JBL speakers located in the local home network.</p>
 </div>
 <div class="section" id="rd-party-client-service-or-device">
 <h3>3rd Party client service or device<a class="headerlink" href="#rd-party-client-service-or-device" title="Permalink to this headline">¶</a></h3>
@@ -143,14 +143,13 @@
 </div>
 <div class="section" id="hub-speaker">
 <h3>Hub Speaker<a class="headerlink" href="#hub-speaker" title="Permalink to this headline">¶</a></h3>
-<p>To enable your Omni speakers to be controlled by other services or devices either in the Internet or in local network, one of your speakers should become a Hub Speaker. A Hub speaker is just a regular HK Omni speaker, but is configured as a Hub. A Hub device can control other HK Omni speakers when it receives a REST requests from other clients. Hub speaker needs to be connected all the time to the HKIoTCloud which actually receives HTTP request from client in the Internet. HKIoTCloud forwards the command to the Hub speaker to control other speakers as well as Hub speaker.</p>
+<p>To enable your Omni speakers to be controlled by other services or devices either in the Internet or in local network, one of your speakers should become a Hub Speaker. A Hub speaker is just a regular HK Omni speaker, but is configured as a Hub. A Hub device can control other HK Omni speakers when it receives a REST requests from other clients. Hub speaker needs to be connected all the time to the Harman Cloud (or HKIoTCloud) which actually receives HTTP request from client in the Internet. Harman Cloud forwards the command to the Hub speaker to control other speakers as well as Hub speaker.</p>
 <p>In addition, to handle HTTP requests from devices in local network, not through HKIoTCloud, Hub Speaker runs a web server inside.</p>
 </div>
 <div class="section" id="hkwhub-app">
 <h3>HKWHub App<a class="headerlink" href="#hkwhub-app" title="Permalink to this headline">¶</a></h3>
-<p>HKWHub app is an iOS app that uses HKWirelessHD SDK and acts as a Hub Speaker that handles REST requests to control speakers. Like Hub Speaker, HKWHub App is always connected to HKIoTCloud and also runs a web server inside that handles HTTP requests of REST API.</p>
-<div class="section" id="features">
-<h4>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h4>
+<p>HKWHub app is an iOS app that simulates Hub speaker with HKWirelessHD SDK. It acts like a Hub Speaker that handles REST requests to control speakers. Like Hub Speaker, HKWHub App is always connected to HKIoTCloud and also runs a web server inside that handles HTTP requests of REST API.</p>
+<p>HKWHub App has following features:</p>
 <ul>
 <li><dl class="first docutils">
 <dt>Supports integration with cloud-based services, smart devices or sensors</dt>
@@ -172,20 +171,13 @@
 </dl>
 </li>
 </ul>
-</div>
-<div class="section" id="usage">
-<h4>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li>User may place an iOS device on the cradle and run WebHub app. Then the app acts as Web Hub. (A stationary device in a house lik AppleTV can be a nice iOS device for WebHub.)</li>
-</ul>
 <div class="figure">
 <img alt="_images/hub-app.png" src="_images/hub-app.png" />
 </div>
 </div>
-</div>
-<div class="section" id="overall-architecture">
-<h3>Overall Architecture<a class="headerlink" href="#overall-architecture" title="Permalink to this headline">¶</a></h3>
-<p>HKWHub App handles requests from and sends responses to sensors, smart devices or cloud-based services to control audio playback with wireless speakers in the house.</p>
+<div class="section" id="overall-architecture-hub-device-or-hub-app">
+<h3>Overall Architecture Hub Device (or Hub App)<a class="headerlink" href="#overall-architecture-hub-device-or-hub-app" title="Permalink to this headline">¶</a></h3>
+<p>Hub Device or HKWHub App handles requests from and sends responses to sensors, smart devices or cloud-based services to control audio playback with wireless speakers in the house.</p>
 <div class="figure">
 <img alt="_images/architecture.png" src="_images/architecture.png" />
 </div>
@@ -348,18 +340,14 @@ So, the client of Web app need to call corresponding APIs for checking events re
 </ul>
 </li>
 <li><a class="reference internal" href="#mobile-app">Mobile App</a></li>
-<li><a class="reference internal" href="#harman-cloud-servers">Harman Cloud Servers</a></li>
+<li><a class="reference internal" href="#harman-cloud-servers-hkiotcloud">Harman Cloud Servers (HKIoTCloud)</a></li>
 <li><a class="reference internal" href="#rd-party-client-service-or-device">3rd Party client service or device</a></li>
 <li><a class="reference internal" href="#rd-party-service-providers">3rd Party service providers</a></li>
 <li><a class="reference internal" href="#rd-party-local-clients">3rd Party Local clients</a></li>
 <li><a class="reference internal" href="#use-cases-illustration">Use Cases Illustration</a></li>
 <li><a class="reference internal" href="#hub-speaker">Hub Speaker</a></li>
-<li><a class="reference internal" href="#hkwhub-app">HKWHub App</a><ul>
-<li><a class="reference internal" href="#features">Features</a></li>
-<li><a class="reference internal" href="#usage">Usage</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#overall-architecture">Overall Architecture</a></li>
+<li><a class="reference internal" href="#hkwhub-app">HKWHub App</a></li>
+<li><a class="reference internal" href="#overall-architecture-hub-device-or-hub-app">Overall Architecture Hub Device (or Hub App)</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#hkwirelesshd-api-architecture">HKWirelessHD API Architecture</a></li>
