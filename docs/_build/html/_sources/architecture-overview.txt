@@ -1,8 +1,6 @@
 HKWirelessHD Overview 
 =====================================
 
-
-
 Connecting Omni speakers to your services or devices
 ------------------------------------------------------
 
@@ -35,8 +33,8 @@ Harman Devices
 
 Harman Kardon Omni and JBL Link  wireless speakers
 
-Common device functions
-^^^^^^^^^^^^^^^^^^^^^^^^^
+(a) Common device functions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Every Harman devices support the following functions:
 
 - Play Firecast-based multi-room audio
@@ -47,8 +45,8 @@ Every Harman devices support the following functions:
 - Data Analytics
 	- Every Harman device needs to connect to Harman Data Analytics server to send the logs collected during the operation.
 
-Hub-specific function
-^^^^^^^^^^^^^^^^^^^^^^^^
+(b) Hub-specific function
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Any Harman device will be enabled with Hub-specific functions, but only one Harman device should be selected as Hub device. (In this document, we call the Hub function-enabled devices as “Hub Device”. And the device with no hub-function enabled as “Non-Hub Device”.)
 
 Hub device needs to perform the following additional functions:
@@ -101,8 +99,6 @@ The following 3rd party services are mandatory to support:
 3rd party client devices or application which is connected in the local network can also send requests to Harman device to control audio playback or other device control using voice command.
 
 To support this feature, Harman devices should be able to handle REST requests from the local devices.
-
-
 
 
 
