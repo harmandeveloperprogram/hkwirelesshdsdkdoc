@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>HKWirelessHD Architecture Overview &mdash; Harman Developer 1.0 documentation</title>
+    <title>HKWirelessHD Overview &mdash; Harman Developer 1.0 documentation</title>
     
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Harman Developer 1.0 documentation" href="index.html" />
-    <link rel="next" title="Connecting Omni speakers to your services or devices" href="hub-overview.html" />
+    <link rel="next" title="REST API Specification (including PubNub JSON format)" href="restapi-specification.html" />
     <link rel="prev" title="Introduction" href="introduction.html" /> 
   </head>
   <body role="document">
@@ -35,7 +35,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="hub-overview.html" title="Connecting Omni speakers to your services or devices"
+          <a href="restapi-specification.html" title="REST API Specification (including PubNub JSON format)"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="introduction.html" title="Introduction"
@@ -49,26 +49,195 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="hkwirelesshd-architecture-overview">
-<h1>HKWirelessHD Architecture Overview<a class="headerlink" href="#hkwirelesshd-architecture-overview" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="overall-configuration">
-<h3>Overall Configuration<a class="headerlink" href="#overall-configuration" title="Permalink to this headline">¶</a></h3>
+  <div class="section" id="hkwirelesshd-overview">
+<h1>HKWirelessHD Overview<a class="headerlink" href="#hkwirelesshd-overview" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="connecting-omni-speakers-to-your-services-or-devices">
+<h2>Connecting Omni speakers to your services or devices<a class="headerlink" href="#connecting-omni-speakers-to-your-services-or-devices" title="Permalink to this headline">¶</a></h2>
+<p>HKWirelessHD API is designed for Harman Kardon and JBL wireless speakers to be connected with third-party services or devices in standard base web protocols. This section describes the overall use cases and architecture of HKWirelessHD API.</p>
+<div class="section" id="context-diagram">
+<h3>Context Diagram<a class="headerlink" href="#context-diagram" title="Permalink to this headline">¶</a></h3>
+<p>The following figures show the brief diagram of context diagram explaining how the Harman Kardon and JBL speakers can be connected with other devices or services.</p>
+<div class="figure" id="id1">
+<img alt="_images/context-diagram.png" src="_images/context-diagram.png" />
+<p class="caption"><span class="caption-text">Context Diagram</span></p>
+</div>
+<div class="section" id="users-end-customer-and-developer">
+<h4>Users (End Customer and Developer)<a class="headerlink" href="#users-end-customer-and-developer" title="Permalink to this headline">¶</a></h4>
+<p>Harman cloud should support two types of users:</p>
+<ul class="simple">
+<li>End user</li>
+</ul>
+<p>o       Install Harman Devices and use to play sound
+o       Use Harman device to work with 3rd party devices or services to perform IoT functions
+o       User can use voice commands to control 3rd party devices or to do voice search.</p>
+<ul class="simple">
+<li>Developer</li>
+</ul>
+<p>o       3rd party developers create HK/JBL applications or services for end user based on Harman APIs or 3rd party APIs that Harman device supports.
+-       e.g. Harman Cloud REST APIs
+-       e.g. REST APIs provided by Harman device directly
+-       e.g. 3rd party APIs, like Google Weave, etc.</p>
+<p>1.2.2.  Harman Devices
+The device that the project needs to build.</p>
+<ul class="simple">
+<li>The audio devices – speakers, headphone, amplifiers, etc. - branded of Harman Kardon, JBL, or other Harman brands.</li>
+</ul>
+<p>o       For Phase 1, we consider Harman Kardon Omni MK2 and JBL Link
+•       It should also need to communicate with user’s smartphone app for setup, configuration and control.</p>
+<p>1.2.2.1.        Common device functions
+Regardless of Hub capability, every Harman device should support the following functions:</p>
+<ul class="simple">
+<li>Play Firecast-based multi-room audio</li>
+<li>Support 3rd party streaming services, like Google Cast or Spotify</li>
+<li>Voice command</li>
+</ul>
+<p>o       User can talk to any Harman device (regardless of Hub enabled or not) to initiate voice commands.
+o       The response of voice command should return to the origin of the voice commands, regardless of Hub enabled or not.
+•       Data Analytics
+o       Every Harman device needs to connect to Harman Data Analytics server to send the logs collected during the operation.</p>
+<p>1.2.2.2.        Hub-specific function
+Any Harman device will be enabled with Hub-specific functions, but only one Harman device should be selected as Hub device. (In this document, we call the Hub function-enabled devices as “Hub Device”. And the device with no hub-function enabled as “Non-Hub Device”.)</p>
+<p>Hub device needs to perform the following additional functions:</p>
+<ul class="simple">
+<li>Communicate with the Harman Cloud to handle multi-room audio requests.</li>
+<li>Control local IoT devices when receiving requests from Harman cloud or voice service</li>
+</ul>
+<p>1.2.3.  Mobile App
+The mobile app will be used for initial setup, configuration and in some cases control of Harman devices, for example, for network setting, 3rd party service or device authorization, and so on.</p>
+<p>It may need to communicate with Harman Cloud to get and set the configuration information from/to the cloud.</p>
+<p>In some scenarios, it may be desirable to have remote control (off local network) of Harman devices using the cloud system as a control hub, e.g. remote paging functionality.
+1.2.4.  Harman Cloud Servers
+Harman Cloud communicates all with Harman users (via smartphone app or web page), Harman devices, 3rd party clients (services or devices), 3rd party providers, and other Harman internal clouds like device management (e.g. Redbend cloud, etc.) and data analytics servers.</p>
+<p>1.2.5.  3rd Party client service or device
+3rd party client service or device will connect to Harman Cloud and send REST API request to control Harman devices.</p>
+<p>The following 3rd party clients are mandatory to support:</p>
+<ul class="simple">
+<li>IFTTT (<a class="reference external" href="https://developers.ifttt.com">https://developers.ifttt.com</a>)</li>
+</ul>
+<p>1.2.6.  3rd Party service providers
+Harman Cloud can connect to 3rd party service providers to control 3rd party devices or to receive services on behalf of end customer. In most case, user will use voice commands or button presses to initiate a command to control 3rd party devices via 3rd party service provider.</p>
+<p>For example, user will say a voice command to speaker (Harman device), then the speaker send the voice to or get it interpreted by 3rd party voice services. The result will be sent to Harman Cloud. Then, Harman Cloud connects Nest server or SmartThings servers to control user’s Nest or SmartThings devices through the 3rd party servers.</p>
+<p>The following 3rd party services are mandatory to support:</p>
+<ul class="simple">
+<li>NEST (<a class="reference external" href="https://developer.nest.com">https://developer.nest.com</a>)</li>
+<li>SmartThings (<a class="reference external" href="https://developer.smartthings.com">https://developer.smartthings.com</a>)</li>
+</ul>
+<p>1.2.7.  Voice Recognition Cloud
+The voice command will be interpreted by 3rd party Voice services. The following voice service should be integrated.</p>
+<ul class="simple">
+<li>Amazon Alexa</li>
+<li>Houndify</li>
+</ul>
+<p>1.2.8.  3rd Party Local clients
+3rd party client devices or application which is connected in the local network can also send requests to Harman device to control audio playback or other device control using voice command.</p>
+<p>To support this feature, Harman devices should be able to handle REST requests from the local devices.</p>
+</div>
+</div>
+<div class="section" id="use-cases">
+<h3>Use Cases<a class="headerlink" href="#use-cases" title="Permalink to this headline">¶</a></h3>
+<div class="figure">
+<img alt="_images/hub-use-cases.png" src="_images/hub-use-cases.png" />
+</div>
+</div>
+<div class="section" id="hub-speaker">
+<h3>Hub Speaker<a class="headerlink" href="#hub-speaker" title="Permalink to this headline">¶</a></h3>
+<p>To enable your Omni speakers to be controlled by other services or devices either in the Internet or in local network, one of your speakers should become a Hub Speaker. A Hub speaker is just a regular HK Omni speaker, but is configured as a Hub. A Hub device can control other HK Omni speakers when it receives a REST requests from other clients. Hub speaker needs to be connected all the time to the HKIoTCloud which actually receives HTTP request from client in the Internet. HKIoTCloud forwards the command to the Hub speaker to control other speakers as well as Hub speaker.</p>
+<p>In addition, to handle HTTP requests from devices in local network, not through HKIoTCloud, Hub Speaker runs a web server inside.</p>
+</div>
+<div class="section" id="hkwhub-app">
+<h3>HKWHub App<a class="headerlink" href="#hkwhub-app" title="Permalink to this headline">¶</a></h3>
+<p>HKWHub app is an iOS app that uses HKWirelessHD SDK and acts as a Hub Speaker that handles REST requests to control speakers. Like Hub Speaker, HKWHub App is always connected to HKIoTCloud and also runs a web server inside that handles HTTP requests of REST API.</p>
+<div class="section" id="features">
+<h4>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h4>
+<ul>
+<li><dl class="first docutils">
+<dt>Supports integration with cloud-based services, smart devices or sensors</dt>
+<dd><ul class="first last simple">
+<li>Receives the requests from clouds (web service) outside or sensors in the house</li>
+<li>Translates the requests into HKWirelessHD commands and controls the speakers based on the requests.</li>
+<li>Sends response with status of speakers to the cloud if necessary</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Central Music Playlist manager</dt>
+<dd><ul class="first last simple">
+<li>Maintain user’s media list from iOS local music library or streaming services, like MixRadio, etc.</li>
+<li>Maintain a collection of sound files used for IoT use cases, like door bell, etc.</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="usage">
+<h4>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>User may place an iOS device on the cradle and run WebHub app. Then the app acts as Web Hub. (A stationary device in a house lik AppleTV can be a nice iOS device for WebHub.)</li>
+</ul>
+<div class="figure">
+<img alt="_images/hub-app.png" src="_images/hub-app.png" />
+</div>
+</div>
+</div>
+<div class="section" id="overall-architecture">
+<h3>Overall Architecture<a class="headerlink" href="#overall-architecture" title="Permalink to this headline">¶</a></h3>
+<p>HKWHub App handles requests from and sends responses to sensors, smart devices or cloud-based services to control audio playback with wireless speakers in the house.</p>
+<div class="figure">
+<img alt="_images/architecture.png" src="_images/architecture.png" />
+</div>
+<p>The latest version of HKWHub app supports the following three modes:</p>
+<ul>
+<li><dl class="first docutils">
+<dt>Cloud mode (HKIoTCloud)</dt>
+<dd><ul class="first last simple">
+<li>HKWHub app communicates with HKIoTCloud to receive speaker control commands by REST API call from 3rd party services or clients.</li>
+<li>HKIoTCloud handles the REST API request from any clients in the Internet. The clients can be 3rd party apps or services or devices like smartphone or sensors.</li>
+<li>In this mode, any 3rd party services or clients in the Internet can reach out to HKWHub app and then control speakers and playback of audio.</li>
+<li>All the 3rd party apps or services should be authorized with OAuth2 to get access token. An access token is required when 3rd party apps call the REST APIs. The detailed information about OAuth2 is available at <a class="reference external" href="http://harmandeveloperdocs.readthedocs.org/en/latest/iOS/hkwhub-spec.html#id2">this link</a>.</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<ul>
+<li><dl class="first docutils">
+<dt>Local Server Mode</dt>
+<dd><ul class="first last simple">
+<li>HKWHub app lauches a web server internally, and then handles the REST API requests for speaker control and playback from devices, sensors or applications in the same local network.</li>
+<li>HKWHub app opens a HTTP port in the local network, so if devices or services outside of the local network want to reach out to HKWHub (and then speakers) then user needs to configure the route so that a request coming from outside can be routed to HKWHub app accordingly, such as firewall, etc.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>PubNub Cloud mode</dt>
+<dd><ul class="first last simple">
+<li>HKWHub app uses PubNub API/SDK to connect to PubNub server and communicate with it to receive commands from other PubNub clients, and also sends events to other PubNub client, through a common PubNub channel.</li>
+<li>By setting the same PubNub channel, any client devices or services can communicate with the HKWHub app, and then control speakers and playback of audio.</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>The following figure shows how HKWHub app handles three modes.</p>
+<div class="figure">
+<img alt="_images/HubAppV2.png" src="_images/HubAppV2.png" />
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="hkwirelesshd-api-architecture">
+<h2>HKWirelessHD API Architecture<a class="headerlink" href="#hkwirelesshd-api-architecture" title="Permalink to this headline">¶</a></h2>
 <p>There are two types of entities in HKWirelessHD audio streaming - one is source device and the other is destination device. Source device sends audio stream to destination devices (speakers), and destination devices receive the audio stream from source and play it. In HKWirelessHD audio, audio streaming is in a one-to-many way. That is, there is one single source device sending an audio stream, and multiple destination devices receive the audio stream by synchronizing with other speakers.</p>
 <p>In case of multi-channel streaming, each speaker is assigned with a role to process a dedicated audio channel. For example, a speaker can play either left channel or right channel in stereo mode.</p>
 <p>Source device can be a mobile device like iPhone or Android phone, but Harman Kardon or JBL speakers, that is, a HK/JBL speaker can stream an audio to other speakers. Destination devices are Harman Kardon Omni speakers (Omni Adapt, Omni 10, Omni 20, Omni Bar, etc.) and JBL Link speakers. You can find more information on HK Omni speakers at <a class="reference external" href="http://www.harmankardon.com/content?ContentID=omni-v2">http://www.harmankardon.com/content?ContentID=omni-v2</a>.</p>
-<div class="figure" id="id1">
+<div class="figure" id="id2">
 <img alt="_images/architecture-hub.png" src="_images/architecture-hub.png" />
 <p class="caption"><span class="caption-text">Hub Speaker controlling other speakers</span></p>
 </div>
-</div>
-<div class="section" id="use-of-hkwirelesshd-api-to-stream-audio-to-omni-speakers">
-<h3>Use of HKWirelessHD API to stream audio to Omni Speakers<a class="headerlink" href="#use-of-hkwirelesshd-api-to-stream-audio-to-omni-speakers" title="Permalink to this headline">¶</a></h3>
 <p>To send audio stream to destination devices, an App (either APIs for Mobile app or Web app) has to use HKWirelessHD API. HKWirelessHD SDK provides a set of APIs, library (in case of mobile app) of the APIs.</p>
-</div>
-<div class="section" id="communication-channels-between-source-and-destinations">
-<h3>Communication channels between source and destinations<a class="headerlink" href="#communication-channels-between-source-and-destinations" title="Permalink to this headline">¶</a></h3>
 <p>As shown in the figure above, there are two kind of communications between a source device and (multiple) destination devices.</p>
 <ul>
 <li><dl class="first docutils">
@@ -107,9 +276,6 @@
 </dl>
 </li>
 </ul>
-</div>
-<div class="section" id="asynchronous-communication">
-<h3>Asynchronous Communication<a class="headerlink" href="#asynchronous-communication" title="Permalink to this headline">¶</a></h3>
 <p>The communication between the source device and the destination speakers are accomplished in asynchronous way. Asynchronous behavior is efficient because all the commands and status updates are executed in a way like RPC (Remote Procedure Call). Even more, audio streaming always involves some amount of buffering of audio data packets, so a latency  between the source and the destinations is inevitable.</p>
 <p>Below are some examples of asynchronous communications.</p>
 <ul>
@@ -138,11 +304,7 @@
 </dl>
 </li>
 </ul>
-</div>
-<div class="section" id="speaker-management">
-<h3>Speaker Management<a class="headerlink" href="#speaker-management" title="Permalink to this headline">¶</a></h3>
 <p>Whenever a speaker updates its status, the latest status information should be updated on the source device side as well. HKWirelessHD APIs for source-side manages the latest device status information.</p>
-</div>
 </div>
 <div class="section" id="visibility-of-speakers">
 <h2>Visibility of Speakers<a class="headerlink" href="#visibility-of-speakers" title="Permalink to this headline">¶</a></h2>
@@ -158,15 +320,9 @@
 <div class="figure">
 <img alt="_images/control-handler.png" src="_images/control-handler.png" />
 </div>
-<div class="section" id="controlling-speakers">
-<h3>Controlling speakers<a class="headerlink" href="#controlling-speakers" title="Permalink to this headline">¶</a></h3>
 <p>Speaker controls, like start/pause/resume/stop audio streaming, change volume level, etc. are done by calling a corresponding APIs provided by the specification.</p>
-</div>
-<div class="section" id="handling-events-from-speakers">
-<h3>Handling events from speakers<a class="headerlink" href="#handling-events-from-speakers" title="Permalink to this headline">¶</a></h3>
 <p>On the other hand, receiving an event from speakers is different. Because REST API is basically one-directional communication initiated by a client, it is hard for speaker as a server to report an event to a client when necessary.
 So, the client of Web app need to call corresponding APIs for checking events regularly, in a way of polling.</p>
-</div>
 </div>
 </div>
 
@@ -181,21 +337,25 @@ So, the client of Web app need to call corresponding APIs for checking events re
             </a></p>
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">HKWirelessHD Architecture Overview</a><ul>
-<li><a class="reference internal" href="#overview">Overview</a><ul>
-<li><a class="reference internal" href="#overall-configuration">Overall Configuration</a></li>
-<li><a class="reference internal" href="#use-of-hkwirelesshd-api-to-stream-audio-to-omni-speakers">Use of HKWirelessHD API to stream audio to Omni Speakers</a></li>
-<li><a class="reference internal" href="#communication-channels-between-source-and-destinations">Communication channels between source and destinations</a></li>
-<li><a class="reference internal" href="#asynchronous-communication">Asynchronous Communication</a></li>
-<li><a class="reference internal" href="#speaker-management">Speaker Management</a></li>
+<li><a class="reference internal" href="#">HKWirelessHD Overview</a><ul>
+<li><a class="reference internal" href="#connecting-omni-speakers-to-your-services-or-devices">Connecting Omni speakers to your services or devices</a><ul>
+<li><a class="reference internal" href="#context-diagram">Context Diagram</a><ul>
+<li><a class="reference internal" href="#users-end-customer-and-developer">Users (End Customer and Developer)</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#use-cases">Use Cases</a></li>
+<li><a class="reference internal" href="#hub-speaker">Hub Speaker</a></li>
+<li><a class="reference internal" href="#hkwhub-app">HKWHub App</a><ul>
+<li><a class="reference internal" href="#features">Features</a></li>
+<li><a class="reference internal" href="#usage">Usage</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#overall-architecture">Overall Architecture</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#hkwirelesshd-api-architecture">HKWirelessHD API Architecture</a></li>
 <li><a class="reference internal" href="#visibility-of-speakers">Visibility of Speakers</a></li>
-<li><a class="reference internal" href="#controlling-speakers-and-handling-the-events-from-speakers">Controlling Speakers and Handling the Events from Speakers</a><ul>
-<li><a class="reference internal" href="#controlling-speakers">Controlling speakers</a></li>
-<li><a class="reference internal" href="#handling-events-from-speakers">Handling events from speakers</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#controlling-speakers-and-handling-the-events-from-speakers">Controlling Speakers and Handling the Events from Speakers</a></li>
 </ul>
 </li>
 </ul>
@@ -204,8 +364,8 @@ So, the client of Web app need to call corresponding APIs for checking events re
   <p class="topless"><a href="introduction.html"
                         title="previous chapter">Introduction</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="hub-overview.html"
-                        title="next chapter">Connecting Omni speakers to your services or devices</a></p>
+  <p class="topless"><a href="restapi-specification.html"
+                        title="next chapter">REST API Specification (including PubNub JSON format)</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -237,7 +397,7 @@ So, the client of Web app need to call corresponding APIs for checking events re
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="hub-overview.html" title="Connecting Omni speakers to your services or devices"
+          <a href="restapi-specification.html" title="REST API Specification (including PubNub JSON format)"
              >next</a> |</li>
         <li class="right" >
           <a href="introduction.html" title="Introduction"

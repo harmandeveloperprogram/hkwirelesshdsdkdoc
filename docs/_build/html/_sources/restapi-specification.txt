@@ -4,7 +4,7 @@ REST API Specification (including PubNub JSON format)
 REST API Specification (including PubNub JSON format)
 -------------------------------------------------------
 
-This specification describes about the REST APIs to control HK Omni speakers and stream audio to the speakers via HKWHub app.
+This specification describes about the REST APIs to control HK Omni speakers and stream audio to the speakers via Hub Speaker or HKWHub app.
 
 All the APIS are in REST API protocol.
 
