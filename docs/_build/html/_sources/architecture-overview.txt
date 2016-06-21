@@ -31,19 +31,17 @@ There are two types of users as below, and HKWirelessHD API and SDK is intended 
 Harman Devices
 ~~~~~~~~~~~~~~~~~~
 
-Harman Kardon Omni and JBL Link  wireless speakers
+Harman Kardon Omni and JBL Link wireless speakers. All Harman speakers are enabled with both common functions (described below) and Hub-specific functions. User is supposed to choose one speaker as Hub speakers. The Hub speaker will connect to the Harman Cloud, and also run local web server to process REST requests from third party devices in the local network.
 
-(a) Common device functions
+
+(a) Common functions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Every Harman devices support the following functions:
 
-- Play Firecast-based multi-room audio
-- Support 3rd party streaming services, like Google Cast or Spotify
-- Voice command
-	- User can talk to any Harman device (regardless of Hub enabled or not) to initiate voice commands.
-	- The response of voice command should return to the origin of the voice commands, regardless of Hub enabled or not.
-- Data Analytics
-	- Every Harman device needs to connect to Harman Data Analytics server to send the logs collected during the operation.
+- Play WirelessHD multi-room audio
+- Support 3rd party streaming services
+- Voice command (optional)
+
 
 (b) Hub-specific function
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -52,31 +50,25 @@ Any Harman device will be enabled with Hub-specific functions, but only one Harm
 Hub device needs to perform the following additional functions:
 
 - Communicate with the Harman Cloud to handle multi-room audio requests.
-- Control local IoT devices when receiving requests from Harman cloud or voice service
+- Handle requests from local devices or services
 
 Mobile App 
 ~~~~~~~~~~~~~
 
-The mobile app will be used for initial setup, configuration and in some cases control of Harman devices, for example, for network setting, 3rd party service or device authorization, and so on.
+The mobile app is used for initial setup and configuration. In some cases, mobile app can be used to provide user interface for 3rd party authorization, and so on.
 
-It may need to communicate with Harman Cloud to get and set the configuration information from/to the cloud.
+It communicates with Harman Cloud to get and set the configuration information from/to the cloud.
 
-In some scenarios, it may be desirable to have remote control (off local network) of Harman devices using the cloud system as a control hub, e.g. remote paging functionality.
 
 Harman Cloud Servers
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Harman Cloud communicates all with Harman users (via smartphone app or web page), Harman devices, 3rd party clients (services or devices), 3rd party providers, and other Harman internal clouds like device management (e.g. Redbend cloud, etc.) and data analytics servers.
-
+Harman Cloud communicates with Harman users (via mobile app or web page), Harman devices, 3rd party clients (services or devices), 3rd party providers. Harman Cloud allows the users or services in the Internet (outside of local network) to access HK/JBL speakers located in the local home network.
 
 3rd Party client service or device
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-3rd party client service or device will connect to Harman Cloud and send REST API request to control Harman devices.
-
-The following 3rd party clients are mandatory to support:
-
-- IFTTT (https://developers.ifttt.com)
+3rd party client service or device connect to Harman Cloud and send REST API request to control Harman devices.
 
 
 3rd Party service providers
@@ -86,24 +78,15 @@ Harman Cloud can connect to 3rd party service providers to control 3rd party dev
 
 For example, user will say a voice command to speaker (Harman device), then the speaker send the voice to or get it interpreted by 3rd party voice services. The result will be sent to Harman Cloud. Then, Harman Cloud connects Nest server or SmartThings servers to control user’s Nest or SmartThings devices through the 3rd party servers.
 
-The following 3rd party services are mandatory to support:
-
-- NEST (https://developer.nest.com)
-- SmartThings (https://developer.smartthings.com)
-
 
 3rd Party Local clients
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-
 3rd party client devices or application which is connected in the local network can also send requests to Harman device to control audio playback or other device control using voice command.
 
-To support this feature, Harman devices should be able to handle REST requests from the local devices.
 
-
-
-Use Cases
-~~~~~~~~~~~~
+Use Cases Illustration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. figure:: img/hub/hub-use-cases.png
 
