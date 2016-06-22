@@ -137,8 +137,9 @@
 </div>
 <div class="section" id="use-cases-illustration">
 <h3>Use Cases Illustration<a class="headerlink" href="#use-cases-illustration" title="Permalink to this headline">¶</a></h3>
-<div class="figure">
+<div class="figure" id="id2">
 <img alt="_images/hub-use-cases.png" src="_images/hub-use-cases.png" />
+<p class="caption"><span class="caption-text">Use Case: Speakers as Internet of Things</span></p>
 </div>
 </div>
 <div class="section" id="hub-speaker">
@@ -171,15 +172,17 @@
 </dl>
 </li>
 </ul>
-<div class="figure">
+<div class="figure" id="id3">
 <img alt="_images/hub-app.png" src="_images/hub-app.png" />
+<p class="caption"><span class="caption-text">Hub Speaker (Hub App) to connect IoT devices and services to speakers in your home</span></p>
 </div>
 </div>
 <div class="section" id="overall-architecture-hub-device-or-hub-app">
 <h3>Overall Architecture Hub Device (or Hub App)<a class="headerlink" href="#overall-architecture-hub-device-or-hub-app" title="Permalink to this headline">¶</a></h3>
 <p>Hub Device or HKWHub App handles requests from and sends responses to sensors, smart devices or cloud-based services to control audio playback with wireless speakers in the house.</p>
-<div class="figure">
+<div class="figure" id="id4">
 <img alt="_images/architecture.png" src="_images/architecture.png" />
+<p class="caption"><span class="caption-text">Hub Speaker Architecture</span></p>
 </div>
 <p>Hub Speaker (or HKWHub App) supports the following two modes:</p>
 <ul>
@@ -207,8 +210,9 @@
 </li>
 </ul>
 <p>The following figure explains how HKWHub app handles the different modes.</p>
-<div class="figure">
+<div class="figure" id="id5">
 <img alt="_images/HubAppV2.png" src="_images/HubAppV2.png" />
+<p class="caption"><span class="caption-text">Integrating with third party devices and services</span></p>
 </div>
 </div>
 </div>
@@ -221,7 +225,7 @@
 <p>In case of multi-channel streaming, each speaker is assigned with a role to process a dedicated audio channel. For example, a speaker can play either left channel or right channel in stereo mode.</p>
 <p>Source device can be a mobile device like iPhone or Android phone, but Harman Kardon or JBL speakerx can stream an audio to other speakers. Destination devices are Harman Kardon Omni speakers (Omni Adapt, Omni 10, Omni 20, Omni Bar, etc.) and JBL Link speakers. You can find more information on HK Omni speakers at <a class="reference external" href="http://www.harmankardon.com/content?ContentID=omni-v2">http://www.harmankardon.com/content?ContentID=omni-v2</a>.</p>
 <p>As mentioned earlier, a speaker configured as Hub speaker can stream audio to other speakers when it receives commands from HKIoTCloud or devices in the local network.</p>
-<div class="figure" id="id2">
+<div class="figure" id="id6">
 <img alt="_images/architecture-hub.png" src="_images/architecture-hub.png" />
 <p class="caption"><span class="caption-text">Hub Speaker controlling other speakers</span></p>
 </div>
@@ -312,14 +316,16 @@
 <p>Any speakers in a network are visible to source devices (mobile devices or Hub speaker) if a source device is successfully initialized when it starts up. Source device can be multiple. This means, even in the case that a speaker is being used by a source device, the status of each speaker is also visible to all other source devices in the network, once they are successfully initialized.</p>
 <p>For example, as described in the figure below, let&#8217;s assume that Speaker-A and Speaker-B are being used by Source A (Hub Speaker), and Speaker-D and Speaker-E are being used by Source B( Mobile App). Once Source A and Source B are successfully initialized, then all the speakers from Speaker-A to Speaker-E are also visible both to Source A and Source B. Therefore, it is possible for Source A to add Speaker-D to its on-going playback session, even if it is being used by Source B. In this case, Speaker-D stops playing the audio stream from Source B, and join the on-going playback audio stream from Source A.</p>
 <p>There is an API, called isPlaying() to return a boolean value indicating if the speaker is being playing audio or not, regardless that which source audio stream comes from.</p>
-<div class="figure">
+<div class="figure" id="id7">
 <img alt="_images/speaker-visibility.png" src="_images/speaker-visibility.png" />
+<p class="caption"><span class="caption-text">Visibility of speakers</span></p>
 </div>
 </div>
 <div class="section" id="controlling-speakers-and-handling-the-events-from-speakers">
 <h2>Controlling Speakers and Handling the Events from Speakers<a class="headerlink" href="#controlling-speakers-and-handling-the-events-from-speakers" title="Permalink to this headline">¶</a></h2>
-<div class="figure">
+<div class="figure" id="id8">
 <img alt="_images/control-handler.png" src="_images/control-handler.png" />
+<p class="caption"><span class="caption-text">Control Handler of Hub Speaker</span></p>
 </div>
 <div class="section" id="controlling-speakers">
 <h3>Controlling speakers<a class="headerlink" href="#controlling-speakers" title="Permalink to this headline">¶</a></h3>

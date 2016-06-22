@@ -90,7 +90,7 @@ Use Cases Illustration
 
 .. figure:: img/hub/hub-use-cases.png
 
-
+	Use Case: Speakers as Internet of Things
 
 
 Hub Speaker
@@ -120,12 +120,16 @@ HKWHub App has following features:
 
 .. figure:: img/hub/hub-app.png
 
+	Hub Speaker (Hub App) to connect IoT devices and services to speakers in your home
+
 Overall Architecture Hub Device (or Hub App)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Hub Device or HKWHub App handles requests from and sends responses to sensors, smart devices or cloud-based services to control audio playback with wireless speakers in the house.
 
 .. figure:: img/hub/architecture.png
+
+	Hub Speaker Architecture
 
 
 Hub Speaker (or HKWHub App) supports the following two modes:
@@ -145,6 +149,8 @@ Hub Speaker (or HKWHub App) supports the following two modes:
 The following figure explains how HKWHub app handles the different modes.
 
 .. figure:: img/hub/HubAppV2.png
+
+	Integrating with third party devices and services
 
 ----
 
@@ -229,11 +235,14 @@ There is an API, called isPlaying() to return a boolean value indicating if the 
 
 .. figure:: img/hub/speaker-visibility.png
 
+	Visibility of speakers
 
 Controlling Speakers and Handling the Events from Speakers
 -------------------------------------------------------------
 
 .. figure:: img/hub/control-handler.png
+
+	Control Handler of Hub Speaker
 
 
 Controlling speakers

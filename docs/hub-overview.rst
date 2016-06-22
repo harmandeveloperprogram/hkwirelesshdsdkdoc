@@ -9,6 +9,8 @@ Use Cases
 
 .. figure:: img/hub/hub-use-cases.png
 
+	Use Cases: Speakers as Internet of Things 
+
 
 Hub Speaker
 ~~~~~~~~~~~~~
