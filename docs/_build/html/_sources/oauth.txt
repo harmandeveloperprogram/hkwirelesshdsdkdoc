@@ -52,7 +52,7 @@ To obtain an access token (and a refresh token) with password grant, you should 
 .. code::
 
 	POST /oauth/token HTTP/1.1
-	Host: hkiotcloud.herokuapp.com
+	Host: hkiotcloud.azurewebsites.net
 	Authorization: Basic RkZjUE9iS2h4OThvNXhtMzpjcENZQ1BrUjA4NXFSR3hFempDMUlGeEoxQWRhZFQ=
 	Content-Type: application/x-www-form-urlencoded  
 
@@ -85,7 +85,7 @@ By creating a consent request, your user will be redirected to the HKIoTCloud we
 
 The consent request is constructed as follows:
 
-- Redirect the user to HKIoTCloud at https://hkiotcloud.herokuapp.com/oauth/token with the following URL-encoded query parameters:
+- Redirect the user to HKIoTCloud at https://hkiotcloud.azurewebsites.net/oauth/token with the following URL-encoded query parameters:
 	- ``client_id`` : The client ID of your application. This information can be found on the HKIoTCloud website.
 	- ``response_type``: ``code`` for authorization code grant.
 	- ``redirect_uri`` : Specifies the return URI that you added to your app's  profile when signing up.
@@ -96,7 +96,7 @@ Send as GET request.
 
 .. code-block:: json
 
-	https://hkiotcloud.herokuapp.com/oauth/authorize?response_type=code&
+	https://hkiotcloud.azurewebsites.net/oauth/authorize?response_type=code&
 	          client_id=n7HhiTnKYjJd4zmM&redirect_uri=https://your.app.com/oauthCallbackHKIoTCloud
 
 
@@ -116,7 +116,7 @@ The response includes an authorization code.
 
 Next, your service leverages the returned authorization code to ask for an access token:
 
-- Send a **POST** request to https://hkiotcloud.herokuapp.com/oauth/token with the following parameters:
+- Send a **POST** request to https://hkiotcloud.azurewebsites.net/oauth/token with the following parameters:
 
 **HTTP Header Parameters:**
 
@@ -135,13 +135,13 @@ Next, your service leverages the returned authorization code to ask for an acces
 .. code-block:: json
 
 	POST /oauth/token HTTP/1.1
-	Host: hkiotcloud.herokuapp.com
+	Host: hkiotcloud.azurewebsites.net
 	Content-Type: application/x-www-form-urlencoded
 	Cache-Control: no-cache
  
 	grant_type=authorization_code&code=2b3711911f4f2263e785eeda386046ccc8da6aee&
 	    client_id=n7HhiTnKYjJd4zmM&client_secret=ANRfB9z94xtcxFGXrd5XHXEiKg43UY
-		&redirect_uri=https://hkvoicecloud.herokuapp.com/oauthCallbackHKIoTCloud
+		&redirect_uri=https://hkvoicecloud.azurewebsites.net/oauthCallbackHKIoTCloud
 
 
 **Sample Response:**
@@ -171,7 +171,7 @@ When you call the HKIoTCloud API calls, pass the value of the access token into 
 
 **Sample Request using curl:**
 
-- curl -X GET -H "Authorization: Bearer 15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8" http://hkiotcloud.herokuapp.com/api/v1/init_session
+- curl -X GET -H "Authorization: Bearer 15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8" http://hkiotcloud.azurewebsites.net/api/v1/init_session
 
 
 Getting a New Access Token with Refresh Token
@@ -179,7 +179,7 @@ Getting a New Access Token with Refresh Token
 
 The access token is valid for one hour. When the access token expires or is about to expire, you can exchange the refresh token for new access and refresh tokens.
 
-- Send a ``POST`` request to ``https://hkiotcloud.herokuapp.com/oauth/token`` with the following parameters:
+- Send a ``POST`` request to ``https://hkiotcloud.azurewebsites.net/oauth/token`` with the following parameters:
 
 **HTTP Header Parameters:**
 

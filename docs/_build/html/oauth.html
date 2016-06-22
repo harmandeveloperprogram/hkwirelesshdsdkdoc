@@ -90,7 +90,7 @@
 <p>To obtain an access token (and a refresh token) with password grant, you should <strong>POST</strong> to <code class="docutils literal"><span class="pre">/oauth/token</span></code>. You should include your client ID and client secret in the <code class="docutils literal"><span class="pre">Authorization</span></code> header by combining them with a colon &#8221;:&#8221; and then encoding in Base64. That is, <code class="docutils literal"><span class="pre">Base64(client_id:client_secret)</span></code>. And also, you should include <code class="docutils literal"><span class="pre">grant_type:</span> <span class="pre">password</span></code>, username and passworkd in the request body.</p>
 <p><strong>Sample Request:</strong></p>
 <div class="code highlight-python"><div class="highlight"><pre>POST /oauth/token HTTP/1.1
-Host: hkiotcloud.herokuapp.com
+Host: hkiotcloud.azurewebsites.net
 Authorization: Basic RkZjUE9iS2h4OThvNXhtMzpjcENZQ1BrUjA4NXFSR3hFempDMUlGeEoxQWRhZFQ=
 Content-Type: application/x-www-form-urlencoded
 
@@ -119,7 +119,7 @@ Pragma: no-cache
 <p>The consent request is constructed as follows:</p>
 <ul>
 <li><dl class="first docutils">
-<dt>Redirect the user to HKIoTCloud at <a class="reference external" href="https://hkiotcloud.herokuapp.com/oauth/token">https://hkiotcloud.herokuapp.com/oauth/token</a> with the following URL-encoded query parameters:</dt>
+<dt>Redirect the user to HKIoTCloud at <a class="reference external" href="https://hkiotcloud.azurewebsites.net/oauth/token">https://hkiotcloud.azurewebsites.net/oauth/token</a> with the following URL-encoded query parameters:</dt>
 <dd><ul class="first last simple">
 <li><code class="docutils literal"><span class="pre">client_id</span></code> : The client ID of your application. This information can be found on the HKIoTCloud website.</li>
 <li><code class="docutils literal"><span class="pre">response_type</span></code>: <code class="docutils literal"><span class="pre">code</span></code> for authorization code grant.</li>
@@ -131,7 +131,7 @@ Pragma: no-cache
 </ul>
 <p><strong>Sample Request:</strong></p>
 <p>Send as GET request.</p>
-<div class="highlight-json"><div class="highlight"><pre>https://hkiotcloud.herokuapp.com/oauth/authorize?response_type=code&amp;
+<div class="highlight-json"><div class="highlight"><pre>https://hkiotcloud.azurewebsites.net/oauth/authorize?response_type=code&amp;
           client_id=n7HhiTnKYjJd4zmM&amp;redirect_uri=https://your.app.com/oauthCallbackHKIoTCloud
 </pre></div>
 </div>
@@ -146,7 +146,7 @@ Pragma: no-cache
 </div>
 <p>Next, your service leverages the returned authorization code to ask for an access token:</p>
 <ul class="simple">
-<li>Send a <strong>POST</strong> request to <a class="reference external" href="https://hkiotcloud.herokuapp.com/oauth/token">https://hkiotcloud.herokuapp.com/oauth/token</a> with the following parameters:</li>
+<li>Send a <strong>POST</strong> request to <a class="reference external" href="https://hkiotcloud.azurewebsites.net/oauth/token">https://hkiotcloud.azurewebsites.net/oauth/token</a> with the following parameters:</li>
 </ul>
 <p><strong>HTTP Header Parameters:</strong></p>
 <ul class="simple">
@@ -162,13 +162,13 @@ Pragma: no-cache
 </ul>
 <p><strong>Sample Request:</strong></p>
 <div class="highlight-json"><div class="highlight"><pre>POST /oauth/token HTTP/1.1
-Host: hkiotcloud.herokuapp.com
+Host: hkiotcloud.azurewebsites.net
 Content-Type: application/x-www-form-urlencoded
 Cache-Control: no-cache
 
 grant_type=authorization_code&amp;code=2b3711911f4f2263e785eeda386046ccc8da6aee&amp;
     client_id=n7HhiTnKYjJd4zmM&amp;client_secret=ANRfB9z94xtcxFGXrd5XHXEiKg43UY
-        &amp;redirect_uri=https://hkvoicecloud.herokuapp.com/oauthCallbackHKIoTCloud
+        &amp;redirect_uri=https://hkvoicecloud.azurewebsites.net/oauthCallbackHKIoTCloud
 </pre></div>
 </div>
 <p><strong>Sample Response:</strong></p>
@@ -191,14 +191,14 @@ grant_type=authorization_code&amp;code=2b3711911f4f2263e785eeda386046ccc8da6aee&
 <p>When you call the HKIoTCloud API calls, pass the value of the access token into the request header. Specifically, create an <code class="docutils literal"><span class="pre">Authorization</span></code> header and give it the value <code class="docutils literal"><span class="pre">Bearer</span> <span class="pre">&lt;access</span> <span class="pre">token&gt;</span></code>.</p>
 <p><strong>Sample Request using curl:</strong></p>
 <ul class="simple">
-<li>curl -X GET -H &#8220;Authorization: Bearer 15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8&#8221; <a class="reference external" href="http://hkiotcloud.herokuapp.com/api/v1/init_session">http://hkiotcloud.herokuapp.com/api/v1/init_session</a></li>
+<li>curl -X GET -H &#8220;Authorization: Bearer 15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8&#8221; <a class="reference external" href="http://hkiotcloud.azurewebsites.net/api/v1/init_session">http://hkiotcloud.azurewebsites.net/api/v1/init_session</a></li>
 </ul>
 </div>
 <div class="section" id="getting-a-new-access-token-with-refresh-token">
 <h2>Getting a New Access Token with Refresh Token<a class="headerlink" href="#getting-a-new-access-token-with-refresh-token" title="Permalink to this headline">¶</a></h2>
 <p>The access token is valid for one hour. When the access token expires or is about to expire, you can exchange the refresh token for new access and refresh tokens.</p>
 <ul class="simple">
-<li>Send a <code class="docutils literal"><span class="pre">POST</span></code> request to <code class="docutils literal"><span class="pre">https://hkiotcloud.herokuapp.com/oauth/token</span></code> with the following parameters:</li>
+<li>Send a <code class="docutils literal"><span class="pre">POST</span></code> request to <code class="docutils literal"><span class="pre">https://hkiotcloud.azurewebsites.net/oauth/token</span></code> with the following parameters:</li>
 </ul>
 <p><strong>HTTP Header Parameters:</strong></p>
 <ul class="simple">
