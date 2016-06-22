@@ -221,11 +221,11 @@ Whenever a speaker updates its status, the latest status information should be u
 Visibility of Speakers
 ------------------------
 
-Any speakers in a network are visible to source devices (mobile devices or Hub speaker) if a source device is successfully initialized when it starts up. Source device can be multiple. This means, even in the case that a speaker is being used by a source device, the status of each speaker is also visible to all other source devices in the network, once they are successfully initialized with HKWControlHandler.
+Any speakers in a network are visible to source devices (mobile devices or Hub speaker) if a source device is successfully initialized when it starts up. Source device can be multiple. This means, even in the case that a speaker is being used by a source device, the status of each speaker is also visible to all other source devices in the network, once they are successfully initialized.
 
-For example, as described in the figure below, let's assume that Speaker-A and Speaker-B are being used by Source A, and Speaker-D and Speaker-E are being used by Source B. Once Source A and Source B initialize HKWControlHandler, then all the speakers from Speaker-A to Speaker-E are also visible both to Source A and Source B. Therefore, it is possible for Source A to add Speaker-D to its on-going playback session, even if it is being used by Source B. In this case, Speaker-D stops playing the audio stream from Source B, and join the on-going playback audio stream from Source A.
+For example, as described in the figure below, let's assume that Speaker-A and Speaker-B are being used by Source A (Hub Speaker), and Speaker-D and Speaker-E are being used by Source B( Mobile App). Once Source A and Source B are successfully initialized, then all the speakers from Speaker-A to Speaker-E are also visible both to Source A and Source B. Therefore, it is possible for Source A to add Speaker-D to its on-going playback session, even if it is being used by Source B. In this case, Speaker-D stops playing the audio stream from Source B, and join the on-going playback audio stream from Source A.
 
-There is an API, called isPlaying(), in DeviceInfo.h to return a boolean value indicating if the speaker is being playing audio or not, regardless that which source audio stream comes from.
+There is an API, called isPlaying() to return a boolean value indicating if the speaker is being playing audio or not, regardless that which source audio stream comes from.
 
 .. figure:: img/hub/speaker-visibility.png
 
@@ -237,13 +237,13 @@ Controlling Speakers and Handling the Events from Speakers
 
 
 Controlling speakers
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~
 
 Speaker controls, like start/pause/resume/stop audio streaming, change volume level, etc. are done by calling a corresponding APIs provided by the specification. 
 
 
 Handling events from speakers
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 On the other hand, receiving an event from speakers is different. Because REST API is basically one-directional communication initiated by a client, it is hard for speaker as a server to report an event to a client when necessary. 
 So, the client of Web app need to call corresponding APIs for checking events regularly, in a way of polling.
