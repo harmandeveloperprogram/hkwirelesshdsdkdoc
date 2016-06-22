@@ -152,10 +152,10 @@ The following figure explains how HKWHub app handles the different modes.
 
 
 HKWirelessHD API Architecture
-==============================
+-------------------------------
 
 Overall Configuration
--------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 There are two types of entities in HKWirelessHD audio streaming - one is source device and the other is destination device. Source device sends audio stream to destination devices (speakers), and destination devices receive the audio stream from source and play it. In HKWirelessHD audio, audio streaming is in a one-to-many way. That is, there is one single source device sending an audio stream, and multiple destination devices receive the audio stream by synchronizing with other speakers.
 
@@ -171,13 +171,13 @@ As mentioned earlier, a speaker configured as Hub speaker can stream audio to ot
 
 
 Use of HKWirelessHD API to stream audio to Omni Speakers
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To send audio stream to destination devices, a client (either Mobile app or Web app) should use HKWirelessHD API. HKWirelessHD SDK provides APIs for Web app, iOS and Android App, and this documentation most describes about REST APIs for Web apps.
 
 
 Communication channels between source and destinations
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 As shown in the figure above, there are two kind of communications between a source device and (multiple) destination devices.
 
@@ -197,7 +197,7 @@ As shown in the figure above, there are two kind of communications between a sou
 
 
 Asynchronous Communication
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The communication between the source device and the destination speakers are accomplished in asynchronous way. Asynchronous behavior is efficient because all the commands and status updates are executed in a way like RPC (Remote Procedure Call). Even more, audio streaming always involves some amount of buffering of audio data packets, so a latency  between the source and the destinations is inevitable.
 
@@ -213,7 +213,7 @@ Below are some examples of asynchronous communications.
 	- When the source changes the volume level of speakers, actual volume changes occur a few millisecond later.
 
 Speaker Management
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~
 
 Whenever a speaker updates its status, the latest status information should be updated on the source device side as well. HKWirelessHD APIs for source-side manages the latest device status information. 
 
@@ -221,7 +221,7 @@ Whenever a speaker updates its status, the latest status information should be u
 Visibility of Speakers
 ------------------------
 
-Any speakers in a network are visible to source devices (iOS devices) if a source device successfully initializes the HKWControlHandler when it starts up. Source device can be multiple. This means, even in the case that a speaker is being used by a source device, the status of each speaker is also visible to all other source devices in the network, once they are successfully initialized with HKWControlHandler.
+Any speakers in a network are visible to source devices (mobile devices or Hub speaker) if a source device is successfully initialized when it starts up. Source device can be multiple. This means, even in the case that a speaker is being used by a source device, the status of each speaker is also visible to all other source devices in the network, once they are successfully initialized with HKWControlHandler.
 
 For example, as described in the figure below, let's assume that Speaker-A and Speaker-B are being used by Source A, and Speaker-D and Speaker-E are being used by Source B. Once Source A and Source B initialize HKWControlHandler, then all the speakers from Speaker-A to Speaker-E are also visible both to Source A and Source B. Therefore, it is possible for Source A to add Speaker-D to its on-going playback session, even if it is being used by Source B. In this case, Speaker-D stops playing the audio stream from Source B, and join the on-going playback audio stream from Source A.
 
