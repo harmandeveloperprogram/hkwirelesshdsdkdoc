@@ -173,7 +173,7 @@ As mentioned earlier, a speaker configured as Hub speaker can stream audio to ot
 Use of HKWirelessHD API to stream audio to Omni Speakers
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To send audio stream to destination devices, an App (either APIs for Mobile app or Web app) has to use HKWirelessHD API. HKWirelessHD SDK provides a set of APIs, library (in case of mobile app) of the APIs. 
+To send audio stream to destination devices, a client (either Mobile app or Web app) should use HKWirelessHD API. HKWirelessHD SDK provides APIs for Web app, iOS and Android App, and this documentation most describes about REST APIs for Web apps.
 
 
 Communication channels between source and destinations
