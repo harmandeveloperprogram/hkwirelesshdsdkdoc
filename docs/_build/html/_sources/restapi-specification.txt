@@ -1,23 +1,14 @@
 REST API Specification (including PubNub JSON format)
 ======================================================
 
-REST API Specification (including PubNub JSON format)
--------------------------------------------------------
-
 This specification describes about the REST APIs to control HK Omni speakers and stream audio to the speakers via Hub Speaker or HKWHub app.
 
 All the APIS are in REST API protocol.
 
 .. Note::
 	
-	In this documentation, for HKIoTCloud mode, <server_host> should be "hkiotcloud.herokuapp.com".
-	For Local server mode, <server_host> should be the URL (IP address and port number) tat HKWHub app is showing.
-
-.. Note::
-
-	PubNub server mode does not use REST API. Instead, PubNub client needs to subscribe to the PubNub channel to get events from HKWHub, and use publish message to the PubNub channel to send request to HKWHub. The commands and parameters of each command are the same as REST API specification. However, PubNub message needs to include a couple of additional parameters in the JSON data to specify the **HKWHub UUID (HKWHubUUID)** that are talking to. The response message coming from the HKWHub app will include **ResponseOf** parameters to specify which request the resonse was for.
-	
-	So, we will describe PubNub message specification along with REST API specification here.
+	In this documentation, for HKIoTCloud mode, <server_host> should be "hkiotcloud.azurewebsites.net".
+	For Local server mode, <server_host> should be the URL (IP address and port number) that Hub speaker or HKWHub app is showing.
 
 
 .. Note::
@@ -26,10 +17,11 @@ All the APIS are in REST API protocol.
 
 
 Session Management
-~~~~~~~~~~~~~~~~~~~~
+------------------
 
 Start Session
-^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~
+
 This starts a new session. As a response, the client will receive a SessionToken. The SessionToken is required to be sent in any following requests. Note that the REST requests differs depending on the server mode.
 
 
@@ -51,27 +43,11 @@ This starts a new session. As a response, the client will receive a SessionToken
 
 		{"ResponseOf":"init_session","SessionToken":"r:abciKaTbUgdpQFuvYtgMm0FRh"}
 
-- PubNub
-	- Publish Message
-
-	.. code-block:: json
-
-		{Command = "init_session"}
-
-	- Message from HKWHub (via Subscribe)
-		- Note that the response of ``init_session`` will contain **HKWHubUUID** to identify the HKWHub the PubNub client is getting talking to. The subsequent Publish message should include this HKWHubUUID information as well as SessionToken.
-
-	.. code-block:: json
-
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		SessionToken = "PubNub-1000",
-		ResponseOf = "init_session"
-		}
 			
 
 Close Session
-^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~
+
 Close the session. The SessionToken information is removed from the session table.
 
 - API: GET /api/v1/close_session?SessionToken=<session token>
@@ -91,35 +67,16 @@ Close the session. The SessionToken information is removed from the session tabl
 
 		{"Result" : "true"}
 
-- PubNub
-	- Publish Message
 
-	.. code-block:: json
-
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		SessionToken = "PubNub-1000",
-		Command = "close_session"
-		}
-
-	- Message from HKWHub (via Subscribe)
-
-	.. code-block:: json
-
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		SessionToken = "PubNub-1000",
-		ResponseOf = "close_session",
-		Result = true
-		}
 		
 ----
 
 Device Management
-~~~~~~~~~~~~~~~~~~~~
+-------------------
 
 Get the device count
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~
+
 Returns the number of speakers available in the network.
 
 - API: GET /api/v1/device_count?SessionToken=<session token>
@@ -139,34 +96,13 @@ Returns the number of speakers available in the network.
 
 		{"DeviceCount":"2"}
 
-- PubNub
-	- Publish Message
-
-	.. code-block:: json
-
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		SessionToken = "PubNub-1000",
-		Command = "device_count"
-		}
-
-	- Message from HKWHub (via Subscribe)
-
-	.. code-block:: json
-
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		SessionToken = "PubNub-1000",
-		ResponseOf = "device_count",
-		DeviceCount = 2
-		}
-		
 		
 ----
 
 
 Get the list of devices and their information
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Returns the list of speakers and their information including several status information.
 
 - API: GET /api/v1/device_list?SessionToken=<session token>
@@ -216,66 +152,13 @@ Returns the list of speakers and their information including several status info
 			"DeviceID":"129321920968880"
 			}]
 		}
-		
-- PubNub
-	- Publish message
-	
-	.. code-block:: json	
-	
-		{
-		Command = "device_list",
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		SessionToken = "PubNub-1000"
-		}
-		
-	- Response message (from Subscribed)
-	
-	.. code-block:: json	
-	
- .. code-block:: json
-
- 	   {
-	   HKWHubUUID = "XXX-XXX-XXX-XXX",
-	   SessionToken = "PubNub-1000",
-	   ResponseOf = "device_list",
-	   DeviceList = 
-			[{"GroupName":"Bathroom", 
-			"Role":21, 
-			"MacAddress":"b0:38:29:1b:36:1f", 
-			"WifiSignalStrength":-47, 
-			"Port":44055, 
-			"Active":true, 
-			"DeviceName":"Adapt1", 
-			"Version":"0.1.6.2", 
-			"ModelName":"Omni Adapt", 
-			"IPAddress":"192.168.1.40", 
-			"GroupID":"3431724438", 
-			"Volume":47, 
-			"IsPlaying":false, 
-			"DeviceID":"34317244381360"
-			},
-			{"GroupName":"Temp", 
-			"Role":21, 
-			"MacAddress":"b0:38:29:1b:9e:75", 
-			"WifiSignalStrength":-53, 
-			"Port":44055, 
-			"Active":true, 
-			"DeviceName":"Adapt", 
-			"Version":"0.1.6.2", 
-			"ModelName":"Omni Adapt", 
-			"IPAddress":"192.168.1.39", 
-			"GroupID":"1293219209", 
-			"Volume":47, 
-			"IsPlaying":false, 
-			"DeviceID":"129321920968880"
-			}]
-		}
 	
 
 ----
 
 Get the Device Information
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Gets the device information of a particular device (speaker) identified by DeviceID.
 
 - API: GET /api/v1/device_info?SessionToken=<session token>&DeviceID=<device id>
@@ -308,45 +191,12 @@ Gets the device information of a particular device (speaker) identified by Devic
 		"IsPlaying":true, 
 		"DeviceID":"129321920968880"}
 
-- PubNub
-	- Publish message
-	
-	.. code-block:: json	
-	
-		{
-		Command = "device_list",
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		SessionToken = "PubNub-1000"
-		}
-		
-	- Response message (from Subscribed)
-	
-	.. code-block:: json	
-	
- 	   {
-	   HKWHubUUID = "XXX-XXX-XXX-XXX",
-	   SessionToken = "PubNub-1000",
-	   ResponseOf = "device_list",
-	   GroupName: "Temp", 
-	   Role = 21, 
-	   MacAddress = "b0:38:29:1b:9e:75", 
-	   WifiSignalStrength = -52, 
-	   Port = 44055, 
-	   Active = true, 
-	   DeviceName = "Adapt", 
-	   Version = "0.1.6.2", 
-	   ModelName = Omni Adapt", 
-	   IPAddress = "192.168.1.39", 
-	   GroupID = 1293219209", 
-	   Volume = 47, 
-	   IsPlaying = true, 
-	   DeviceID = 129321920968880"
-		}
 	
 ----
 
 Add a Device to Session
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Add a speaker to playback session. Once a speaker is added, then the speaker will play the music. There is no impact of this call to other speakers.
 
 - API: GET /api/v1/add_device_to_session?SessionToken=<session token>&DeviceID=<device id>
@@ -366,34 +216,12 @@ Add a speaker to playback session. Once a speaker is added, then the speaker wil
 
 		{"Result":"true"}
 
-- PubNub
-	- Publish message
-	
-	.. code-block:: json
-	
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		SessionToken = "PubNub-1000",
-		Command = "add_device_to_session",
-		DeviceID = "129321920968880"
-		}
-
-		
-	- Response: 
-	
-	.. code-block:: json
-
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		SessionToken = "PubNub-1000",
-		ResponseOf = "add_device_to_session",
-		Result = true
-		}
 	
 ----
 
 Remove a Device from Session
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Removes a speaker from playback session. Once a speaker is removed, then the speaker will not play the music. There is no impact of this call to other speakers.
 
 - API: GET /api/v1/remove_device_from_session?SessionToken=<session token>&DeviceID=<device id>
@@ -413,33 +241,11 @@ Removes a speaker from playback session. Once a speaker is removed, then the spe
 
 		{"Result":"true"}
 		
-- PubNub
-	- Publish message
-	
-	.. code-block:: json
-	
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		SessionToken = "PubNub-1000",
-		Command = "remove_device_from_session",
-		DeviceID = "129321920968880"
-		}
-
-		
-	- Response: 
-	
-	.. code-block:: json
-
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		SessionToken = "PubNub-1000",
-		ResponseOf = "remove_device_from_session",
-		Result = true
-		}
-	
+----
 
 Set party mode
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~
+
 Addes all speakers to playback session. Once it is done, all speakers will play music.
 
 - API: GET /api/v1/set_party_mode?SessionToken=<session token>
@@ -458,35 +264,15 @@ Addes all speakers to playback session. Once it is done, all speakers will play 
 
 		{"Result":"true"}
 
-			
-- PubNub
-	- Publish Message
-
-	.. code-block:: json
-
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		SesssionToken = "PubNub-1000",
-		Command = "set_party_mode"
-		}
-
-	- Message from HKWHub (via Subscribe)
-
-	.. code-block:: json
-
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		ResponseOf = "set_party_mode",
-		Result = true
-		}
 		
 ----
 
 Media Playback Management
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 Get the list of media item in the Media List of the HKWHub app
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Returns the list of media items added to the Media List of the app. User can add music items to the **Media List** of the app via **Setting** of the app.
 
 .. Note::
@@ -523,42 +309,13 @@ Returns the list of media items added to the Media List of the app. User can add
 			"Duration":257,
 			"AlbumTitle":"Wordplay [SINGLE EP]"}
 			]}
-			
-- PubNub
-	- Publish Message
 
-	.. code-block:: json
-
-		{Command = "media_list",
-		 HKWHubUUID = "XXX-XXX-XXX-XXX",
-		 SesssionToken = "PubNub-1000"}
-
-	- Message from HKWHub (via Subscribe)
-
-	.. code-block:: json
-
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		MediaList = [
-			{"PersistentID":"7387446959931482519",
-			"Title":"I Will Run To You",
-			"Artist":"Hillsong",
-			"Duration":436,
-			"AlbumTitle":"Simply Worship"
-			},
-			{"PersistentID":"5829171347867182746",
-			"Title":"I'm Yours [ORIGINAL DEMO]",
-			"Artist":"Jason Mraz",
-			"Duration":257,
-			"AlbumTitle":"Wordplay [SINGLE EP]"}
-			],
-		ResponseOf = "media_list"
-		}
 	
 ----
 
 Play a song in the Media List of the HKWHub app
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Plays a song in the Media List of the Hub app. Each music item is identified with MPMediaItem's PersistentID. It is a unique ID to identify a song in the iOS Music library.
 
 .. note::
@@ -581,34 +338,12 @@ Plays a song in the Media List of the Hub app. Each music item is identified wit
 	.. code-block:: json
 
 		{"Result":"true"}
-
-- PubNub
-	- Publish Message
-
-	.. code-block:: json
-
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		Command = "play_hub_media",
-		PersistentID = 7387446959931482519,
-		SesssionToken = "PubNub-1000"
-		}
-
-	- Message from HKWHub (via Subscribe)
-
-	.. code-block:: json
-
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		SessionToken = "PubNub-1000",
-		ResponseOf = "play_hub_media",
-		Result = true
-		}
 		
 ----
 
 Play a song in the Media list as party mode
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Plays a song in the Media List with all speakers available. So, regardless of current session setting, this command play a song to all speakers.
 
 - API: GET /api/v1/play_hub_media_party_mode?SessionToken=<session token>&PersistentID=<persistent id>
@@ -628,33 +363,12 @@ Plays a song in the Media List with all speakers available. So, regardless of cu
 
 		{"Result":"true"}
 		
-- PubNub
-	- Publish Message
-
-	.. code-block:: json
-
-		{
-		Command = "play_hub_media_party_mode",
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		PersistentID = 7387446959931482519,
-		SesssionToken = "PubNub-1000"
-		}
-
-	- Message from HKWHub (via Subscribe)
-
-	.. code-block:: json
-
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		SessionToken = "PubNub-1000",
-		ResponseOf = "play_hub_media_party_mode",
-		Result = true
-		}
 
 ----
 
 Play a song in the Media list with selected speakers
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Plays a song in the Media List with selected speakers. The selected speakers are represented in ``DeviceIDList`` parameter as a list of ``DeviceID`` separated by ",".
 
 - API: GET /api/v1/play_hub_media_selected_speakers?SessionToken=<session token>&PersistentID=<persistent id>&DeviceIDList=<xxx,xxx,...>
@@ -675,34 +389,12 @@ Plays a song in the Media List with selected speakers. The selected speakers are
 
 		{"Result":"true"}
 
-- PubNub
-	- Publish Message
-
-	.. code-block:: json
-
-		{
-		Command = "play_hub_media_selected_speakers",
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		PersistentID = 7387446959931482519,
-		SesssionToken = "PubNub-1000",
-		DeviceIDList = 34317244381360,129321920968880
-		}
-
-	- Message from HKWHub (via Subscribe)
-
-	.. code-block:: json
-
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		SessionToken = "PubNub-1000",
-		ResponseOf = "play_hub_media_selected_speakers",
-		Result = true
-		}
 		
 ----
 
 Play a Song from Web Server
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Plays a song from Web (http:) or rstp (rstp:) or mms (mms:) server. The URL of the song to play is specified by ``MediaUrl`` parameter.
 
 .. note::
@@ -734,33 +426,12 @@ Plays a song from Web (http:) or rstp (rstp:) or mms (mms:) server. The URL of t
 .. Note::
 	This API call takes several hundreds millisecond to return the response.
 
-- PubNub
-	- Publish Message
-
-	.. code-block:: json
-
-		{
-		Command = "play_web_media",
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		MediaUrl = "http://seonman.github.io/music/hyolyn.mp3"
-		SesssionToken = "PubNub-1000"
-		}
-
-	- Message from HKWHub (via Subscribe)
-
-	.. code-block:: json
-
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		SessionToken = "PubNub-1000",
-		ResponseOf = "play_web_media",
-		Result = true
-		}
 		
 ----
 
 Play a Song from Web Server as party mode
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Plays a song from Web server with all speakers. The URL of the song to play is specified by ``MediaUrl`` parameter.
 
 .. note::
@@ -788,33 +459,12 @@ Plays a song from Web server with all speakers. The URL of the song to play is s
 .. Note::
 	This API call takes several hundreds millisecond to return the response.
 	
-- PubNub
-	- Publish Message
-
-	.. code-block:: json
-
-		{
-		Command = "play_web_media_party_mode",
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		MediaUrl = "http://seonman.github.io/music/hyolyn.mp3"
-		SesssionToken = "PubNub-1000"
-		}
-
-	- Message from HKWHub (via Subscribe)
-
-	.. code-block:: json
-
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		SessionToken = "PubNub-1000",
-		ResponseOf = "play_web_media_party_mode",
-		Result = true
-		}
 	
 ----
 
 Play a Song from Web Server with selected speakers
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Plays a song from Web server with selected speakers. The URL of the song to play is specified by ``MediaUrl`` parameter. The selected speakers are represented in ``DeviceIDList`` parameter as a list of ``DeviceID`` separated by ",".
 
 .. note::
@@ -842,35 +492,12 @@ Plays a song from Web server with selected speakers. The URL of the song to play
 .. Note::
 	This API call takes several hundreds millisecond to return the response.
 	
-- PubNub
-	- Publish Message
-
-	.. code-block:: json
-
-		{
-		Command = "play_web_media_selected_speakers",
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		MediaUrl = "http://seonman.github.io/music/hyolyn.mp3"
-		SesssionToken = "PubNub-1000",
-		DeviceIDList = "34317244381360,129321920968880"
-		}
-
-	- Message from HKWHub (via Subscribe)
-
-	.. code-block:: json
-
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		SessionToken = "PubNub-1000",
-		ResponseOf = "play_web_media_selected_speakers",
-		Result = true
-		}
-	
 ----
 
 
 Play TTS (Text-to-Speech)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Plays a Text-to-Speech audio from VoiceRRS server. The Text to play is specified by ``Text`` parameter.
 
 .. note::
@@ -907,33 +534,12 @@ Plays a Text-to-Speech audio from VoiceRRS server. The Text to play is specified
 .. Note::
 	This API call takes more than several hundreds millisecond to return the response, depending on the network condition.
 
-- PubNub
-	- Publish Message
-
-	.. code-block:: json
-
-		{
-		Command = "play_tts",
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		Text = "Hello World. How are you today?"
-		SesssionToken = "PubNub-1000"
-		}
-
-	- Message from HKWHub (via Subscribe)
-
-	.. code-block:: json
-
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		SessionToken = "PubNub-1000",
-		ResponseOf = "play_tts",
-		Result = true
-		}
 		
 ----
 
 Play TTS (Text-to-Speech) as party mode
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Plays a Text-to-Speech audio from VoiceRRS server with all speakers. The Text to play is specified by ``Text`` parameter.	
 
 - API: GET /api/v1/play_tts_party_mode?SessionToken=<session token>&Text=<Text>
@@ -955,33 +561,12 @@ Plays a Text-to-Speech audio from VoiceRRS server with all speakers. The Text to
 .. Note::
 	This API call takes several hundreds millisecond to return the response.
 	
-- PubNub
-	- Publish Message
-
-	.. code-block:: json
-
-		{
-		Command = "play_tts_party_mode",
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		Text = "Hello World. How are you today?"
-		SesssionToken = "PubNub-1000"
-		}
-
-	- Message from HKWHub (via Subscribe)
-
-	.. code-block:: json
-
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		SessionToken = "PubNub-1000",
-		ResponseOf = "play_tts_party_mode",
-		Result = true
-		}
 	
 ----
 
 Play a Song from Web Server with selected speakers
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Plays a Text-to-Speech audio from VoiceRRS server with selected speakers. The Text to play is specified by ``Text`` parameter. The selected speakers are represented in ``DeviceIDList`` parameter as a list of ``DeviceID`` separated by ",".
 
 - API: GET /api/v1/play_tts_selected_speakers?SessionToken=<Session Token>&Text=<Text>&DeviceIDList=<xxx,xxx,...>
@@ -1005,35 +590,12 @@ Plays a Text-to-Speech audio from VoiceRRS server with selected speakers. The Te
 .. Note::
 	This API call takes several hundreds millisecond to return the response.
 	
-- PubNub
-	- Publish Message
-
-	.. code-block:: json
-
-		{
-		Command = "play_tts_selected_speakers",
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		Text = "Hello World. How are you today?"
-		SesssionToken = "PubNub-1000",
-		DeviceIDList = "34317244381360,129321920968880"
-		}
-
-	- Message from HKWHub (via Subscribe)
-
-	.. code-block:: json
-
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		SessionToken = "PubNub-1000",
-		ResponseOf = "play_tts_selected_speakers",
-		Result = true
-		}
 	
 ----
 
 
 Pause the Current Playback
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Pauses the current playback. The client can resue the playback by ``resume_hub_media``.
 
 - API: GET /api/v1/pause_play?SessionToken=<session token>
@@ -1053,32 +615,11 @@ Pauses the current playback. The client can resue the playback by ``resume_hub_m
 
 		{"Result":"true"}
 
-- PubNub
-	- Publish Message
-
-	.. code-block:: json
-
-		{
-		Command = "pause_play",
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		SesssionToken = "PubNub-1000"
-		}
-
-	- Message from HKWHub (via Subscribe)
-
-	.. code-block:: json
-
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		SessionToken = "PubNub-1000",
-		ResponseOf = "pause_play",
-		Result = true
-		}
 	
 ----
 
 Resume the Current Playback with Hub Media
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - API: GET /api/v1/resume_hub_media?SessionToken=<session token>&PersistentID=<persistent id>
 - Response
@@ -1097,33 +638,11 @@ Resume the Current Playback with Hub Media
 
 		{"Result":"true"}
 
-- PubNub
-	- Publish Message
-
-	.. code-block:: json
-
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		Command = "resume_hub_media",
-		PersistentID = 7387446959931482519,
-		SesssionToken = "PubNub-1000"
-		}
-
-	- Message from HKWHub (via Subscribe)
-
-	.. code-block:: json
-
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		SessionToken = "PubNub-1000",
-		ResponseOf = "resume_hub_media",
-		Result = true
-		}
 		
 ----
 
 Resume the Current Playback with Hub Media as Party Mode
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - API: GET /api/v1/resume_hub_media_party_mode?SessionToken=<session token>&PersistentID=<persistent id>
 - Response
@@ -1142,33 +661,11 @@ Resume the Current Playback with Hub Media as Party Mode
 
 		{"Result":"true"}
 
-- PubNub
-	- Publish Message
-
-	.. code-block:: json
-
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		Command = "resume_hub_media_party_mode",
-		PersistentID = 7387446959931482519,
-		SesssionToken = "PubNub-1000"
-		}
-
-	- Message from HKWHub (via Subscribe)
-
-	.. code-block:: json
-
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		SessionToken = "PubNub-1000",
-		ResponseOf = "resume_hub_media_party_mode",
-		Result = true
-		}
 		
 ----
 
 Resume the Current Playback with Hub Media with selected speakers
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - API: GET /api/v1/resume_hub_media_selected_speakers?SessionToken=<session token>&PersistentID=<persistent id>&DeviceIDList=<xxx,xxx,...>
 - Response
@@ -1188,33 +685,10 @@ Resume the Current Playback with Hub Media with selected speakers
 
 		{"Result":"true"}
 
-- PubNub
-	- Publish Message
-
-	.. code-block:: json
-
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		Command = "resume_hub_media_selected_speakers",
-		PersistentID = 7387446959931482519,
-		SesssionToken = "PubNub-1000",
-		DeviceIDList = "34317244381360,129321920968880"
-		}
-
-	- Message from HKWHub (via Subscribe)
-
-	.. code-block:: json
-
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		SessionToken = "PubNub-1000",
-		ResponseOf = "resume_hub_media_selected_speakers",
-		Result = true
-		}
 ----
 
 Stop the Current Playback
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - API: GET /api/v1/stop_play?SessionToken=<session token>
 - Response
@@ -1234,31 +708,10 @@ Stop the Current Playback
 
 		{"Result":"true"}
 
-- PubNub
-	- Publish Message
-
-	.. code-block:: json
-
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		Command = "stop_play",
-		SesssionToken = "PubNub-1000",
-		}
-
-	- Message from HKWHub (via Subscribe)
-
-	.. code-block:: json
-
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		SessionToken = "PubNub-1000",
-		ResponseOf = "stop_play",
-		Result = true
-		}
 ----
 
 Get the Playback Status (Current Playback State and Elapsed Time)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - API: GET /api/v1/playback_status?SessionToken=<session token>
 - Response
@@ -1285,24 +738,11 @@ Get the Playback Status (Current Playback State and Elapsed Time)
 		{"PlaybackState":"PlayerStatePlaying",
 		 "TimeElapsed":"15"}
 		 
-- PubNub
-	- PubNub mode does not support playback_status command, because clients subscribing the channel will automatically receive the playback_status event from the HKWHub app when an event is available.
-	- Event from HKWHub app
-
-	.. code-block:: json
-
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		SessionToken = "PubNub-1000",
-		Envet = PlaybackTimeChanged,
-		PlaybackTime = 15
-		}
-	
 
 ----
 
 Check if the Hub is playing audio
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - API: GET /api/v1/is_playing?SessionToken=<session token>
 - Response
@@ -1320,34 +760,13 @@ Check if the Hub is playing audio
 
 		{"IsPlaying":"true"}
 
-- PubNub
-	- Publish Message
-
-	.. code-block:: json
-
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		Command = "is_playing",
-		SesssionToken = "PubNub-1000",
-		}
-
-	- Message from HKWHub (via Subscribe)
-
-	.. code-block:: json
-
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		SessionToken = "PubNub-1000",
-		ResponseOf = "is_playing",
-		Result = true
-		}
 		
 		
 Volume Control
-~~~~~~~~~~~~~~~~~
+-----------------
 
 Get Volume for all Devices
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - API: GET /api/v1/get_volume?SessionToken=<session token>
 - Response
@@ -1366,32 +785,11 @@ Get Volume for all Devices
 
 		{"Volume":"10"}
 
-- PubNub
-	- Publish Message
-
-	.. code-block:: json
-
-		{
-		Command = "get_volume",
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		SesssionToken = "PubNub-1000"
-		}
-
-	- Message from HKWHub (via Subscribe)
-
-	.. code-block:: json
-
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		ResponseOf = "get_volume",
-		SesssionToken = "PubNub-1000",
-		Volume = 10
-		}
 		
 ----
 
 Get Volume for a particular device
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - API: GET /api/v1/get_volume_device?SessionToken=<session token>&DeviceID=<device id>
 - Response
@@ -1411,33 +809,11 @@ Get Volume for a particular device
 
 		{"Volume":"10"}
 
-- PubNub
-	- Publish Message
-
-	.. code-block:: json
-
-		{
-		Command = "get_volume_device",
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		SesssionToken = "PubNub-1000",
-		DeviceID=1234567
-		}
-
-	- Message from HKWHub (via Subscribe)
-
-	.. code-block:: json
-
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		ResponseOf = "get_volume_device",
-		SesssionToken = "PubNub-1000",
-		Volume = 10
-		}
 
 ----
 
 Set Volume for all devices
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - API: GET /api/v1/set_volume?SessionToken=<session token>&Volume=<volume>
 - Response
@@ -1455,33 +831,11 @@ Set Volume for all devices
 
 		{"Result":"true"}
 
-- PubNub
-	- Publish Message
-
-	.. code-block:: json
-
-		{
-		Command = "set_volume",
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		SesssionToken = "PubNub-1000",
-		Volume = 10
-		}
-
-	- Message from HKWHub (via Subscribe)
-
-	.. code-block:: json
-
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		ResponseOf = "set_volume",
-		SesssionToken = "PubNub-1000",
-		Result = true
-		}
 		
 ----
 
 Set Volume for a particular device
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - API: GET /api/v1/set_volume_device?SessionToken=<session token>&DeviceID=<device id>&Volume=<volume>
 - Response
@@ -1500,56 +854,9 @@ Set Volume for a particular device
 
 		{"Result":"true"}
 
-- PubNub
-	- Publish Message
-
-	.. code-block:: json
-
-		{
-		Command = "set_volume_device",
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		SesssionToken = "PubNub-1000",
-		DeviceID = 1234567,
-		Volume = 10
-		}
-
-	- Message from HKWHub (via Subscribe)
-
-	.. code-block:: json
-
-		{
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		ResponseOf = "set_volume_device",
-		SesssionToken = "PubNub-1000",
-		Result = true
-		}
 
 ----
 		
-Device Status Change Event (only available for PubNub mode)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-- PubNub
-	- Whenever a speaker status change occurs, the HKWHub sends DeviceStateUpdated event to subscribers.
-	- Type of Reason
-		- NetworkUnavailable : the network became unavailable
-		- DeviceAvailable : a device became available
-		- DeviceUnavailable : a device becaome unavailable
-		- DeviceError : some error occured to a particular speaker
-		- SpeakerInfoUpdated: some of speaker information has been updated
-		- WiFiSignalChanged: wifi signal has changed
-		
-	- Example:
-	
-	.. code-block:: json
-
-		{
-		Event = DeviceStateUpdated,
-		HKWHubUUID = "XXX-XXX-XXX-XXX",
-		Reason = SpeakerInfoUpdated,
-		SessionToken = "PubNub-1000"
-		}
-
-----
 
 
 OAuth2 Authorization API Specification

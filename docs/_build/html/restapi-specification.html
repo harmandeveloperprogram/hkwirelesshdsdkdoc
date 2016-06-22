@@ -51,28 +51,21 @@
             
   <div class="section" id="rest-api-specification-including-pubnub-json-format">
 <h1>REST API Specification (including PubNub JSON format)<a class="headerlink" href="#rest-api-specification-including-pubnub-json-format" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="id1">
-<h2>REST API Specification (including PubNub JSON format)<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p>This specification describes about the REST APIs to control HK Omni speakers and stream audio to the speakers via Hub Speaker or HKWHub app.</p>
 <p>All the APIS are in REST API protocol.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">In this documentation, for HKIoTCloud mode, &lt;server_host&gt; should be &#8220;hkiotcloud.herokuapp.com&#8221;.
-For Local server mode, &lt;server_host&gt; should be the URL (IP address and port number) tat HKWHub app is showing.</p>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p>PubNub server mode does not use REST API. Instead, PubNub client needs to subscribe to the PubNub channel to get events from HKWHub, and use publish message to the PubNub channel to send request to HKWHub. The commands and parameters of each command are the same as REST API specification. However, PubNub message needs to include a couple of additional parameters in the JSON data to specify the <strong>HKWHub UUID (HKWHubUUID)</strong> that are talking to. The response message coming from the HKWHub app will include <strong>ResponseOf</strong> parameters to specify which request the resonse was for.</p>
-<p class="last">So, we will describe PubNub message specification along with REST API specification here.</p>
+<p class="last">In this documentation, for HKIoTCloud mode, &lt;server_host&gt; should be &#8220;hkiotcloud.azurewebsites.net&#8221;.
+For Local server mode, &lt;server_host&gt; should be the URL (IP address and port number) that Hub speaker or HKWHub app is showing.</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">All the REST request should contain <code class="docutils literal"><span class="pre">Authorization</span></code> header that contains the access token, as described above.</p>
 </div>
 <div class="section" id="session-management">
-<h3>Session Management<a class="headerlink" href="#session-management" title="Permalink to this headline">¶</a></h3>
+<h2>Session Management<a class="headerlink" href="#session-management" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="start-session">
-<h4>Start Session<a class="headerlink" href="#start-session" title="Permalink to this headline">¶</a></h4>
+<h3>Start Session<a class="headerlink" href="#start-session" title="Permalink to this headline">¶</a></h3>
 <p>This starts a new session. As a response, the client will receive a SessionToken. The SessionToken is required to be sent in any following requests. Note that the REST requests differs depending on the server mode.</p>
 <ul>
 <li><p class="first">API: GET /api/v1/init_session</p>
@@ -104,38 +97,10 @@ For Local server mode, &lt;server_host&gt; should be the URL (IP address and por
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>PubNub</dt>
-<dd><ul class="first simple">
-<li>Publish Message</li>
-</ul>
-<div class="highlight-json"><div class="highlight"><pre>{Command = &quot;init_session&quot;}
-</pre></div>
-</div>
-<ul>
-<li><dl class="first docutils">
-<dt>Message from HKWHub (via Subscribe)</dt>
-<dd><ul class="first last simple">
-<li>Note that the response of <code class="docutils literal"><span class="pre">init_session</span></code> will contain <strong>HKWHubUUID</strong> to identify the HKWHub the PubNub client is getting talking to. The subsequent Publish message should include this HKWHubUUID information as well as SessionToken.</li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-<div class="last highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-SessionToken = &quot;PubNub-1000&quot;,
-ResponseOf = &quot;init_session&quot;
-}
-</pre></div>
-</div>
-</dd>
-</dl>
-</li>
 </ul>
 </div>
 <div class="section" id="close-session">
-<h4>Close Session<a class="headerlink" href="#close-session" title="Permalink to this headline">¶</a></h4>
+<h3>Close Session<a class="headerlink" href="#close-session" title="Permalink to this headline">¶</a></h3>
 <p>Close the session. The SessionToken information is removed from the session table.</p>
 <ul>
 <li><p class="first">API: GET /api/v1/close_session?SessionToken=&lt;session token&gt;</p>
@@ -166,40 +131,14 @@ ResponseOf = &quot;init_session&quot;
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>PubNub</dt>
-<dd><ul class="first simple">
-<li>Publish Message</li>
-</ul>
-<div class="highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-SessionToken = &quot;PubNub-1000&quot;,
-Command = &quot;close_session&quot;
-}
-</pre></div>
-</div>
-<ul class="simple">
-<li>Message from HKWHub (via Subscribe)</li>
-</ul>
-<div class="last highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-SessionToken = &quot;PubNub-1000&quot;,
-ResponseOf = &quot;close_session&quot;,
-Result = true
-}
-</pre></div>
-</div>
-</dd>
-</dl>
-</li>
 </ul>
 </div>
 </div>
 <hr class="docutils" />
 <div class="section" id="device-management">
-<h3>Device Management<a class="headerlink" href="#device-management" title="Permalink to this headline">¶</a></h3>
+<h2>Device Management<a class="headerlink" href="#device-management" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="get-the-device-count">
-<h4>Get the device count<a class="headerlink" href="#get-the-device-count" title="Permalink to this headline">¶</a></h4>
+<h3>Get the device count<a class="headerlink" href="#get-the-device-count" title="Permalink to this headline">¶</a></h3>
 <p>Returns the number of speakers available in the network.</p>
 <ul>
 <li><p class="first">API: GET /api/v1/device_count?SessionToken=&lt;session token&gt;</p>
@@ -230,37 +169,11 @@ Result = true
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>PubNub</dt>
-<dd><ul class="first simple">
-<li>Publish Message</li>
-</ul>
-<div class="highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-SessionToken = &quot;PubNub-1000&quot;,
-Command = &quot;device_count&quot;
-}
-</pre></div>
-</div>
-<ul class="simple">
-<li>Message from HKWHub (via Subscribe)</li>
-</ul>
-<div class="last highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-SessionToken = &quot;PubNub-1000&quot;,
-ResponseOf = &quot;device_count&quot;,
-DeviceCount = 2
-}
-</pre></div>
-</div>
-</dd>
-</dl>
-</li>
 </ul>
 </div>
 <hr class="docutils" />
 <div class="section" id="get-the-list-of-devices-and-their-information">
-<h4>Get the list of devices and their information<a class="headerlink" href="#get-the-list-of-devices-and-their-information" title="Permalink to this headline">¶</a></h4>
+<h3>Get the list of devices and their information<a class="headerlink" href="#get-the-list-of-devices-and-their-information" title="Permalink to this headline">¶</a></h3>
 <p>Returns the list of speakers and their information including several status information.</p>
 <ul>
 <li><p class="first">API: GET /api/v1/device_list?SessionToken=&lt;session token&gt;</p>
@@ -325,73 +238,10 @@ DeviceCount = 2
 </pre></div>
 </div>
 </div></blockquote>
-<ul>
-<li><dl class="first docutils">
-<dt>PubNub</dt>
-<dd><ul class="first simple">
-<li>Publish message</li>
-</ul>
-<div class="highlight-json"><div class="highlight"><pre>{
-Command = &quot;device_list&quot;,
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-SessionToken = &quot;PubNub-1000&quot;
-}
-</pre></div>
-</div>
-<ul class="simple">
-<li>Response message (from Subscribed)</li>
-</ul>
-<div class="last highlight-json"><div class="highlight"><pre>
-</pre></div>
-</div>
-</dd>
-</dl>
-</li>
-</ul>
-<blockquote>
-<div><div class="highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-SessionToken = &quot;PubNub-1000&quot;,
-ResponseOf = &quot;device_list&quot;,
-DeviceList =
-             [{&quot;GroupName&quot;:&quot;Bathroom&quot;,
-             &quot;Role&quot;:21,
-             &quot;MacAddress&quot;:&quot;b0:38:29:1b:36:1f&quot;,
-             &quot;WifiSignalStrength&quot;:-47,
-             &quot;Port&quot;:44055,
-             &quot;Active&quot;:true,
-             &quot;DeviceName&quot;:&quot;Adapt1&quot;,
-             &quot;Version&quot;:&quot;0.1.6.2&quot;,
-             &quot;ModelName&quot;:&quot;Omni Adapt&quot;,
-             &quot;IPAddress&quot;:&quot;192.168.1.40&quot;,
-             &quot;GroupID&quot;:&quot;3431724438&quot;,
-             &quot;Volume&quot;:47,
-             &quot;IsPlaying&quot;:false,
-             &quot;DeviceID&quot;:&quot;34317244381360&quot;
-             },
-             {&quot;GroupName&quot;:&quot;Temp&quot;,
-             &quot;Role&quot;:21,
-             &quot;MacAddress&quot;:&quot;b0:38:29:1b:9e:75&quot;,
-             &quot;WifiSignalStrength&quot;:-53,
-             &quot;Port&quot;:44055,
-             &quot;Active&quot;:true,
-             &quot;DeviceName&quot;:&quot;Adapt&quot;,
-             &quot;Version&quot;:&quot;0.1.6.2&quot;,
-             &quot;ModelName&quot;:&quot;Omni Adapt&quot;,
-             &quot;IPAddress&quot;:&quot;192.168.1.39&quot;,
-             &quot;GroupID&quot;:&quot;1293219209&quot;,
-             &quot;Volume&quot;:47,
-             &quot;IsPlaying&quot;:false,
-             &quot;DeviceID&quot;:&quot;129321920968880&quot;
-             }]
-     }
-</pre></div>
-</div>
-</div></blockquote>
 </div>
 <hr class="docutils" />
 <div class="section" id="get-the-device-information">
-<h4>Get the Device Information<a class="headerlink" href="#get-the-device-information" title="Permalink to this headline">¶</a></h4>
+<h3>Get the Device Information<a class="headerlink" href="#get-the-device-information" title="Permalink to this headline">¶</a></h3>
 <p>Gets the device information of a particular device (speaker) identified by DeviceID.</p>
 <ul>
 <li><p class="first">API: GET /api/v1/device_info?SessionToken=&lt;session token&gt;&amp;DeviceID=&lt;device id&gt;</p>
@@ -435,50 +285,11 @@ DeviceList =
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>PubNub</dt>
-<dd><ul class="first simple">
-<li>Publish message</li>
-</ul>
-<div class="highlight-json"><div class="highlight"><pre>{
-Command = &quot;device_list&quot;,
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-SessionToken = &quot;PubNub-1000&quot;
-}
-</pre></div>
-</div>
-<ul class="simple">
-<li>Response message (from Subscribed)</li>
-</ul>
-<div class="last highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-SessionToken = &quot;PubNub-1000&quot;,
-ResponseOf = &quot;device_list&quot;,
-GroupName: &quot;Temp&quot;,
-Role = 21,
-MacAddress = &quot;b0:38:29:1b:9e:75&quot;,
-WifiSignalStrength = -52,
-Port = 44055,
-Active = true,
-DeviceName = &quot;Adapt&quot;,
-Version = &quot;0.1.6.2&quot;,
-ModelName = Omni Adapt&quot;,
-IPAddress = &quot;192.168.1.39&quot;,
-GroupID = 1293219209&quot;,
-Volume = 47,
-IsPlaying = true,
-DeviceID = 129321920968880&quot;
-     }
-</pre></div>
-</div>
-</dd>
-</dl>
-</li>
 </ul>
 </div>
 <hr class="docutils" />
 <div class="section" id="add-a-device-to-session">
-<h4>Add a Device to Session<a class="headerlink" href="#add-a-device-to-session" title="Permalink to this headline">¶</a></h4>
+<h3>Add a Device to Session<a class="headerlink" href="#add-a-device-to-session" title="Permalink to this headline">¶</a></h3>
 <p>Add a speaker to playback session. Once a speaker is added, then the speaker will play the music. There is no impact of this call to other speakers.</p>
 <ul>
 <li><p class="first">API: GET /api/v1/add_device_to_session?SessionToken=&lt;session token&gt;&amp;DeviceID=&lt;device id&gt;</p>
@@ -509,38 +320,11 @@ DeviceID = 129321920968880&quot;
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>PubNub</dt>
-<dd><ul class="first simple">
-<li>Publish message</li>
-</ul>
-<div class="highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-SessionToken = &quot;PubNub-1000&quot;,
-Command = &quot;add_device_to_session&quot;,
-DeviceID = &quot;129321920968880&quot;
-}
-</pre></div>
-</div>
-<ul class="simple">
-<li>Response:</li>
-</ul>
-<div class="last highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-SessionToken = &quot;PubNub-1000&quot;,
-ResponseOf = &quot;add_device_to_session&quot;,
-Result = true
-}
-</pre></div>
-</div>
-</dd>
-</dl>
-</li>
 </ul>
 </div>
 <hr class="docutils" />
 <div class="section" id="remove-a-device-from-session">
-<h4>Remove a Device from Session<a class="headerlink" href="#remove-a-device-from-session" title="Permalink to this headline">¶</a></h4>
+<h3>Remove a Device from Session<a class="headerlink" href="#remove-a-device-from-session" title="Permalink to this headline">¶</a></h3>
 <p>Removes a speaker from playback session. Once a speaker is removed, then the speaker will not play the music. There is no impact of this call to other speakers.</p>
 <ul>
 <li><p class="first">API: GET /api/v1/remove_device_from_session?SessionToken=&lt;session token&gt;&amp;DeviceID=&lt;device id&gt;</p>
@@ -571,37 +355,11 @@ Result = true
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>PubNub</dt>
-<dd><ul class="first simple">
-<li>Publish message</li>
-</ul>
-<div class="highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-SessionToken = &quot;PubNub-1000&quot;,
-Command = &quot;remove_device_from_session&quot;,
-DeviceID = &quot;129321920968880&quot;
-}
-</pre></div>
-</div>
-<ul class="simple">
-<li>Response:</li>
-</ul>
-<div class="last highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-SessionToken = &quot;PubNub-1000&quot;,
-ResponseOf = &quot;remove_device_from_session&quot;,
-Result = true
-}
-</pre></div>
-</div>
-</dd>
-</dl>
-</li>
 </ul>
 </div>
+<hr class="docutils" />
 <div class="section" id="set-party-mode">
-<h4>Set party mode<a class="headerlink" href="#set-party-mode" title="Permalink to this headline">¶</a></h4>
+<h3>Set party mode<a class="headerlink" href="#set-party-mode" title="Permalink to this headline">¶</a></h3>
 <p>Addes all speakers to playback session. Once it is done, all speakers will play music.</p>
 <ul>
 <li><p class="first">API: GET /api/v1/set_party_mode?SessionToken=&lt;session token&gt;</p>
@@ -631,39 +389,14 @@ Result = true
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>PubNub</dt>
-<dd><ul class="first simple">
-<li>Publish Message</li>
-</ul>
-<div class="highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-SesssionToken = &quot;PubNub-1000&quot;,
-Command = &quot;set_party_mode&quot;
-}
-</pre></div>
-</div>
-<ul class="simple">
-<li>Message from HKWHub (via Subscribe)</li>
-</ul>
-<div class="last highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-ResponseOf = &quot;set_party_mode&quot;,
-Result = true
-}
-</pre></div>
-</div>
-</dd>
-</dl>
-</li>
 </ul>
 </div>
 </div>
 <hr class="docutils" />
 <div class="section" id="media-playback-management">
-<h3>Media Playback Management<a class="headerlink" href="#media-playback-management" title="Permalink to this headline">¶</a></h3>
+<h2>Media Playback Management<a class="headerlink" href="#media-playback-management" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="get-the-list-of-media-item-in-the-media-list-of-the-hkwhub-app">
-<h4>Get the list of media item in the Media List of the HKWHub app<a class="headerlink" href="#get-the-list-of-media-item-in-the-media-list-of-the-hkwhub-app" title="Permalink to this headline">¶</a></h4>
+<h3>Get the list of media item in the Media List of the HKWHub app<a class="headerlink" href="#get-the-list-of-media-item-in-the-media-list-of-the-hkwhub-app" title="Permalink to this headline">¶</a></h3>
 <p>Returns the list of media items added to the Media List of the app. User can add music items to the <strong>Media List</strong> of the app via <strong>Setting</strong> of the app.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -710,46 +443,11 @@ Result = true
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>PubNub</dt>
-<dd><ul class="first simple">
-<li>Publish Message</li>
-</ul>
-<div class="highlight-json"><div class="highlight"><pre>{Command = &quot;media_list&quot;,
- HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
- SesssionToken = &quot;PubNub-1000&quot;}
-</pre></div>
-</div>
-<ul class="simple">
-<li>Message from HKWHub (via Subscribe)</li>
-</ul>
-<div class="last highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-MediaList = [
-        {&quot;PersistentID&quot;:&quot;7387446959931482519&quot;,
-        &quot;Title&quot;:&quot;I Will Run To You&quot;,
-        &quot;Artist&quot;:&quot;Hillsong&quot;,
-        &quot;Duration&quot;:436,
-        &quot;AlbumTitle&quot;:&quot;Simply Worship&quot;
-        },
-        {&quot;PersistentID&quot;:&quot;5829171347867182746&quot;,
-        &quot;Title&quot;:&quot;I&#39;m Yours [ORIGINAL DEMO]&quot;,
-        &quot;Artist&quot;:&quot;Jason Mraz&quot;,
-        &quot;Duration&quot;:257,
-        &quot;AlbumTitle&quot;:&quot;Wordplay [SINGLE EP]&quot;}
-        ],
-ResponseOf = &quot;media_list&quot;
-}
-</pre></div>
-</div>
-</dd>
-</dl>
-</li>
 </ul>
 </div>
 <hr class="docutils" />
 <div class="section" id="play-a-song-in-the-media-list-of-the-hkwhub-app">
-<h4>Play a song in the Media List of the HKWHub app<a class="headerlink" href="#play-a-song-in-the-media-list-of-the-hkwhub-app" title="Permalink to this headline">¶</a></h4>
+<h3>Play a song in the Media List of the HKWHub app<a class="headerlink" href="#play-a-song-in-the-media-list-of-the-hkwhub-app" title="Permalink to this headline">¶</a></h3>
 <p>Plays a song in the Media List of the Hub app. Each music item is identified with MPMediaItem&#8217;s PersistentID. It is a unique ID to identify a song in the iOS Music library.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -784,38 +482,11 @@ ResponseOf = &quot;media_list&quot;
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>PubNub</dt>
-<dd><ul class="first simple">
-<li>Publish Message</li>
-</ul>
-<div class="highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-Command = &quot;play_hub_media&quot;,
-PersistentID = 7387446959931482519,
-SesssionToken = &quot;PubNub-1000&quot;
-}
-</pre></div>
-</div>
-<ul class="simple">
-<li>Message from HKWHub (via Subscribe)</li>
-</ul>
-<div class="last highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-SessionToken = &quot;PubNub-1000&quot;,
-ResponseOf = &quot;play_hub_media&quot;,
-Result = true
-}
-</pre></div>
-</div>
-</dd>
-</dl>
-</li>
 </ul>
 </div>
 <hr class="docutils" />
 <div class="section" id="play-a-song-in-the-media-list-as-party-mode">
-<h4>Play a song in the Media list as party mode<a class="headerlink" href="#play-a-song-in-the-media-list-as-party-mode" title="Permalink to this headline">¶</a></h4>
+<h3>Play a song in the Media list as party mode<a class="headerlink" href="#play-a-song-in-the-media-list-as-party-mode" title="Permalink to this headline">¶</a></h3>
 <p>Plays a song in the Media List with all speakers available. So, regardless of current session setting, this command play a song to all speakers.</p>
 <ul>
 <li><p class="first">API: GET /api/v1/play_hub_media_party_mode?SessionToken=&lt;session token&gt;&amp;PersistentID=&lt;persistent id&gt;</p>
@@ -846,38 +517,11 @@ Result = true
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>PubNub</dt>
-<dd><ul class="first simple">
-<li>Publish Message</li>
-</ul>
-<div class="highlight-json"><div class="highlight"><pre>{
-Command = &quot;play_hub_media_party_mode&quot;,
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-PersistentID = 7387446959931482519,
-SesssionToken = &quot;PubNub-1000&quot;
-}
-</pre></div>
-</div>
-<ul class="simple">
-<li>Message from HKWHub (via Subscribe)</li>
-</ul>
-<div class="last highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-SessionToken = &quot;PubNub-1000&quot;,
-ResponseOf = &quot;play_hub_media_party_mode&quot;,
-Result = true
-}
-</pre></div>
-</div>
-</dd>
-</dl>
-</li>
 </ul>
 </div>
 <hr class="docutils" />
 <div class="section" id="play-a-song-in-the-media-list-with-selected-speakers">
-<h4>Play a song in the Media list with selected speakers<a class="headerlink" href="#play-a-song-in-the-media-list-with-selected-speakers" title="Permalink to this headline">¶</a></h4>
+<h3>Play a song in the Media list with selected speakers<a class="headerlink" href="#play-a-song-in-the-media-list-with-selected-speakers" title="Permalink to this headline">¶</a></h3>
 <p>Plays a song in the Media List with selected speakers. The selected speakers are represented in <code class="docutils literal"><span class="pre">DeviceIDList</span></code> parameter as a list of <code class="docutils literal"><span class="pre">DeviceID</span></code> separated by &#8221;,&#8221;.</p>
 <ul>
 <li><p class="first">API: GET /api/v1/play_hub_media_selected_speakers?SessionToken=&lt;session token&gt;&amp;PersistentID=&lt;persistent id&gt;&amp;DeviceIDList=&lt;xxx,xxx,...&gt;</p>
@@ -909,39 +553,11 @@ Result = true
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>PubNub</dt>
-<dd><ul class="first simple">
-<li>Publish Message</li>
-</ul>
-<div class="highlight-json"><div class="highlight"><pre>{
-Command = &quot;play_hub_media_selected_speakers&quot;,
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-PersistentID = 7387446959931482519,
-SesssionToken = &quot;PubNub-1000&quot;,
-DeviceIDList = 34317244381360,129321920968880
-}
-</pre></div>
-</div>
-<ul class="simple">
-<li>Message from HKWHub (via Subscribe)</li>
-</ul>
-<div class="last highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-SessionToken = &quot;PubNub-1000&quot;,
-ResponseOf = &quot;play_hub_media_selected_speakers&quot;,
-Result = true
-}
-</pre></div>
-</div>
-</dd>
-</dl>
-</li>
 </ul>
 </div>
 <hr class="docutils" />
 <div class="section" id="play-a-song-from-web-server">
-<h4>Play a Song from Web Server<a class="headerlink" href="#play-a-song-from-web-server" title="Permalink to this headline">¶</a></h4>
+<h3>Play a Song from Web Server<a class="headerlink" href="#play-a-song-from-web-server" title="Permalink to this headline">¶</a></h3>
 <p>Plays a song from Web (http:) or rstp (rstp:) or mms (mms:) server. The URL of the song to play is specified by <code class="docutils literal"><span class="pre">MediaUrl</span></code> parameter.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -985,39 +601,10 @@ Result = true
 <p class="first admonition-title">Note</p>
 <p class="last">This API call takes several hundreds millisecond to return the response.</p>
 </div>
-<ul>
-<li><dl class="first docutils">
-<dt>PubNub</dt>
-<dd><ul class="first simple">
-<li>Publish Message</li>
-</ul>
-<div class="highlight-json"><div class="highlight"><pre>{
-Command = &quot;play_web_media&quot;,
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-MediaUrl = &quot;http://seonman.github.io/music/hyolyn.mp3&quot;
-SesssionToken = &quot;PubNub-1000&quot;
-}
-</pre></div>
-</div>
-<ul class="simple">
-<li>Message from HKWHub (via Subscribe)</li>
-</ul>
-<div class="last highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-SessionToken = &quot;PubNub-1000&quot;,
-ResponseOf = &quot;play_web_media&quot;,
-Result = true
-}
-</pre></div>
-</div>
-</dd>
-</dl>
-</li>
-</ul>
 </div>
 <hr class="docutils" />
 <div class="section" id="play-a-song-from-web-server-as-party-mode">
-<h4>Play a Song from Web Server as party mode<a class="headerlink" href="#play-a-song-from-web-server-as-party-mode" title="Permalink to this headline">¶</a></h4>
+<h3>Play a Song from Web Server as party mode<a class="headerlink" href="#play-a-song-from-web-server-as-party-mode" title="Permalink to this headline">¶</a></h3>
 <p>Plays a song from Web server with all speakers. The URL of the song to play is specified by <code class="docutils literal"><span class="pre">MediaUrl</span></code> parameter.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -1057,39 +644,10 @@ Result = true
 <p class="first admonition-title">Note</p>
 <p class="last">This API call takes several hundreds millisecond to return the response.</p>
 </div>
-<ul>
-<li><dl class="first docutils">
-<dt>PubNub</dt>
-<dd><ul class="first simple">
-<li>Publish Message</li>
-</ul>
-<div class="highlight-json"><div class="highlight"><pre>{
-Command = &quot;play_web_media_party_mode&quot;,
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-MediaUrl = &quot;http://seonman.github.io/music/hyolyn.mp3&quot;
-SesssionToken = &quot;PubNub-1000&quot;
-}
-</pre></div>
-</div>
-<ul class="simple">
-<li>Message from HKWHub (via Subscribe)</li>
-</ul>
-<div class="last highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-SessionToken = &quot;PubNub-1000&quot;,
-ResponseOf = &quot;play_web_media_party_mode&quot;,
-Result = true
-}
-</pre></div>
-</div>
-</dd>
-</dl>
-</li>
-</ul>
 </div>
 <hr class="docutils" />
 <div class="section" id="play-a-song-from-web-server-with-selected-speakers">
-<h4>Play a Song from Web Server with selected speakers<a class="headerlink" href="#play-a-song-from-web-server-with-selected-speakers" title="Permalink to this headline">¶</a></h4>
+<h3>Play a Song from Web Server with selected speakers<a class="headerlink" href="#play-a-song-from-web-server-with-selected-speakers" title="Permalink to this headline">¶</a></h3>
 <p>Plays a song from Web server with selected speakers. The URL of the song to play is specified by <code class="docutils literal"><span class="pre">MediaUrl</span></code> parameter. The selected speakers are represented in <code class="docutils literal"><span class="pre">DeviceIDList</span></code> parameter as a list of <code class="docutils literal"><span class="pre">DeviceID</span></code> separated by &#8221;,&#8221;.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -1130,40 +688,10 @@ Result = true
 <p class="first admonition-title">Note</p>
 <p class="last">This API call takes several hundreds millisecond to return the response.</p>
 </div>
-<ul>
-<li><dl class="first docutils">
-<dt>PubNub</dt>
-<dd><ul class="first simple">
-<li>Publish Message</li>
-</ul>
-<div class="highlight-json"><div class="highlight"><pre>{
-Command = &quot;play_web_media_selected_speakers&quot;,
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-MediaUrl = &quot;http://seonman.github.io/music/hyolyn.mp3&quot;
-SesssionToken = &quot;PubNub-1000&quot;,
-DeviceIDList = &quot;34317244381360,129321920968880&quot;
-}
-</pre></div>
-</div>
-<ul class="simple">
-<li>Message from HKWHub (via Subscribe)</li>
-</ul>
-<div class="last highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-SessionToken = &quot;PubNub-1000&quot;,
-ResponseOf = &quot;play_web_media_selected_speakers&quot;,
-Result = true
-}
-</pre></div>
-</div>
-</dd>
-</dl>
-</li>
-</ul>
 </div>
 <hr class="docutils" />
 <div class="section" id="play-tts-text-to-speech">
-<h4>Play TTS (Text-to-Speech)<a class="headerlink" href="#play-tts-text-to-speech" title="Permalink to this headline">¶</a></h4>
+<h3>Play TTS (Text-to-Speech)<a class="headerlink" href="#play-tts-text-to-speech" title="Permalink to this headline">¶</a></h3>
 <p>Plays a Text-to-Speech audio from VoiceRRS server. The Text to play is specified by <code class="docutils literal"><span class="pre">Text</span></code> parameter.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -1210,39 +738,10 @@ Result = true
 <p class="first admonition-title">Note</p>
 <p class="last">This API call takes more than several hundreds millisecond to return the response, depending on the network condition.</p>
 </div>
-<ul>
-<li><dl class="first docutils">
-<dt>PubNub</dt>
-<dd><ul class="first simple">
-<li>Publish Message</li>
-</ul>
-<div class="highlight-json"><div class="highlight"><pre>{
-Command = &quot;play_tts&quot;,
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-Text = &quot;Hello World. How are you today?&quot;
-SesssionToken = &quot;PubNub-1000&quot;
-}
-</pre></div>
-</div>
-<ul class="simple">
-<li>Message from HKWHub (via Subscribe)</li>
-</ul>
-<div class="last highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-SessionToken = &quot;PubNub-1000&quot;,
-ResponseOf = &quot;play_tts&quot;,
-Result = true
-}
-</pre></div>
-</div>
-</dd>
-</dl>
-</li>
-</ul>
 </div>
 <hr class="docutils" />
 <div class="section" id="play-tts-text-to-speech-as-party-mode">
-<h4>Play TTS (Text-to-Speech) as party mode<a class="headerlink" href="#play-tts-text-to-speech-as-party-mode" title="Permalink to this headline">¶</a></h4>
+<h3>Play TTS (Text-to-Speech) as party mode<a class="headerlink" href="#play-tts-text-to-speech-as-party-mode" title="Permalink to this headline">¶</a></h3>
 <p>Plays a Text-to-Speech audio from VoiceRRS server with all speakers. The Text to play is specified by <code class="docutils literal"><span class="pre">Text</span></code> parameter.</p>
 <ul>
 <li><p class="first">API: GET /api/v1/play_tts_party_mode?SessionToken=&lt;session token&gt;&amp;Text=&lt;Text&gt;</p>
@@ -1277,39 +776,10 @@ Result = true
 <p class="first admonition-title">Note</p>
 <p class="last">This API call takes several hundreds millisecond to return the response.</p>
 </div>
-<ul>
-<li><dl class="first docutils">
-<dt>PubNub</dt>
-<dd><ul class="first simple">
-<li>Publish Message</li>
-</ul>
-<div class="highlight-json"><div class="highlight"><pre>{
-Command = &quot;play_tts_party_mode&quot;,
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-Text = &quot;Hello World. How are you today?&quot;
-SesssionToken = &quot;PubNub-1000&quot;
-}
-</pre></div>
-</div>
-<ul class="simple">
-<li>Message from HKWHub (via Subscribe)</li>
-</ul>
-<div class="last highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-SessionToken = &quot;PubNub-1000&quot;,
-ResponseOf = &quot;play_tts_party_mode&quot;,
-Result = true
-}
-</pre></div>
-</div>
-</dd>
-</dl>
-</li>
-</ul>
 </div>
 <hr class="docutils" />
-<div class="section" id="id2">
-<h4>Play a Song from Web Server with selected speakers<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id1">
+<h3>Play a Song from Web Server with selected speakers<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <p>Plays a Text-to-Speech audio from VoiceRRS server with selected speakers. The Text to play is specified by <code class="docutils literal"><span class="pre">Text</span></code> parameter. The selected speakers are represented in <code class="docutils literal"><span class="pre">DeviceIDList</span></code> parameter as a list of <code class="docutils literal"><span class="pre">DeviceID</span></code> separated by &#8221;,&#8221;.</p>
 <ul>
 <li><p class="first">API: GET /api/v1/play_tts_selected_speakers?SessionToken=&lt;Session Token&gt;&amp;Text=&lt;Text&gt;&amp;DeviceIDList=&lt;xxx,xxx,...&gt;</p>
@@ -1346,40 +816,10 @@ Result = true
 <p class="first admonition-title">Note</p>
 <p class="last">This API call takes several hundreds millisecond to return the response.</p>
 </div>
-<ul>
-<li><dl class="first docutils">
-<dt>PubNub</dt>
-<dd><ul class="first simple">
-<li>Publish Message</li>
-</ul>
-<div class="highlight-json"><div class="highlight"><pre>{
-Command = &quot;play_tts_selected_speakers&quot;,
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-Text = &quot;Hello World. How are you today?&quot;
-SesssionToken = &quot;PubNub-1000&quot;,
-DeviceIDList = &quot;34317244381360,129321920968880&quot;
-}
-</pre></div>
-</div>
-<ul class="simple">
-<li>Message from HKWHub (via Subscribe)</li>
-</ul>
-<div class="last highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-SessionToken = &quot;PubNub-1000&quot;,
-ResponseOf = &quot;play_tts_selected_speakers&quot;,
-Result = true
-}
-</pre></div>
-</div>
-</dd>
-</dl>
-</li>
-</ul>
 </div>
 <hr class="docutils" />
 <div class="section" id="pause-the-current-playback">
-<h4>Pause the Current Playback<a class="headerlink" href="#pause-the-current-playback" title="Permalink to this headline">¶</a></h4>
+<h3>Pause the Current Playback<a class="headerlink" href="#pause-the-current-playback" title="Permalink to this headline">¶</a></h3>
 <p>Pauses the current playback. The client can resue the playback by <code class="docutils literal"><span class="pre">resume_hub_media</span></code>.</p>
 <ul>
 <li><p class="first">API: GET /api/v1/pause_play?SessionToken=&lt;session token&gt;</p>
@@ -1410,37 +850,11 @@ Result = true
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>PubNub</dt>
-<dd><ul class="first simple">
-<li>Publish Message</li>
-</ul>
-<div class="highlight-json"><div class="highlight"><pre>{
-Command = &quot;pause_play&quot;,
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-SesssionToken = &quot;PubNub-1000&quot;
-}
-</pre></div>
-</div>
-<ul class="simple">
-<li>Message from HKWHub (via Subscribe)</li>
-</ul>
-<div class="last highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-SessionToken = &quot;PubNub-1000&quot;,
-ResponseOf = &quot;pause_play&quot;,
-Result = true
-}
-</pre></div>
-</div>
-</dd>
-</dl>
-</li>
 </ul>
 </div>
 <hr class="docutils" />
 <div class="section" id="resume-the-current-playback-with-hub-media">
-<h4>Resume the Current Playback with Hub Media<a class="headerlink" href="#resume-the-current-playback-with-hub-media" title="Permalink to this headline">¶</a></h4>
+<h3>Resume the Current Playback with Hub Media<a class="headerlink" href="#resume-the-current-playback-with-hub-media" title="Permalink to this headline">¶</a></h3>
 <ul>
 <li><p class="first">API: GET /api/v1/resume_hub_media?SessionToken=&lt;session token&gt;&amp;PersistentID=&lt;persistent id&gt;</p>
 </li>
@@ -1470,38 +884,11 @@ Result = true
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>PubNub</dt>
-<dd><ul class="first simple">
-<li>Publish Message</li>
-</ul>
-<div class="highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-Command = &quot;resume_hub_media&quot;,
-PersistentID = 7387446959931482519,
-SesssionToken = &quot;PubNub-1000&quot;
-}
-</pre></div>
-</div>
-<ul class="simple">
-<li>Message from HKWHub (via Subscribe)</li>
-</ul>
-<div class="last highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-SessionToken = &quot;PubNub-1000&quot;,
-ResponseOf = &quot;resume_hub_media&quot;,
-Result = true
-}
-</pre></div>
-</div>
-</dd>
-</dl>
-</li>
 </ul>
 </div>
 <hr class="docutils" />
 <div class="section" id="resume-the-current-playback-with-hub-media-as-party-mode">
-<h4>Resume the Current Playback with Hub Media as Party Mode<a class="headerlink" href="#resume-the-current-playback-with-hub-media-as-party-mode" title="Permalink to this headline">¶</a></h4>
+<h3>Resume the Current Playback with Hub Media as Party Mode<a class="headerlink" href="#resume-the-current-playback-with-hub-media-as-party-mode" title="Permalink to this headline">¶</a></h3>
 <ul>
 <li><p class="first">API: GET /api/v1/resume_hub_media_party_mode?SessionToken=&lt;session token&gt;&amp;PersistentID=&lt;persistent id&gt;</p>
 </li>
@@ -1531,38 +918,11 @@ Result = true
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>PubNub</dt>
-<dd><ul class="first simple">
-<li>Publish Message</li>
-</ul>
-<div class="highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-Command = &quot;resume_hub_media_party_mode&quot;,
-PersistentID = 7387446959931482519,
-SesssionToken = &quot;PubNub-1000&quot;
-}
-</pre></div>
-</div>
-<ul class="simple">
-<li>Message from HKWHub (via Subscribe)</li>
-</ul>
-<div class="last highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-SessionToken = &quot;PubNub-1000&quot;,
-ResponseOf = &quot;resume_hub_media_party_mode&quot;,
-Result = true
-}
-</pre></div>
-</div>
-</dd>
-</dl>
-</li>
 </ul>
 </div>
 <hr class="docutils" />
 <div class="section" id="resume-the-current-playback-with-hub-media-with-selected-speakers">
-<h4>Resume the Current Playback with Hub Media with selected speakers<a class="headerlink" href="#resume-the-current-playback-with-hub-media-with-selected-speakers" title="Permalink to this headline">¶</a></h4>
+<h3>Resume the Current Playback with Hub Media with selected speakers<a class="headerlink" href="#resume-the-current-playback-with-hub-media-with-selected-speakers" title="Permalink to this headline">¶</a></h3>
 <ul>
 <li><p class="first">API: GET /api/v1/resume_hub_media_selected_speakers?SessionToken=&lt;session token&gt;&amp;PersistentID=&lt;persistent id&gt;&amp;DeviceIDList=&lt;xxx,xxx,...&gt;</p>
 </li>
@@ -1593,39 +953,11 @@ Result = true
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>PubNub</dt>
-<dd><ul class="first simple">
-<li>Publish Message</li>
-</ul>
-<div class="highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-Command = &quot;resume_hub_media_selected_speakers&quot;,
-PersistentID = 7387446959931482519,
-SesssionToken = &quot;PubNub-1000&quot;,
-DeviceIDList = &quot;34317244381360,129321920968880&quot;
-}
-</pre></div>
-</div>
-<ul class="simple">
-<li>Message from HKWHub (via Subscribe)</li>
-</ul>
-<div class="last highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-SessionToken = &quot;PubNub-1000&quot;,
-ResponseOf = &quot;resume_hub_media_selected_speakers&quot;,
-Result = true
-}
-</pre></div>
-</div>
-</dd>
-</dl>
-</li>
 </ul>
 </div>
 <hr class="docutils" />
 <div class="section" id="stop-the-current-playback">
-<h4>Stop the Current Playback<a class="headerlink" href="#stop-the-current-playback" title="Permalink to this headline">¶</a></h4>
+<h3>Stop the Current Playback<a class="headerlink" href="#stop-the-current-playback" title="Permalink to this headline">¶</a></h3>
 <ul>
 <li><p class="first">API: GET /api/v1/stop_play?SessionToken=&lt;session token&gt;</p>
 </li>
@@ -1654,37 +986,11 @@ Result = true
 </div>
 </div></blockquote>
 </li>
-<li><dl class="first docutils">
-<dt>PubNub</dt>
-<dd><ul class="first simple">
-<li>Publish Message</li>
-</ul>
-<div class="highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-Command = &quot;stop_play&quot;,
-SesssionToken = &quot;PubNub-1000&quot;,
-}
-</pre></div>
-</div>
-<ul class="simple">
-<li>Message from HKWHub (via Subscribe)</li>
-</ul>
-<div class="last highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-SessionToken = &quot;PubNub-1000&quot;,
-ResponseOf = &quot;stop_play&quot;,
-Result = true
-}
-</pre></div>
-</div>
-</dd>
-</dl>
-</li>
 </ul>
 </div>
 <hr class="docutils" />
 <div class="section" id="get-the-playback-status-current-playback-state-and-elapsed-time">
-<h4>Get the Playback Status (Current Playback State and Elapsed Time)<a class="headerlink" href="#get-the-playback-status-current-playback-state-and-elapsed-time" title="Permalink to this headline">¶</a></h4>
+<h3>Get the Playback Status (Current Playback State and Elapsed Time)<a class="headerlink" href="#get-the-playback-status-current-playback-state-and-elapsed-time" title="Permalink to this headline">¶</a></h3>
 <ul>
 <li><p class="first">API: GET /api/v1/playback_status?SessionToken=&lt;session token&gt;</p>
 </li>
@@ -1731,28 +1037,11 @@ Result = true
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>PubNub</dt>
-<dd><ul class="first simple">
-<li>PubNub mode does not support playback_status command, because clients subscribing the channel will automatically receive the playback_status event from the HKWHub app when an event is available.</li>
-<li>Event from HKWHub app</li>
-</ul>
-<div class="last highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-SessionToken = &quot;PubNub-1000&quot;,
-Envet = PlaybackTimeChanged,
-PlaybackTime = 15
-}
-</pre></div>
-</div>
-</dd>
-</dl>
-</li>
 </ul>
 </div>
 <hr class="docutils" />
 <div class="section" id="check-if-the-hub-is-playing-audio">
-<h4>Check if the Hub is playing audio<a class="headerlink" href="#check-if-the-hub-is-playing-audio" title="Permalink to this headline">¶</a></h4>
+<h3>Check if the Hub is playing audio<a class="headerlink" href="#check-if-the-hub-is-playing-audio" title="Permalink to this headline">¶</a></h3>
 <ul>
 <li><p class="first">API: GET /api/v1/is_playing?SessionToken=&lt;session token&gt;</p>
 </li>
@@ -1781,39 +1070,13 @@ PlaybackTime = 15
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>PubNub</dt>
-<dd><ul class="first simple">
-<li>Publish Message</li>
-</ul>
-<div class="highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-Command = &quot;is_playing&quot;,
-SesssionToken = &quot;PubNub-1000&quot;,
-}
-</pre></div>
-</div>
-<ul class="simple">
-<li>Message from HKWHub (via Subscribe)</li>
-</ul>
-<div class="last highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-SessionToken = &quot;PubNub-1000&quot;,
-ResponseOf = &quot;is_playing&quot;,
-Result = true
-}
-</pre></div>
-</div>
-</dd>
-</dl>
-</li>
 </ul>
 </div>
 </div>
 <div class="section" id="volume-control">
-<h3>Volume Control<a class="headerlink" href="#volume-control" title="Permalink to this headline">¶</a></h3>
+<h2>Volume Control<a class="headerlink" href="#volume-control" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="get-volume-for-all-devices">
-<h4>Get Volume for all Devices<a class="headerlink" href="#get-volume-for-all-devices" title="Permalink to this headline">¶</a></h4>
+<h3>Get Volume for all Devices<a class="headerlink" href="#get-volume-for-all-devices" title="Permalink to this headline">¶</a></h3>
 <ul>
 <li><p class="first">API: GET /api/v1/get_volume?SessionToken=&lt;session token&gt;</p>
 </li>
@@ -1843,37 +1106,11 @@ Result = true
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>PubNub</dt>
-<dd><ul class="first simple">
-<li>Publish Message</li>
-</ul>
-<div class="highlight-json"><div class="highlight"><pre>{
-Command = &quot;get_volume&quot;,
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-SesssionToken = &quot;PubNub-1000&quot;
-}
-</pre></div>
-</div>
-<ul class="simple">
-<li>Message from HKWHub (via Subscribe)</li>
-</ul>
-<div class="last highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-ResponseOf = &quot;get_volume&quot;,
-SesssionToken = &quot;PubNub-1000&quot;,
-Volume = 10
-}
-</pre></div>
-</div>
-</dd>
-</dl>
-</li>
 </ul>
 </div>
 <hr class="docutils" />
 <div class="section" id="get-volume-for-a-particular-device">
-<h4>Get Volume for a particular device<a class="headerlink" href="#get-volume-for-a-particular-device" title="Permalink to this headline">¶</a></h4>
+<h3>Get Volume for a particular device<a class="headerlink" href="#get-volume-for-a-particular-device" title="Permalink to this headline">¶</a></h3>
 <ul>
 <li><p class="first">API: GET /api/v1/get_volume_device?SessionToken=&lt;session token&gt;&amp;DeviceID=&lt;device id&gt;</p>
 </li>
@@ -1904,38 +1141,11 @@ Volume = 10
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>PubNub</dt>
-<dd><ul class="first simple">
-<li>Publish Message</li>
-</ul>
-<div class="highlight-json"><div class="highlight"><pre>{
-Command = &quot;get_volume_device&quot;,
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-SesssionToken = &quot;PubNub-1000&quot;,
-DeviceID=1234567
-}
-</pre></div>
-</div>
-<ul class="simple">
-<li>Message from HKWHub (via Subscribe)</li>
-</ul>
-<div class="last highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-ResponseOf = &quot;get_volume_device&quot;,
-SesssionToken = &quot;PubNub-1000&quot;,
-Volume = 10
-}
-</pre></div>
-</div>
-</dd>
-</dl>
-</li>
 </ul>
 </div>
 <hr class="docutils" />
 <div class="section" id="set-volume-for-all-devices">
-<h4>Set Volume for all devices<a class="headerlink" href="#set-volume-for-all-devices" title="Permalink to this headline">¶</a></h4>
+<h3>Set Volume for all devices<a class="headerlink" href="#set-volume-for-all-devices" title="Permalink to this headline">¶</a></h3>
 <ul>
 <li><p class="first">API: GET /api/v1/set_volume?SessionToken=&lt;session token&gt;&amp;Volume=&lt;volume&gt;</p>
 </li>
@@ -1964,38 +1174,11 @@ Volume = 10
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>PubNub</dt>
-<dd><ul class="first simple">
-<li>Publish Message</li>
-</ul>
-<div class="highlight-json"><div class="highlight"><pre>{
-Command = &quot;set_volume&quot;,
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-SesssionToken = &quot;PubNub-1000&quot;,
-Volume = 10
-}
-</pre></div>
-</div>
-<ul class="simple">
-<li>Message from HKWHub (via Subscribe)</li>
-</ul>
-<div class="last highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-ResponseOf = &quot;set_volume&quot;,
-SesssionToken = &quot;PubNub-1000&quot;,
-Result = true
-}
-</pre></div>
-</div>
-</dd>
-</dl>
-</li>
 </ul>
 </div>
 <hr class="docutils" />
 <div class="section" id="set-volume-for-a-particular-device">
-<h4>Set Volume for a particular device<a class="headerlink" href="#set-volume-for-a-particular-device" title="Permalink to this headline">¶</a></h4>
+<h3>Set Volume for a particular device<a class="headerlink" href="#set-volume-for-a-particular-device" title="Permalink to this headline">¶</a></h3>
 <ul>
 <li><p class="first">API: GET /api/v1/set_volume_device?SessionToken=&lt;session token&gt;&amp;DeviceID=&lt;device id&gt;&amp;Volume=&lt;volume&gt;</p>
 </li>
@@ -2025,74 +1208,7 @@ Result = true
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>PubNub</dt>
-<dd><ul class="first simple">
-<li>Publish Message</li>
 </ul>
-<div class="highlight-json"><div class="highlight"><pre>{
-Command = &quot;set_volume_device&quot;,
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-SesssionToken = &quot;PubNub-1000&quot;,
-DeviceID = 1234567,
-Volume = 10
-}
-</pre></div>
-</div>
-<ul class="simple">
-<li>Message from HKWHub (via Subscribe)</li>
-</ul>
-<div class="last highlight-json"><div class="highlight"><pre>{
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-ResponseOf = &quot;set_volume_device&quot;,
-SesssionToken = &quot;PubNub-1000&quot;,
-Result = true
-}
-</pre></div>
-</div>
-</dd>
-</dl>
-</li>
-</ul>
-</div>
-<hr class="docutils" />
-<div class="section" id="device-status-change-event-only-available-for-pubnub-mode">
-<h4>Device Status Change Event (only available for PubNub mode)<a class="headerlink" href="#device-status-change-event-only-available-for-pubnub-mode" title="Permalink to this headline">¶</a></h4>
-<ul>
-<li><dl class="first docutils">
-<dt>PubNub</dt>
-<dd><ul class="first">
-<li><p class="first">Whenever a speaker status change occurs, the HKWHub sends DeviceStateUpdated event to subscribers.</p>
-</li>
-<li><dl class="first docutils">
-<dt>Type of Reason</dt>
-<dd><ul class="first last simple">
-<li>NetworkUnavailable : the network became unavailable</li>
-<li>DeviceAvailable : a device became available</li>
-<li>DeviceUnavailable : a device becaome unavailable</li>
-<li>DeviceError : some error occured to a particular speaker</li>
-<li>SpeakerInfoUpdated: some of speaker information has been updated</li>
-<li>WiFiSignalChanged: wifi signal has changed</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p class="first">Example:</p>
-</li>
-</ul>
-<div class="last highlight-json"><div class="highlight"><pre>{
-Event = DeviceStateUpdated,
-HKWHubUUID = &quot;XXX-XXX-XXX-XXX&quot;,
-Reason = SpeakerInfoUpdated,
-SessionToken = &quot;PubNub-1000&quot;
-}
-</pre></div>
-</div>
-</dd>
-</dl>
-</li>
-</ul>
-</div>
 </div>
 </div>
 <hr class="docutils" />
@@ -2295,7 +1411,6 @@ client_id=n7HhiTnKYjJd4zmM&amp;client_secret=ANRfB9z94xtcxFGXrd5XHXEiKg43UY
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">REST API Specification (including PubNub JSON format)</a><ul>
-<li><a class="reference internal" href="#id1">REST API Specification (including PubNub JSON format)</a><ul>
 <li><a class="reference internal" href="#session-management">Session Management</a><ul>
 <li><a class="reference internal" href="#start-session">Start Session</a></li>
 <li><a class="reference internal" href="#close-session">Close Session</a></li>
@@ -2320,7 +1435,7 @@ client_id=n7HhiTnKYjJd4zmM&amp;client_secret=ANRfB9z94xtcxFGXrd5XHXEiKg43UY
 <li><a class="reference internal" href="#play-a-song-from-web-server-with-selected-speakers">Play a Song from Web Server with selected speakers</a></li>
 <li><a class="reference internal" href="#play-tts-text-to-speech">Play TTS (Text-to-Speech)</a></li>
 <li><a class="reference internal" href="#play-tts-text-to-speech-as-party-mode">Play TTS (Text-to-Speech) as party mode</a></li>
-<li><a class="reference internal" href="#id2">Play a Song from Web Server with selected speakers</a></li>
+<li><a class="reference internal" href="#id1">Play a Song from Web Server with selected speakers</a></li>
 <li><a class="reference internal" href="#pause-the-current-playback">Pause the Current Playback</a></li>
 <li><a class="reference internal" href="#resume-the-current-playback-with-hub-media">Resume the Current Playback with Hub Media</a></li>
 <li><a class="reference internal" href="#resume-the-current-playback-with-hub-media-as-party-mode">Resume the Current Playback with Hub Media as Party Mode</a></li>
@@ -2335,9 +1450,6 @@ client_id=n7HhiTnKYjJd4zmM&amp;client_secret=ANRfB9z94xtcxFGXrd5XHXEiKg43UY
 <li><a class="reference internal" href="#get-volume-for-a-particular-device">Get Volume for a particular device</a></li>
 <li><a class="reference internal" href="#set-volume-for-all-devices">Set Volume for all devices</a></li>
 <li><a class="reference internal" href="#set-volume-for-a-particular-device">Set Volume for a particular device</a></li>
-<li><a class="reference internal" href="#device-status-change-event-only-available-for-pubnub-mode">Device Status Change Event (only available for PubNub mode)</a></li>
-</ul>
-</li>
 </ul>
 </li>
 <li><a class="reference internal" href="#oauth2-authorization-api-specification">OAuth2 Authorization API Specification</a><ul>
