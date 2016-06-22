@@ -212,9 +212,12 @@
 </div>
 </div>
 </div>
+</div>
 <hr class="docutils" />
 <div class="section" id="hkwirelesshd-api-architecture">
-<h2>HKWirelessHD API Architecture<a class="headerlink" href="#hkwirelesshd-api-architecture" title="Permalink to this headline">¶</a></h2>
+<h1>HKWirelessHD API Architecture<a class="headerlink" href="#hkwirelesshd-api-architecture" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overall-configuration">
+<h2>Overall Configuration<a class="headerlink" href="#overall-configuration" title="Permalink to this headline">¶</a></h2>
 <p>There are two types of entities in HKWirelessHD audio streaming - one is source device and the other is destination device. Source device sends audio stream to destination devices (speakers), and destination devices receive the audio stream from source and play it. In HKWirelessHD audio, audio streaming is in a one-to-many way. That is, there is one single source device sending an audio stream, and multiple destination devices receive the audio stream by synchronizing with other speakers.</p>
 <p>In case of multi-channel streaming, each speaker is assigned with a role to process a dedicated audio channel. For example, a speaker can play either left channel or right channel in stereo mode.</p>
 <p>Source device can be a mobile device like iPhone or Android phone, but Harman Kardon or JBL speakerx can stream an audio to other speakers. Destination devices are Harman Kardon Omni speakers (Omni Adapt, Omni 10, Omni 20, Omni Bar, etc.) and JBL Link speakers. You can find more information on HK Omni speakers at <a class="reference external" href="http://www.harmankardon.com/content?ContentID=omni-v2">http://www.harmankardon.com/content?ContentID=omni-v2</a>.</p>
@@ -342,7 +345,10 @@ So, the client of Web app need to call corresponding APIs for checking events re
 <li><a class="reference internal" href="#overall-architecture-hub-device-or-hub-app">Overall Architecture Hub Device (or Hub App)</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#hkwirelesshd-api-architecture">HKWirelessHD API Architecture</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#hkwirelesshd-api-architecture">HKWirelessHD API Architecture</a><ul>
+<li><a class="reference internal" href="#overall-configuration">Overall Configuration</a></li>
 <li><a class="reference internal" href="#visibility-of-speakers">Visibility of Speakers</a></li>
 <li><a class="reference internal" href="#controlling-speakers-and-handling-the-events-from-speakers">Controlling Speakers and Handling the Events from Speakers</a></li>
 </ul>

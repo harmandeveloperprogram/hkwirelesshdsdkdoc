@@ -152,10 +152,10 @@ The following figure explains how HKWHub app handles the different modes.
 
 
 HKWirelessHD API Architecture
--------------------------------
+==============================
 
 Overall Configuration
-^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------
 
 There are two types of entities in HKWirelessHD audio streaming - one is source device and the other is destination device. Source device sends audio stream to destination devices (speakers), and destination devices receive the audio stream from source and play it. In HKWirelessHD audio, audio streaming is in a one-to-many way. That is, there is one single source device sending an audio stream, and multiple destination devices receive the audio stream by synchronizing with other speakers.
 
@@ -194,6 +194,7 @@ As shown in the figure above, there are two kind of communications between a sou
 	- This channel is also used to send the device information and the status data of a destination speakers to the source device.
 		- Device information includes the speaker name, the group name, IP address and port number, firmware version, etc.
 		- Device status information includes the status about the device availability and changes of its attributes, whether or not it is playing music, Wi-Fi signal strength, volume change, etc.
+
 
 Asynchronous Communication
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
