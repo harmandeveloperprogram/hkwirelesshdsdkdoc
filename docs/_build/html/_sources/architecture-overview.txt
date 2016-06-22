@@ -151,8 +151,6 @@ The following figure explains how HKWHub app handles the different modes.
 
 
 
-
-
 HKWirelessHD API Architecture
 -------------------------------
 
@@ -163,11 +161,14 @@ There are two types of entities in HKWirelessHD audio streaming - one is source 
 
 In case of multi-channel streaming, each speaker is assigned with a role to process a dedicated audio channel. For example, a speaker can play either left channel or right channel in stereo mode.
 
-Source device can be a mobile device like iPhone or Android phone, but Harman Kardon or JBL speakers, that is, a HK/JBL speaker can stream an audio to other speakers. Destination devices are Harman Kardon Omni speakers (Omni Adapt, Omni 10, Omni 20, Omni Bar, etc.) and JBL Link speakers. You can find more information on HK Omni speakers at http://www.harmankardon.com/content?ContentID=omni-v2.
+Source device can be a mobile device like iPhone or Android phone, but Harman Kardon or JBL speakerx can stream an audio to other speakers. Destination devices are Harman Kardon Omni speakers (Omni Adapt, Omni 10, Omni 20, Omni Bar, etc.) and JBL Link speakers. You can find more information on HK Omni speakers at http://www.harmankardon.com/content?ContentID=omni-v2.
+
+As mentioned earlier, a speaker configured as Hub speaker can stream audio to other speakers when it receives commands from HKIoTCloud or devices in the local network.
 
 .. figure:: img/hub/architecture-hub.png
 
 	Hub Speaker controlling other speakers
+
 
 Use of HKWirelessHD API to stream audio to Omni Speakers
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
