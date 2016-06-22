@@ -75,7 +75,7 @@ HKIoTCloud Mode
 Connecting to HKIoTCloud
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-In HKIoTCloud demo, 3rd party clients can connect to HKIoTCloud (http://hkiotcloud.herokuapp.com) and send REST requests to control speakers and play audio. In order to use HKIoTCloud mode, user needs to sign up to the cloud with username, emaill address and password. Once sign up is done, user need to sign in to the server. User sign-up and sign-in can be done within the HKWHub app, as shown below.
+In HKIoTCloud demo, 3rd party clients can connect to HKIoTCloud (http://hkiotcloud.azurewebsites.net) and send REST requests to control speakers and play audio. In order to use HKIoTCloud mode, user needs to sign up to the cloud with username, emaill address and password. Once sign up is done, user need to sign in to the server. User sign-up and sign-in can be done within the HKWHub app, as shown below.
 	
 .. figure:: img/hub/hubappv2-signin.jpg
 	:scale: 30
@@ -96,7 +96,7 @@ Once the HKWHub App is running, you can now connect a client to HKIoTCloud and s
 		
 	For a client to connect to HKIoTCloud, the same username and password are required. 
 
-As an example of client, HKIoTCloud hosts a Web-based client app, at http://hkiotcloud.herokuapp.com/webapp/. The following is a screenshot of the web app.
+As an example of client, HKIoTCloud hosts a Web-based client app, at http://hkiotcloud.azurewebsites.net/webapp/. The following is a screenshot of the web app.
 
 .. figure:: img/hub/cloudapp-login.png
 	:scale: 70
@@ -259,7 +259,7 @@ If you are a chrome browser user, you can use **Postman** (https://chrome.google
 	
 .. Note::
 
-	Before you do this, do not forget to run HKWHub App and connect to HKIoTCloud.
+	Before you do this, do not forget to run HKWHub App and connect to HKIoTCloud..
 	
 Get an Access Token and Refresh Token (HKIoTCloud mode only)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -271,7 +271,7 @@ In case of HKIoTCloud more, the client should get an access token from the HKIoT
 With **password** grant mode, you can get an access token and a refresh token as shown below:
 
 
-- curl -X POST -H "Authorization: Basic bjdIaGlUbktZakpkNHptTTpBTlJmQjl6OTR4dGN4RkdYcmQ1WEhYRWlLZzQzVVk=" -d "grant_type=password&username=yyy&password=xxx" http://hkiotcloud.herokuapp.com/oauth/token
+- curl -X POST -H "Authorization: Basic bjdIaGlUbktZakpkNHptTTpBTlJmQjl6OTR4dGN4RkdYcmQ1WEhYRWlLZzQzVVk=" -d "grant_type=password&username=yyy&password=xxx" http://hkiotcloud.azurewebsites.net/oauth/token
 
 Result:
 
@@ -288,7 +288,7 @@ When you call the HKIoTCloud API calls, you should pass the value of the access 
 a. Init session
 ^^^^^^^^^^^^^^^
 
-- curl -H "Authorization: Bearer 15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8" http://hkiotcloud.herokuapp.com/api/v1/init_session
+- curl -H "Authorization: Bearer 15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8" http://hkiotcloud.azurewebsites.net/api/v1/init_session
 
 This returns the SessionToken. The returned SessionToken is used by all subsequent REST API request in the body.
 
@@ -303,7 +303,7 @@ b. Add alls speaker to session
 After HKWHub app is launched, none of speakers is selected for playback. You need to add one or more speakers to play audio. To add all speakers to playback session, use ``set_party_mode``. **Party Mode** is the mode where all speakers are playing the same audio together with synchronization. So, by ``set_party_mode``, you can select all speakers to play.
 
 
-- curl -H "Authorization: Bearer 15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8" "http://hkiotcloud.herokuapp.com/api/v1/set_party_mode?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh"
+- curl -H "Authorization: Bearer 15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8" "http://hkiotcloud.azurewebsites.net/api/v1/set_party_mode?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh"
 	
 .. code:: json
 
@@ -313,7 +313,7 @@ c. Get the list of speakers available
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 To control speakers individually, you can get the list of speakers available by using **device_list** command.
 
-- curl -H "Authorization: Bearer 15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8" "http://hkiotcloud.herokuapp.com/api/v1/device_list?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh"
+- curl -H "Authorization: Bearer 15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8" "http://hkiotcloud.azurewebsites.net/api/v1/device_list?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh"
 
 .. code:: json
 
@@ -360,7 +360,7 @@ d. Add a speaker to session
 
 If you want to add a speaker to session, use ``add_device_to_session`. It requires ``DeviceID`` parameter to identify a speaker to add. This command does not impact other speakers regardless of their status.
 
-- curl -H "Authorization: Bearer 15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8" "http://hkiotcloud.herokuapp.com/api/v1/add_device_to_session?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh&DeviceID=4625984469168"
+- curl -H "Authorization: Bearer 15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8" "http://hkiotcloud.azurewebsites.net/api/v1/add_device_to_session?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh&DeviceID=4625984469168"
 
 .. code:: json
 
@@ -369,7 +369,7 @@ If you want to add a speaker to session, use ``add_device_to_session`. It requir
 e. Get the media list
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-- curl -H "Authorization: Bearer 15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8" "http://hkiotcloud.herokuapp.com/api/v1/media_list?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh"
+- curl -H "Authorization: Bearer 15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8" "http://hkiotcloud.azurewebsites.net/api/v1/media_list?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh"
 
 Here, SessionToken should be the session token you got from ``init_session``. You will get a list of media in JSON like below
 
@@ -397,7 +397,7 @@ If you want to play a media item listed in the HKWHub app, use ``play_hub_media`
 
 	Note that, before calling ``play_hub_media``, at least one or more speakers must be selected (added to session) in advance. If not, then the playback will fail. 
 
-- curl -H "Authorization: Bearer 15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8" "http://hkiotcloud.herokuapp.com/api/v1/play_hub_media?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh&PersistentID=1062764963669236741"
+- curl -H "Authorization: Bearer 15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8" "http://hkiotcloud.azurewebsites.net/api/v1/play_hub_media?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh&PersistentID=1062764963669236741"
 
 .. code-block:: json
 
@@ -408,7 +408,7 @@ f. Play a media item in the HKWHub by specifying a speaker list to play
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 You can play a media item in the HKWHub app by specifying the list of speakers.
 
-- curl -H "Authorization: Bearer 15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8" "http://hkiotcloud.herokuapp.com/api/v1/play_hub_media_selected_speakers?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh&PersistentID=1062764963669236741&DeviceIDList=34317244381360,129321920968880"
+- curl -H "Authorization: Bearer 15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8" "http://hkiotcloud.azurewebsites.net/api/v1/play_hub_media_selected_speakers?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh&PersistentID=1062764963669236741&DeviceIDList=34317244381360,129321920968880"
 
 The list of speakers are listed by the parameter ``DeviceIDList`` with delimitor ",".
 
@@ -419,7 +419,7 @@ The list of speakers are listed by the parameter ``DeviceIDList`` with delimitor
 g. Play a HTTP streaming media as party mode
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-- curl -H "Authorization: Bearer 15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8" "http://hkiotcloud.herokuapp.com/api/v1/play_web_media_party_mode?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh&MediaUrl=http://seonman.github.io/music/hyolyn.mp3"
+- curl -H "Authorization: Bearer 15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8" "http://hkiotcloud.azurewebsites.net/api/v1/play_web_media_party_mode?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh&MediaUrl=http://seonman.github.io/music/hyolyn.mp3"
 
 .. code-block:: json
 
@@ -428,7 +428,7 @@ g. Play a HTTP streaming media as party mode
 h. Stop playing
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-- curl -H "Authorization: Bearer 15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8" "http://hkiotcloud.herokuapp.com/api/v1/stop_play?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh"
+- curl -H "Authorization: Bearer 15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8" "http://hkiotcloud.azurewebsites.net/api/v1/stop_play?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh"
 
 .. code-block:: json
 
@@ -437,7 +437,7 @@ h. Stop playing
 i. Set Volume
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-- curl -H "Authorization: Bearer 15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8" "http://hkiotcloud.herokuapp.com/api/v1/set_volume?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh&Volume=30"
+- curl -H "Authorization: Bearer 15c0507f3a550d7a31f7af5dc45e4dd9fd9f4bc8" "http://hkiotcloud.azurewebsites.net/api/v1/set_volume?SessionToken=r:abciKaTbUgdpQFuvYtgMm0FRh&Volume=30"
 
 .. code-block:: json
 
